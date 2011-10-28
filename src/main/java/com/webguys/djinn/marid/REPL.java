@@ -68,7 +68,7 @@ public class REPL
             try
             {
                 Executable result = this.parseAndWalk(input);
-                reader.println("<= " + result.toString());
+                reader.println("=> " + result.toString());
                 reader.println();
             }
             catch(Exception e)

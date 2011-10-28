@@ -15,7 +15,7 @@
 
 ## Syntax and Semantics
 
-The REPL three forms of definitions: declarations, functions and immediate statements.
+The REPL supports three forms of statements: declarations, functions and immediate statements.
 
 ### Declarations
 
