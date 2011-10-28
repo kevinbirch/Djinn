@@ -44,9 +44,9 @@ To create a new function, do this:
 
 The syntax for functions takes the form of:
 
-    \[<<name>> <<pattern lambda>> <<atoms>>]
+    '\[' NAME (lambda '?')? atom+ function* declaration* ']'
 
-The <<name>> of the function comes first, followed by an optional pattern lambda.  This is a special lambda that will be
+The name of the function comes first, followed by an optional pattern lambda.  This is a special lambda that will be
 executed before the body of the function to determine if the function should be activated.  The pattern lambda definition
 MUST be suffixed by a question mark ('?') to be considered as the pattern.
 
