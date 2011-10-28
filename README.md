@@ -1,17 +1,20 @@
-# Welcome to the Djinn Programming Language.
+# Welcome to the Djinn Programming Language
+
+Djinn (جن) are supernatural creatures in Arab folklore and Islamic teachings that occupy a parallel world to that of mankind.
+
+Djinn is a concatenative, functional, stack-based programming language.
 
 ## Getting Started
 
-1. Clone this repository
-2. Build the project
+1. Build the project
 
     $ mvn package
 
-3. Run the REPL
+2. Run the REPL
 
     $ java -jar target/djinn-1.0-SNAPSHOT-uber.jar
 
-4. Enjoy
+3. Enjoy
 
 ## Syntax and Semantics
 
