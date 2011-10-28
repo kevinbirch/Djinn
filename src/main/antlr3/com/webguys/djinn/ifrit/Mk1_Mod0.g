@@ -28,7 +28,6 @@ package com.webguys.djinn.ifrit;
 
 statement
 	:	function
-	|	lambda
 	|	assignment_statement
 	|	immediate_statement
 	;
