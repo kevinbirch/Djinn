@@ -1,0 +1,9 @@
+target
+
+# eclipse files
+.project
+.classpath
+.settings
+
+# OS X files
+.DS_Store
