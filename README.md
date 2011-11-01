@@ -24,7 +24,7 @@ The REPL supports three forms of statements: declarations, functions and immedia
 
 To bind a name to the result of a lambda, use a declaration:
 
-    System> \name "Djinn"
+    User> \name "Djinn"
     => <<Declaration>> "name" = ["Djinn"]
 
 The name "name" is now bound to a lambda containing the string "Djinn".  When this name is referenced, the lambda will be
@@ -32,14 +32,14 @@ evaluated  at that time.  This is an example of the syntax sugar provided when y
 value to a name.  Immediate values can be integers, decimals or strings.  Otherwise if you want to bind the result of a
 complete lambda to a name, do this:
 
-    System> \value [1 1 +]
-    => <<Declaration>> "value" = [1 1 +]
+    User> \value [1 1 add]
+    => <<Declaration>> "value" = [1 1 add]
 
 ### Functions
 
 To create a new function, do this:
 
-    System> \[increment 1 +]
+    User> \[increment 1 add]
     => <<Function>> "increment"
 
 The syntax for functions takes the form of:
@@ -63,6 +63,15 @@ For example, the definition for the method "ifel" (from the Djinn prelude):
 ### Immediate Statements
 
 Any terms entered into the REPL that are not defining declarations or functions will be executed immediately.
+
+    User> name
+    stack: "Djinn"
+
+    User> 5 increment
+    stack: "Djinn" 6
+
+    User> value
+    stack: "Djinn" 6 2
 
 ## License
 
