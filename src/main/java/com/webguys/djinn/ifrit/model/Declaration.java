@@ -26,8 +26,21 @@
 
 package com.webguys.djinn.ifrit.model;
 
+import javax.annotation.Nullable;
+
+import com.google.common.base.Function;
+
 public interface Declaration extends Executable
 {
+    Function<Declaration, String> TO_SOURCE_REP = new Function<Declaration, String>()
+    {
+        @Override
+        public String apply(@Nullable Declaration declaration)
+        {
+            return declaration.toSourceRep();
+        }
+    };
+    
     String getName();
     
     Lambda getDefinition();

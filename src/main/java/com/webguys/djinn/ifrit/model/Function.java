@@ -26,29 +26,37 @@
 
 package com.webguys.djinn.ifrit.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.webguys.djinn.ifrit.metamodel.Action;
+import com.webguys.djinn.ifrit.metamodel.Container;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Stack;
+import com.webguys.djinn.marid.runtime.Dictionary;
+import org.apache.commons.lang3.StringUtils;
 
-public class Function extends Action<Method, Module> implements Executable, Entry
+public class Function extends Action<Method, Module> implements Executable, Entry, Container<InnerFunction>
 {
     private Lambda pattern;
-    private List<Atom> body = new ArrayList<Atom>();
-    private List<Function> inner;
-    private List<Declaration> declarations;
+    private List<Atom> body;
+    private int depthRequirement = -1;
 
-    public Function(String name, List<Atom> body)
-    {
-        this(name, new Method(name), body);
-    }
+    private Dictionary localDictionary;
+
+    private ImmutableList<InnerFunction> inner = ImmutableList.of();
+    private ImmutableList<Declaration> declarations = ImmutableList.of();
 
     public Function(String name, Method family, List<Atom> body)
     {
         super(name, family);
-        this.body = body;
+        this.body = ImmutableList.copyOf(body);
+    }
+
+    protected Function(String name, Method family)
+    {
+        super(name, family);
+        this.body = ImmutableList.<Atom>of();
     }
 
     @Override
@@ -70,9 +78,13 @@ public class Function extends Action<Method, Module> implements Executable, Entr
     }
 
     @Override
-    public Stack execute(Context context)
+    public void execute(Context context)
     {
-        return null;
+        Context functionContext = new Context(context.getStack(), this.localDictionary);
+        for(Atom atom : this.body)
+        {
+            atom.execute(functionContext);
+        }
     }
 
     public Lambda getPattern()
@@ -85,29 +97,40 @@ public class Function extends Action<Method, Module> implements Executable, Entr
         this.pattern = pattern;
     }
 
-    public List<Function> getInner()
+    @Override
+    public Iterable<InnerFunction> getChildren()
     {
         return this.inner;
     }
 
-    public void setInner(List<Function> inner)
+    public void setInner(List<InnerFunction> inner)
     {
-        this.inner = inner;
-    }
-
-    public List<Declaration> getDeclarations()
-    {
-        return declarations;
+        this.inner = ImmutableList.copyOf(inner);
     }
 
     public void setDeclarations(List<Declaration> declarations)
     {
-        this.declarations = declarations;
+        this.declarations = ImmutableList.copyOf(declarations);
     }
 
     public List<Atom> getBody()
     {
-        return body;
+        return this.body;
+    }
+
+    public int getDepthRequirement()
+    {
+        return this.depthRequirement;
+    }
+
+    public void setDepthRequirement(int depthRequirement)
+    {
+        this.depthRequirement = depthRequirement;
+    }
+
+    public void setLocalDictionary(Dictionary localDictionary)
+    {
+        this.localDictionary = localDictionary;
     }
 
     @Override
@@ -134,29 +157,16 @@ public class Function extends Action<Method, Module> implements Executable, Entr
             sb.append(this.pattern.toSourceRep());
             sb.append(" ");
         }
-        for(Atom atom : this.body)
-        {
-            sb.append(atom.toSourceRep());
-            sb.append(' ');
-        }
-        sb.replace(sb.lastIndexOf(" "), sb.length(), "]");
+        sb.append(StringUtils.join(Lists.transform(this.body, Atom.TO_SOURCE_REP), " "));
         if(null != this.inner && !this.inner.isEmpty())
         {
             sb.append("\n");
-            for(Function function : this.inner)
-            {
-                sb.append(function.toSourceRep());
-                sb.append("\n");
-            }
+            sb.append(StringUtils.join(Lists.transform(this.inner, InnerFunction.TO_SOURCE_REP), "\n"));
         }
         if(null != this.declarations && !this.declarations.isEmpty())
         {
             sb.append("\n");
-            for(Declaration declaration : this.declarations)
-            {
-                sb.append(declaration.toSourceRep());
-                sb.append("\n");
-            }
+            sb.append(StringUtils.join(Lists.transform(this.declarations, Declaration.TO_SOURCE_REP), "\n"));
         }
         sb.append("]");
         return sb.toString();

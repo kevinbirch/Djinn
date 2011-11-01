@@ -26,41 +26,41 @@
 
 package com.webguys.djinn.ifrit.model;
 
-import com.webguys.djinn.ifrit.metamodel.SimpleType;
-import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Stack;
-
-public class StringAtom extends SimpleType implements Atom<String>
+public class StringAtom extends AbstractAtom<String>
 {
-    private String value;
+    private static final String TYPE_NAME = "String";
 
     public StringAtom(String value)
     {
-        super(gensym("string"));
-        this.value = value;
-    }
-
-    @Override
-    public String getValue()
-    {
-        return this.value;
-    }
-
-    @Override
-    public Stack execute(Context context)
-    {
-        return null;
-    }
-
-    @Override
-    public String toSourceRep()
-    {
-        return this.value;
+        super(gensym(TYPE_NAME), value);
     }
 
     @Override
     public String getTypeName()
     {
-        return "String";
+        return TYPE_NAME;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o)
+        {
+            return true;
+        }
+        if(!(o instanceof StringAtom))
+        {
+            return false;
+        }
+
+        StringAtom that = (StringAtom)o;
+
+        return this.value.equals(that.value);
+    }
+
+    @Override
+    public String toSourceRep()
+    {
+        return "\"" + super.toSourceRep() + "\"";
     }
 }

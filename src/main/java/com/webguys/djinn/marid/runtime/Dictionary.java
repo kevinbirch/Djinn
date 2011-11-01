@@ -26,10 +26,11 @@
 
 package com.webguys.djinn.marid.runtime;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.collect.Maps;
 import com.webguys.djinn.ifrit.model.Declaration;
+import com.webguys.djinn.ifrit.model.Executable;
 import com.webguys.djinn.ifrit.model.Function;
 import com.webguys.djinn.ifrit.model.Method;
 
@@ -37,9 +38,9 @@ public class Dictionary
 {
     private static final Dictionary ROOT = new Dictionary();
 
-    private Map<String, Function> functions = new HashMap<String, Function>();
-    private Map<String, Method> methods = new HashMap<String, Method>();
-    private Map<String, Declaration> declarations = new HashMap<String, Declaration>();
+    private Map<String, Function> functions = Maps.newHashMap();
+    private Map<String, Method> methods = Maps.newHashMap();
+    private Map<String, Declaration> declarations = Maps.newHashMap();
     
     private Dictionary parent;
 
@@ -58,10 +59,14 @@ public class Dictionary
         this.parent = null;
     }
 
+    public Dictionary newChild()
+    {
+        return new Dictionary(this);
+    }
+    
     public void defineFunction(Function function)
     {
         this.functions.put(function.getName(), function);
-        this.methods.put(function.getFamily().getName(), function.getFamily());
     }
 
     public boolean isFunctionDefined(String name)
@@ -75,6 +80,11 @@ public class Dictionary
         return null == result && null != this.parent ? this.parent.getFunction(name) : result;
     }
 
+    public void defineMethod(Method method)
+    {
+        this.methods.put(method.getName(), method);
+    }
+    
     public boolean isMethodDefined(String name)
     {
         return this.methods.containsKey(name) || (null != this.parent && this.parent.isMethodDefined(name));
@@ -100,5 +110,25 @@ public class Dictionary
     {
         Declaration result = this.declarations.get(name);
         return null == result && null != this.parent ? this.parent.getDeclaration(name) : result;
+    }
+
+    public boolean isSymbolDefined(String symbol)
+    {
+        return this.isMethodDefined(symbol) || this.isNameDefined(symbol);
+    }
+
+    public Executable getSymbol(String symbol)
+    {
+        Executable result = null;
+        if(this.isMethodDefined(symbol))
+        {
+            result = this.getMethod(symbol);
+        }
+        else if(this.isNameDefined(symbol))
+        {
+            result = this.getDeclaration(symbol);
+        }
+
+        return result;
     }
 }

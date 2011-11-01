@@ -26,41 +26,76 @@
 
 package com.webguys.djinn.ifrit.model;
 
-import com.webguys.djinn.ifrit.metamodel.SimpleType;
-import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Stack;
-
-public class DecimalAtom extends SimpleType implements Atom<Double>
+public class DecimalAtom extends AbstractAtom<Double> implements NumericAtom
 {
-    private Double value;
+    private static final String TYPE_NAME = "Decimal";
 
     public DecimalAtom(Double value)
     {
-        super(gensym("decimal"));
-        this.value = value;
-    }
-
-    @Override
-    public Double getValue()
-    {
-        return this.value;
-    }
-
-    @Override
-    public Stack execute(Context context)
-    {
-        return null;
-    }
-
-    @Override
-    public String toSourceRep()
-    {
-        return this.value.toString();
+        super(gensym(TYPE_NAME), value);
     }
 
     @Override
     public String getTypeName()
     {
-        return "Decimal";
+        return TYPE_NAME;
+    }
+
+    @Override
+    public Atom add(NumericAtom value)
+    {
+        double result = this.value.doubleValue() + value.doubleValue();
+        return new DecimalAtom(result);
+    }
+
+    @Override
+    public Atom sub(NumericAtom value)
+    {
+        double result = this.value.doubleValue() - value.doubleValue();
+        return new DecimalAtom(result);
+    }
+
+    @Override
+    public Atom div(NumericAtom value)
+    {
+        double result = this.value.doubleValue() / value.doubleValue();
+        return new DecimalAtom(result);
+    }
+
+    @Override
+    public Atom mul(NumericAtom value)
+    {
+        double result = this.value.doubleValue() * value.doubleValue();
+        return new DecimalAtom(result);
+    }
+
+    @Override
+    public int intValue()
+    {
+        return this.value.intValue();
+    }
+
+    @Override
+    public double doubleValue()
+    {
+        return this.value.doubleValue();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o)
+        {
+            return true;
+        }
+        if(!(o instanceof DecimalAtom))
+        {
+            return false;
+        }
+
+        DecimalAtom that = (DecimalAtom)o;
+
+        return this.value.equals(that.value);
+
     }
 }

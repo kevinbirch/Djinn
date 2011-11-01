@@ -9,9 +9,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/doc/lang" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/antlr3" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/djinn" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/djinn" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
@@ -23,13 +23,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.5" level="project" />
-    <orderEntry type="library" name="Maven: org.antlr:antlr:3.3" level="project" />
-    <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.3" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr:3.4" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.4" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:stringtemplate:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:ST4:4.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:jline:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: org.fusesource.jansi:jansi:1.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:10.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:1.3.9" level="project" />
   </component>
 </module>
 

@@ -26,41 +26,77 @@
 
 package com.webguys.djinn.ifrit.model;
 
-import com.webguys.djinn.ifrit.metamodel.SimpleType;
-import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Stack;
-
-public class IntegerAtom extends SimpleType implements Atom<Integer>
+public class IntegerAtom extends AbstractAtom<Integer> implements NumericAtom
 {
-    private Integer value;
+    private static final String TYPE_NAME = "Integer";
 
     public IntegerAtom(Integer value)
     {
-        super(gensym("integer"));
-        this.value = value;
-    }
-
-    @Override
-    public Integer getValue()
-    {
-        return this.value;
-    }
-
-    @Override
-    public Stack execute(Context context)
-    {
-        return null;
-    }
-
-    @Override
-    public String toSourceRep()
-    {
-        return this.value.toString();
+        super(gensym(TYPE_NAME), value);
     }
 
     @Override
     public String getTypeName()
     {
-        return "Integer";
+        return TYPE_NAME;
+    }
+
+    @Override
+    public Atom add(NumericAtom value)
+    {
+        int result = this.value.intValue() + value.intValue();
+
+        return new IntegerAtom(result);
+    }
+
+    @Override
+    public Atom sub(NumericAtom value)
+    {
+        int result = this.value.intValue() - value.intValue();
+        return new IntegerAtom(result);
+    }
+
+    @Override
+    public Atom div(NumericAtom value)
+    {
+        int result = this.value.intValue() / value.intValue();
+        return new IntegerAtom(result);
+    }
+
+    @Override
+    public Atom mul(NumericAtom value)
+    {
+        int result = this.value.intValue() * value.intValue();
+        return new IntegerAtom(result);
+    }
+
+    @Override
+    public int intValue()
+    {
+        return this.value.intValue();
+    }
+
+    @Override
+    public double doubleValue()
+    {
+        return this.value.doubleValue();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o)
+        {
+            return true;
+        }
+        if(!(o instanceof IntegerAtom))
+        {
+            return false;
+        }
+
+        IntegerAtom that = (IntegerAtom)o;
+
+        return this.value.equals(that.value);
+
     }
 }

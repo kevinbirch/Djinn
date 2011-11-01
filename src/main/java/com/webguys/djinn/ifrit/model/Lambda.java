@@ -28,24 +28,37 @@ package com.webguys.djinn.ifrit.model;
 
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.webguys.djinn.ifrit.metamodel.MetaObject;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Stack;
+import org.apache.commons.lang3.StringUtils;
 
 public class Lambda extends MetaObject implements Atom<List<Atom>>
 {
-    private List<Atom> body;
+    private static final String TYPE_NAME = "Lambda";
+    
+    private ImmutableList<Atom> body;
 
     public Lambda(List<Atom> body)
     {
-        super(gensym("lambda"));
-        this.body = body;
+        super(gensym(TYPE_NAME));
+        this.body = ImmutableList.copyOf(body);
+    }
+
+    protected Lambda(String name, List<Atom> body)
+    {
+        super(name);
+        this.body = ImmutableList.copyOf(body);
     }
 
     @Override
-    public Stack execute(Context context)
+    public void execute(Context context)
     {
-        return null;
+        for(Atom atom : this.body)
+        {
+            atom.execute(context);
+        }
     }
 
     public List<Atom> getBody()
@@ -62,19 +75,36 @@ public class Lambda extends MetaObject implements Atom<List<Atom>>
     @Override
     public String toSourceRep()
     {
-        StringBuilder sb = new StringBuilder("[");
-        for(Atom atom : this.body)
-        {
-            sb.append(atom.toSourceRep());
-            sb.append(' ');
-        }
-        sb.replace(sb.lastIndexOf(" "), sb.length(), "]");
-        return sb.toString();
+        return "[" + StringUtils.join(Lists.transform(this.body, Atom.TO_SOURCE_REP), " ") + "]";
     }
 
     @Override
     public String getTypeName()
     {
-        return "Lambda";
+        return TYPE_NAME;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o)
+        {
+            return true;
+        }
+        if(o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        Lambda lambda = (Lambda)o;
+
+        return this.body.equals(lambda.body);
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return this.body.hashCode();
     }
 }

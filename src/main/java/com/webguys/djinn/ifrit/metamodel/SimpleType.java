@@ -36,6 +36,6 @@ public class SimpleType extends MetaObject implements Type
     @Override
     public String getTypeName()
     {
-        return null;
+        return "SimpleType";
     }
 }

@@ -26,6 +26,72 @@
 
 package com.webguys.djinn.marid.runtime;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class Context
 {
+    private Stack stack;
+    private Dictionary dictionary;
+    private InputStream stdin = System.in;
+    private OutputStream stdout = System.out;
+
+    public Context(Stack stack, Dictionary dictionary)
+    {
+        this.stack = stack;
+        this.dictionary = dictionary;
+    }
+
+    public Context(Stack stack, Dictionary dictionary, InputStream stdin, OutputStream stdout)
+    {
+        this.stack = stack;
+        this.dictionary = dictionary;
+        this.stdin = stdin;
+        this.stdout = stdout;
+    }
+
+    @Override
+    public Context clone()
+    {
+        try
+        {
+            Context clone = (Context)super.clone();
+            clone.stack = this.stack.clone();
+            return clone;
+        }
+        catch(CloneNotSupportedException e)
+        {
+            throw new RuntimeException("Received unexpected exception when cloning.", e);
+        }
+    }
+
+    public Stack getStack()
+    {
+        return this.stack;
+    }
+
+    public Dictionary getDictionary()
+    {
+        return this.dictionary;
+    }
+
+    public InputStream getStdin()
+    {
+        return this.stdin;
+    }
+
+    public void setStdin(InputStream stdin)
+    {
+        this.stdin = stdin;
+    }
+
+    public OutputStream getStdout()
+    {
+        return this.stdout;
+    }
+
+    public void setStdout(OutputStream stdout)
+    {
+        this.stdout = stdout;
+    }
 }

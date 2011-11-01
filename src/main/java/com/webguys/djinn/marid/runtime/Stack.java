@@ -26,6 +26,88 @@
 
 package com.webguys.djinn.marid.runtime;
 
-public class Stack
+import java.util.ArrayList;
+
+import com.google.common.collect.Lists;
+import com.webguys.djinn.ifrit.model.Atom;
+import org.apache.commons.lang3.StringUtils;
+
+public class Stack implements Cloneable
 {
+    private ArrayList<Atom> data = Lists.newArrayList();
+
+    public void push(Atom atom)
+    {
+        this.data.add(0, atom);
+    }
+
+    public Atom pop()
+    {
+        if(this.data.isEmpty())
+        {
+            throw new StackUnderflowException(1, 0);
+        }
+        return this.data.remove(0);
+    }
+
+    public Atom peek()
+    {
+        return this.peek(0);
+    }
+
+    public Atom peek(int depth)
+    {
+        return this.data.size() > depth ? this.data.get(depth) : null;
+    }
+
+    public void drop()
+    {
+        this.pop();
+    }
+
+    public void dup()
+    {
+        if(this.data.isEmpty())
+        {
+            throw new StackUnderflowException(1, 0);
+        }
+        this.data.add(0, this.data.get(0));
+    }
+
+    public void swap()
+    {
+        if(2 > this.data.size())
+        {
+            throw new StackUnderflowException(2, this.data.size());
+        }
+        Atom top = this.pop();
+        this.data.add(1, top);
+    }
+
+    public int depth()
+    {
+        return this.data.size();
+    }
+
+    @Override
+    public Stack clone()
+    {
+        try
+        {
+            Stack clone = (Stack)super.clone();
+            clone.data = (ArrayList<Atom>)this.data.clone();
+            return clone;
+        }
+        catch(CloneNotSupportedException e)
+        {
+            throw new RuntimeException("Received unexpected exception when cloning.", e);
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        Iterable<String> rep = Lists.transform(Lists.reverse(this.data), Atom.TO_SOURCE_REP);
+        return StringUtils.join(rep, " ");
+    }
 }

@@ -26,12 +26,21 @@
 
 package com.webguys.djinn.marid;
 
+import java.io.IOException;
+
 import com.webguys.djinn.ifrit.Mk1_Mod0Lexer;
+import com.webguys.djinn.ifrit.Mk1_Mod0ModelGenerator;
 import com.webguys.djinn.ifrit.Mk1_Mod0Parser;
 import com.webguys.djinn.ifrit.Mk1_Mod0Parser.statement_return;
-import com.webguys.djinn.ifrit.Mk1_Mod0Walker;
+import com.webguys.djinn.ifrit.Mk1_Mod0Parser.translation_unit_return;
 import com.webguys.djinn.ifrit.model.Executable;
+import com.webguys.djinn.ifrit.model.ImmediateStatement;
+import com.webguys.djinn.ifrit.model.Lambda;
+import com.webguys.djinn.ifrit.model.Module;
+import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Dictionary;
+import com.webguys.djinn.marid.runtime.Stack;
+import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -41,51 +50,123 @@ import scala.tools.jline.console.ConsoleReader;
 
 public class REPL
 {
-    private Dictionary dictionary = new Dictionary(Dictionary.getRootDictionary());
+    private ConsoleReader reader;
+    private Dictionary dictionary;
+    private Context context;
+    
+    private boolean done;
 
-    private int execute() throws Exception
+    public REPL() throws Exception
     {
-        ConsoleReader reader = new ConsoleReader();
-        reader.setPrompt("System> ");
+        this.reader = new ConsoleReader();
+        Dictionary root = Dictionary.getRootDictionary();
 
-        reader.println("Welcome to Djinn.");
-        reader.println("Type \":quit\" or \":exit\" to end your session.  Type \":help\" for instructions.");
+        this.parseFile("djinn/primitives.djinn", root);
+        
+        this.dictionary = root.newChild();
+        this.context = new Context(new Stack(), this.dictionary);
+    }
 
-        while(true)
+    private void run() throws Exception
+    {
+        this.reader.setPrompt("User> ");
+
+        this.reader.println("Welcome to Djinn.");
+        this.reader.println("Type \":quit\" or \":exit\" to end your session.  Type \":help\" for instructions.");
+
+        while(!this.done)
         {
-            String input = reader.readLine();
+            String input = this.read();
+            String result = this.eval(input);
+            this.print(result);
+        }
+    }
 
-            if(":quit".equalsIgnoreCase(input) || ":exit".equalsIgnoreCase(input))
-            {
-                break;
-            }
-            else if(":help".equalsIgnoreCase(input))
-            {
-                help(reader);
-                continue;
-            }
+    private String read() throws IOException
+    {
+        return this.reader.readLine();
+    }
 
-            try
+    private String eval(String input) throws Exception
+    {
+        if(null == input)
+        {
+            return this.evalCommand(":exit");
+        }
+        else if(input.startsWith(":"))
+        {
+            return this.evalCommand(input);
+        }
+        else
+        {
+            return this.evalStatement(input);
+        }
+    }
+
+    private String evalCommand(String input) throws Exception
+    {
+        if(":quit".equalsIgnoreCase(input) || ":exit".equalsIgnoreCase(input))
+        {
+            this.done = true;
+            return "goodbye.";
+        }
+        else if(":help".equalsIgnoreCase(input))
+        {
+            return this.help();
+        }
+        else if(":stack".equalsIgnoreCase(input))
+        {
+            return "stack: " + this.context.getStack();
+        }
+        else if(":depth".equalsIgnoreCase(input))
+        {
+            return String.valueOf(this.context.getStack().depth());
+        }
+        else
+        {
+            return "error: command \"" + input.substring(1) + "\" was not understood";
+        }
+    }
+
+    private String help() throws Exception
+    {
+        return "coming soon.";
+    }
+
+    private String evalStatement(String input) throws Exception
+    {
+        try
+        {
+            Executable result = this.parseStatement(input);
+            if(result instanceof ImmediateStatement)
             {
-                Executable result = this.parseAndWalk(input);
-                reader.println("=> " + result.toString());
-                reader.println();
+                result.execute(this.context);
+                return "stack: " + this.context.getStack();
             }
-            catch(Exception e)
+            else if(result instanceof Lambda)
             {
-                reader.println("error: " + e.getMessage());
+                this.context.getStack().push((Lambda)result);
+                return "stack: " + this.context.getStack();
+            }
+            else
+            {
+                return "=> " + result.toString();
             }
         }
-
-        return 0;
+        catch(Exception e)
+        {
+            return "error: " + e.getMessage();
+        }
     }
 
-    private static void help(ConsoleReader reader) throws Exception
+    private void print(String result) throws Exception
     {
-        reader.println("coming soon.");
+        this.reader.println(result);
+        this.reader.flush();
+        this.reader.println();
     }
 
-    private Executable parseAndWalk(String input) throws Exception
+    private Executable parseStatement(String input) throws Exception
     {
         CharStream inputStream = new ANTLRStringStream(input);
         Mk1_Mod0Lexer lexer = new Mk1_Mod0Lexer(inputStream);
@@ -99,17 +180,35 @@ public class REPL
         CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
         nodes.setTokenStream(tokenStream);
 
-        Mk1_Mod0Walker walker = new Mk1_Mod0Walker(nodes, this.dictionary);
+        Mk1_Mod0ModelGenerator walker = new Mk1_Mod0ModelGenerator(nodes, this.dictionary);
         return walker.statement();
+    }
+
+    private Module parseFile(String path, Dictionary dictionary) throws Exception
+    {
+        ClassLoader loader = this.getClass().getClassLoader();
+        ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream(path));
+        Mk1_Mod0Lexer lexer = new Mk1_Mod0Lexer(input);
+
+        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+        Mk1_Mod0Parser parser = new Mk1_Mod0Parser(tokenStream);
+
+        translation_unit_return result = parser.translation_unit();
+        CommonTree tree = (CommonTree)result.getTree();
+
+        CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
+        nodes.setTokenStream(tokenStream);
+
+        Mk1_Mod0ModelGenerator walker = new Mk1_Mod0ModelGenerator(nodes, dictionary);
+        return walker.translation_unit();
     }
 
     public static void main(String[] args)
     {
-        REPL repl = new REPL();
-
         try
         {
-            repl.execute();
+            REPL repl = new REPL();
+            repl.run();
         }
         catch(Exception e)
         {

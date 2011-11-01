@@ -38,7 +38,7 @@ public class Family<T extends Action> extends MetaObject
         super(name);
     }
 
-    public Iterable<T> getMembers()
+    protected Iterable<T> getMembers()
     {
         return this.members;
     }
@@ -53,6 +53,11 @@ public class Family<T extends Action> extends MetaObject
         return this.members.contains(action);
     }
 
+    public int memberCount()
+    {
+        return this.members.size();
+    }
+    
     @Override
     public String getTypeName()
     {

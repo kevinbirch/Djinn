@@ -1,0 +1,184 @@
+module: System;
+
+// Stack manipulation functions
+
+@description: a no-op identity statement that represents the top of the stack;
+@sealed: true;
+id :: [a] -> [a]
+
+\[id __primitive__]
+
+@description: swaps the first two elements on the stack;
+@sealed: true;
+swap :: [a b] -> [b a]
+
+\[swap __primitive__]
+
+@description: drops the top element of the stack;
+@sealed: true;
+drop :: [a] -> []
+
+\[drop __primitive__]
+
+@description: duplicates the top element of the stack;
+@sealed: true;
+dup :: [a] -> [a a]
+
+\[dup __primitive__]
+
+@description: "do in place", applies the lambda at the top of the stack to the second and lower elements, ignoring the top;
+@sealed: true;
+dip :: [a b (A -> B)] -> B [b]
+
+\[dip __primitive__]
+
+// Boolean functions
+
+@description: pushes true onto the stack;
+@sealed: true;
+true :: [] -> [bool]
+
+\[true __primitive__]
+
+@description: pushes false onto the stack;
+@sealed: true;
+false :: [] -> [bool]
+
+\[false __primitive__]
+
+@description: boolean and for the first two stack elements;
+@sealed: true;
+and :: [bool bool] -> [bool]
+
+\[and __primitive__]
+
+@description: boolean or for the first two stack elements;
+@sealed: true;
+or :: [bool bool] -> [bool]
+
+\[or __primitive__]
+
+@description: negates the boolean at the top of the stack;
+@sealed: true;
+not :: [bool] -> [bool]
+
+\[not __primitive__]
+
+// Comparison functions
+
+@description: compares the top two elements of the stack for equality;
+@sealed: true;
+eq :: [a b] -> [bool]
+
+\[eq __primitive__]
+
+@description: compares the top two elements of the stack for inequality;
+@sealed: true;
+ne :: [a b] -> [bool]
+
+\[ne __primitive__]
+
+@description: compares the top two elements of the stack, pushes true if the top is greater than then second;
+@sealed: true;
+gt :: [a b] -> [bool]
+
+\[gt __primitive__]
+
+@description: compares the top two elements of the stack, pushes true if the top is less than the second;
+@sealed: true;
+lt :: [a b] -> [bool]
+
+\[lt __primitive__]
+
+@description: compares the top two elements of the stack, pushes true if the top is greater than or equal to the second;
+@sealed: true;
+gte :: [a b] -> [bool]
+
+\[gte __primitive__]
+
+@description: compares the top two elements of the stack, pushes true if the top is less than or equal to the second;
+@sealed: true;
+lte :: [a b] -> [bool]
+
+\[lte __primitive__]
+
+// Arithmetic functions
+
+@description: adds the top two elements of the stack;
+@sealed: true;
+add :: [number number] -> [number]
+
+\[add __primitive__]
+
+@description: subtracts the top two elements of the stack;
+@sealed: true;
+sub :: [number number] -> [number]
+
+\[sub __primitive__]
+
+@description: divides the top two elements of the stack;
+@sealed: true;
+mul :: [number number] -> [number]
+
+\[mul __primitive__]
+
+@description: negates the boolean at the top of the stack;
+@sealed: true;
+div :: [bool] -> [bool]
+
+\[div __primitive__]
+
+// Mathematics functions
+
+@description: pushes the modulo of the second element with the top;
+@sealed: true;
+mod :: [int int] -> [int]
+
+//\[mod __primitive__]
+
+@description: pushes the result of raising the second element to the power of the top element's value;
+@sealed: true;
+pow :: [int int] -> [int]
+
+//\[pow __primitive__]
+
+// Higher order functions
+
+@description: applies the lambda at the top of the stack to the stack;
+@sealed: true;
+apply :: A [(A -> B)] -> B
+
+//\[apply __primitive__]
+
+@description: composes two functions together;
+@sealed: true;
+compose :: [(A -> B) (B -> C)] -> [(A -> C)]
+
+//\[compose __primitive__]
+
+@description: binds the second element to the function at the top of the stack, pushing a new function;
+@sealed: true;
+bind :: [a (A [a] -> B)] -> [(A -> B)]
+
+//\[bind __primitive__]
+
+@description: pushes a new function that will return the value at the top of the stack;
+@sealed: true;
+quote :: [a] -> [( -> a)]
+
+//\[quote __primitive__]
+
+// Standard IO functions
+
+@description: reads a line of text from the standard input and pushes onto the stack;
+@sealed: true;
+readln :: [] -> [string]
+
+//\[readln __primitive__]
+
+@description: prints a string to the standard output followed by a newline;
+@sealed: true;
+println :: [string] -> []
+
+//\[println __primitive__]
+

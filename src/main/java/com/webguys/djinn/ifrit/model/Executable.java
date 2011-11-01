@@ -27,11 +27,10 @@
 package com.webguys.djinn.ifrit.model;
 
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Stack;
 
 public interface Executable
 {
-    Stack execute(Context context);
+    void execute(Context context);
 
     String toSourceRep();
 }

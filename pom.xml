@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr</artifactId>
-            <version>3.3</version>
+            <version>3.4</version>
         </dependency>
 
         <dependency>
@@ -59,9 +59,22 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.0.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>10.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/djinn</directory>
+                <targetPath>djinn</targetPath>
+            </resource>
+        </resources>
+        
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -75,7 +88,7 @@
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr3-maven-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.4</version>
                 <executions>
                     <execution>
                         <goals>

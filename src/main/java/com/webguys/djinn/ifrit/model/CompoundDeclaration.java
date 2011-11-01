@@ -32,7 +32,6 @@ import com.webguys.djinn.ifrit.metamodel.Attribute;
 import com.webguys.djinn.ifrit.metamodel.Container;
 import com.webguys.djinn.ifrit.metamodel.Member;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Stack;
 
 public class CompoundDeclaration<T extends Container<? extends CompoundDeclaration>> extends Attribute<T> implements Member<T>, Declaration
 {
@@ -69,9 +68,9 @@ public class CompoundDeclaration<T extends Container<? extends CompoundDeclarati
     }
 
     @Override
-    public Stack execute(Context context)
+    public void execute(Context context)
     {
-        return null;
+        throw new RuntimeException("not yet implemented");
     }
 
     @Override

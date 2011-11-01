@@ -51,8 +51,8 @@ public class Mk1_Mod0Test
     @Test
     public void stringLiteralAssignment() throws Exception
     {
-        Mk1_Mod0Walker walker = this.parseAndWalk("mk1_mod0/stringLiteralAssignment.djinn");
-        Executable result = walker.assignment_statement();
+        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/stringLiteralAssignment.djinn");
+        Executable result = walker.assignment_statement(this.dictionary);
 
         Assert.assertNotNull(result);
         Assert.assertTrue(result instanceof SingleDeclaration);
@@ -66,8 +66,8 @@ public class Mk1_Mod0Test
     @Test
     public void integerLiteralAssignment() throws Exception
     {
-        Mk1_Mod0Walker walker = this.parseAndWalk("mk1_mod0/integerLiteralAssignment.djinn");
-        Executable result = walker.assignment_statement();
+        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/integerLiteralAssignment.djinn");
+        Executable result = walker.assignment_statement(this.dictionary);
 
         Assert.assertNotNull(result);
         Assert.assertTrue(result instanceof SingleDeclaration);
@@ -81,8 +81,8 @@ public class Mk1_Mod0Test
     @Test
     public void decimalLiteralAssignment() throws Exception
     {
-        Mk1_Mod0Walker walker = this.parseAndWalk("mk1_mod0/decimalLiteralAssignment.djinn");
-        Executable result = walker.assignment_statement();
+        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/decimalLiteralAssignment.djinn");
+        Executable result = walker.assignment_statement(this.dictionary);
 
         Assert.assertNotNull(result);
         Assert.assertTrue(result instanceof SingleDeclaration);
@@ -96,8 +96,8 @@ public class Mk1_Mod0Test
     @Test
     public void compoundAssignment() throws Exception
     {
-        Mk1_Mod0Walker walker = this.parseAndWalk("mk1_mod0/compoundAssignment.djinn");
-        Declaration result = walker.assignment_statement();
+        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/compoundAssignment.djinn");
+        Declaration result = walker.assignment_statement(this.dictionary);
 
         Assert.assertNotNull(result);
         Assert.assertTrue(result instanceof CompoundDeclaration);
@@ -113,7 +113,7 @@ public class Mk1_Mod0Test
     @Test
     public void functionWithPattern() throws Exception
     {
-        Mk1_Mod0Walker walker = this.parseAndWalk("mk1_mod0/functionWithPattern.djinn");
+        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/functionWithPattern.djinn");
         Function result = walker.function();
         
         Assert.assertNotNull(result);
@@ -129,7 +129,7 @@ public class Mk1_Mod0Test
     @Test
     public void functionWithoutPattern() throws Exception
     {
-        Mk1_Mod0Walker walker = this.parseAndWalk("mk1_mod0/functionWithoutPattern.djinn");
+        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/functionWithoutPattern.djinn");
         Function result = walker.function();
 
         Assert.assertNotNull(result);
@@ -145,7 +145,7 @@ public class Mk1_Mod0Test
     @Test
     public void immediate() throws Exception
     {
-        Mk1_Mod0Walker walker = this.parseAndWalk("mk1_mod0/immediate.djinn");
+        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/immediate.djinn");
         Lambda result = walker.immediate_statement();
 
         Assert.assertNotNull(result);
@@ -171,7 +171,7 @@ public class Mk1_Mod0Test
         CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
         nodes.setTokenStream(stream);
 
-        Mk1_Mod0Walker walker = new Mk1_Mod0Walker(nodes, this.dictionary);
+        Mk1_Mod0ModelGenerator walker = new Mk1_Mod0ModelGenerator(nodes, this.dictionary);
         Lambda result = walker.lambda();
 
         Assert.assertNotNull(result);
@@ -181,7 +181,7 @@ public class Mk1_Mod0Test
         Assert.assertEquals(4, result.getBody().size());
     }
 
-    private Mk1_Mod0Walker parseAndWalk(String path) throws Exception
+    private Mk1_Mod0ModelGenerator parseAndWalk(String path) throws Exception
     {
         ClassLoader loader = this.getClass().getClassLoader();
         ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream(path));
@@ -196,6 +196,6 @@ public class Mk1_Mod0Test
         CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
         nodes.setTokenStream(stream);
 
-        return new Mk1_Mod0Walker(nodes, this.dictionary);
+        return new Mk1_Mod0ModelGenerator(nodes, this.dictionary);
     }
 }

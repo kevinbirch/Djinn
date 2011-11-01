@@ -35,6 +35,7 @@ import com.webguys.djinn.marid.runtime.Stack;
 public class SingleDeclaration<T extends Container<? extends SingleDeclaration>> extends Attribute<T> implements Member<T>, Declaration
 {
     private Lambda definition;
+    private Atom cache;
 
     public SingleDeclaration(String name, Lambda definition)
     {
@@ -61,9 +62,16 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     }
 
     @Override
-    public Stack execute(Context context)
+    public void execute(Context context)
     {
-        return null;
+        if(null == this.cache)
+        {
+            Stack clone = context.getStack().clone();
+            this.definition.execute(new Context(clone, context.getDictionary()));
+            this.cache = clone.pop();
+        }
+
+        context.getStack().push(this.cache);
     }
 
     @Override

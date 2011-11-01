@@ -26,38 +26,35 @@
 
 package com.webguys.djinn.ifrit.model;
 
-import com.webguys.djinn.ifrit.metamodel.SimpleType;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Stack;
+import com.webguys.djinn.marid.runtime.SymbolNotDefinedException;
 
-public class Symbol extends SimpleType implements Atom<String>
+public class Symbol extends AbstractAtom<String>
 {
+    private static final String TYPE_NAME = "Symbol";
+
     public Symbol(String value)
     {
-        super(value);
+        super(gensym(TYPE_NAME), value);
     }
 
     @Override
-    public String getValue()
+    public void execute(Context context)
     {
-        return this.getName();
-    }
-
-    @Override
-    public Stack execute(Context context)
-    {
-        return null;
-    }
-
-    @Override
-    public String toSourceRep()
-    {
-        return this.getName();
+        if(context.getDictionary().isSymbolDefined(this.getValue()))
+        {
+            Executable definition = context.getDictionary().getSymbol(this.getValue());
+            definition.execute(context);
+        }
+        else
+        {
+            throw new SymbolNotDefinedException(this.getValue());
+        }
     }
 
     @Override
     public String getTypeName()
     {
-        return "Symbol";
+        return TYPE_NAME;
     }
 }

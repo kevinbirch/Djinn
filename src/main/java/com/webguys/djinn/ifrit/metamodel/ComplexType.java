@@ -26,13 +26,16 @@
 
 package com.webguys.djinn.ifrit.metamodel;
 
-import java.util.HashSet;
 import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 public class ComplexType<T extends Member> extends MetaObject implements Type, Container<T>
 {
-    private Set<T> members = new HashSet<T>();
-
+    private Set<T> members = Sets.newHashSet();
+    private Set<ComplexType> generalizations = Sets.newHashSet();
+    private Set<ComplexType> specialisation = Sets.newHashSet();
+    
     public ComplexType(String name)
     {
         super(name);
@@ -53,10 +56,21 @@ public class ComplexType<T extends Member> extends MetaObject implements Type, C
     {
         return this.members.contains(member);
     }
-    
+
+    public void addGeneralization(ComplexType complexType)
+    {
+        this.generalizations.add(complexType);
+        complexType.addSpecialisation(this);
+    }
+
+    public void addSpecialisation(ComplexType complexType)
+    {
+        this.specialisation.add(complexType);
+    }
+
     @Override
     public String getTypeName()
     {
-        return null;
+        return "ComplexType";
     }
 }

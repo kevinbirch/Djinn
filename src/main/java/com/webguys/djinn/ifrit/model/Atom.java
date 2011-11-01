@@ -26,7 +26,21 @@
 
 package com.webguys.djinn.ifrit.model;
 
+import javax.annotation.Nullable;
+
+import com.google.common.base.Function;
+
 public interface Atom<T> extends Executable
 {
+    Function<Atom, String> TO_SOURCE_REP = new Function<Atom, String>()
+    {
+        @Override
+        public String apply(@Nullable Atom atom)
+        {
+            return atom.toSourceRep();
+        }
+    };
+
     T getValue();
+
 }
