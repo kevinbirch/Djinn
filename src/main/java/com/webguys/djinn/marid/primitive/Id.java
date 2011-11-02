@@ -32,7 +32,6 @@ import com.webguys.djinn.marid.runtime.Context;
 
 public class Id extends UnaryFunction
 {
-
     public static final String NAME = "id";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

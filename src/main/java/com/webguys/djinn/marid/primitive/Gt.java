@@ -32,7 +32,6 @@ import com.webguys.djinn.marid.runtime.Context;
 
 public class Gt extends Function
 {
-
     public static final String NAME = "gt";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

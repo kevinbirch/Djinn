@@ -35,7 +35,6 @@ import com.webguys.djinn.marid.runtime.Stack;
 
 public class Not extends UnaryFunction
 {
-
     public static final String NAME = "not";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

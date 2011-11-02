@@ -36,7 +36,6 @@ import com.webguys.djinn.marid.runtime.Stack;
 
 public class Dip extends BinaryFunction
 {
-
     public static final String NAME = "dip";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

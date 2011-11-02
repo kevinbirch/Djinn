@@ -35,7 +35,6 @@ import com.webguys.djinn.marid.runtime.Stack;
 
 public class Eq extends BinaryFunction
 {
-
     public static final String NAME = "eq";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

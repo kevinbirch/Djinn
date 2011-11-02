@@ -33,7 +33,6 @@ import com.webguys.djinn.marid.runtime.Stack;
 
 public class Drop extends Function
 {
-
     public static final String NAME = "drop";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

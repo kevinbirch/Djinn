@@ -34,7 +34,6 @@ import com.webguys.djinn.marid.runtime.Stack;
 
 public class False extends NullaryFunction
 {
-
     public static final String NAME = "false";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

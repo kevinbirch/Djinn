@@ -35,7 +35,6 @@ import com.webguys.djinn.marid.runtime.Stack;
 
 public class Or extends BinaryFunction
 {
-
     public static final String NAME = "or";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

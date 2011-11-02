@@ -35,7 +35,6 @@ import com.webguys.djinn.marid.runtime.Stack;
 
 public class Ne extends BinaryFunction
 {
-
     public static final String NAME = "ne";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

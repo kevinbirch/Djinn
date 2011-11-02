@@ -32,7 +32,6 @@ import com.webguys.djinn.marid.runtime.Context;
 
 public class Lte extends BinaryFunction
 {
-
     public static final String NAME = "lte";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()

@@ -32,7 +32,6 @@ import com.webguys.djinn.marid.runtime.Context;
 
 public class Gte extends BinaryFunction
 {
-
     public static final String NAME = "gte";
 
     public static final BuiltinFactory FACTORY = new BuiltinFactory()
