@@ -5,13 +5,12 @@
 - list type
 - module support
 - user types
+- full prelude
+- java interop
 - static type support
 
 ## Enhancements
 
-- move stack depth requirements up from function to method
-    - for user functions this requires finding depth requirements for the actual initial atom
-    - for built-ins binary, unary and nullary abstract classes can be created
 - implement method multiple dispatch execution
 - should dictionary be replaced by modules?
     - should dictionary/module be c'tor arg for functions et al?
@@ -28,3 +27,6 @@
 - escape sequences in strings
 - regex literals
 - need to differentiate between a lambda in an immediate statement that must be pushed and one that must be executed
+- I/O
+- hello world example
+- repl restarts, fix and continue

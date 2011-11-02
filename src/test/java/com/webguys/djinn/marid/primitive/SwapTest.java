@@ -21,41 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 10/30/11 7:00 PM
+ * Created: 10/30/11 7:48 PM
  */
 
-package com.webguys.djinn.marid;
+package com.webguys.djinn.marid.primitive;
 
-import com.google.common.collect.ImmutableMap;
-import com.webguys.djinn.marid.primitive.*;
+import com.webguys.djinn.ifrit.model.StringAtom;
+import org.junit.Before;
+import org.junit.Test;
 
-public class Runtime
+public class SwapTest extends AbstractBuiltinTest
 {
-    private static final ImmutableMap<String, BuiltinFactory> factories = ImmutableMap.<String, BuiltinFactory>builder()
-        .put(Add.NAME, Add.FACTORY)
-        .put(And.NAME, And.FACTORY)
-        .put(Dip.NAME, Dip.FACTORY)
-        .put(Div.NAME, Div.FACTORY)
-        .put(Drop.NAME, Drop.FACTORY)
-        .put(Dup.NAME, Dup.FACTORY)
-        .put(Eq.NAME, Eq.FACTORY)
-        .put(False.NAME, False.FACTORY)
-        .put(Gt.NAME, Gt.FACTORY)
-        .put(Gte.NAME, Gte.FACTORY)
-        .put(Id.NAME, Id.FACTORY)
-        .put(Lt.NAME, Lt.FACTORY)
-        .put(Lte.NAME, Lte.FACTORY)
-        .put(Mul.NAME, Mul.FACTORY)
-        .put(Ne.NAME, Ne.FACTORY)
-        .put(Not.NAME, Not.FACTORY)
-        .put(Or.NAME, Or.FACTORY)
-        .put(Sub.NAME, Sub.FACTORY)
-        .put(Swap.NAME, Swap.FACTORY)
-        .put(True.NAME, True.FACTORY)
-        .build();
-
-    public static BuiltinFactory getBuiltinFactory(String name)
+    @Before
+    public void setUp() throws Exception
     {
-        return factories.get(name);
+        super.setUp("swap", Swap.FACTORY);
+
+        this.stack.push(new StringAtom("bar"));
+        this.stack.push(new StringAtom("foo"));
     }
+
+    @Test
+    public void execute() throws Exception
+    {
+        this.assertStackTop("foo");
+
+        this.function.execute(this.context);
+
+        this.assertStackTop("bar");
+    }
+
 }

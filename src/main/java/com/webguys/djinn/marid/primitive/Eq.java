@@ -21,41 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 10/30/11 7:00 PM
+ * Created: 10/28/11 10:06 PM
  */
 
-package com.webguys.djinn.marid;
+package com.webguys.djinn.marid.primitive;
 
-import com.google.common.collect.ImmutableMap;
-import com.webguys.djinn.marid.primitive.*;
+import com.webguys.djinn.ifrit.model.Atom;
+import com.webguys.djinn.ifrit.model.BooleanAtom;
+import com.webguys.djinn.ifrit.model.Function;
+import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.marid.runtime.Context;
+import com.webguys.djinn.marid.runtime.Stack;
 
-public class Runtime
+public class Eq extends BinaryFunction
 {
-    private static final ImmutableMap<String, BuiltinFactory> factories = ImmutableMap.<String, BuiltinFactory>builder()
-        .put(Add.NAME, Add.FACTORY)
-        .put(And.NAME, And.FACTORY)
-        .put(Dip.NAME, Dip.FACTORY)
-        .put(Div.NAME, Div.FACTORY)
-        .put(Drop.NAME, Drop.FACTORY)
-        .put(Dup.NAME, Dup.FACTORY)
-        .put(Eq.NAME, Eq.FACTORY)
-        .put(False.NAME, False.FACTORY)
-        .put(Gt.NAME, Gt.FACTORY)
-        .put(Gte.NAME, Gte.FACTORY)
-        .put(Id.NAME, Id.FACTORY)
-        .put(Lt.NAME, Lt.FACTORY)
-        .put(Lte.NAME, Lte.FACTORY)
-        .put(Mul.NAME, Mul.FACTORY)
-        .put(Ne.NAME, Ne.FACTORY)
-        .put(Not.NAME, Not.FACTORY)
-        .put(Or.NAME, Or.FACTORY)
-        .put(Sub.NAME, Sub.FACTORY)
-        .put(Swap.NAME, Swap.FACTORY)
-        .put(True.NAME, True.FACTORY)
-        .build();
 
-    public static BuiltinFactory getBuiltinFactory(String name)
+    public static final String NAME = "eq";
+
+    public static final BuiltinFactory FACTORY = new BuiltinFactory()
     {
-        return factories.get(name);
+        @Override
+        public Function makeInstance(Method method)
+        {
+            return new Eq(method);
+        }
+    };
+
+    public Eq(Method family)
+    {
+        super(NAME, family);
+    }
+
+    @Override
+    public void execute(Context context)
+    {
+        super.execute(context);
+
+        Stack stack = context.getStack();
+        Atom b = stack.pop();
+        Atom a = stack.pop();
+
+        if(a.equals(b))
+        {
+            stack.push(BooleanAtom.getTrue());
+        }
+        else
+        {
+            stack.push(BooleanAtom.getFalse());
+        }
     }
 }

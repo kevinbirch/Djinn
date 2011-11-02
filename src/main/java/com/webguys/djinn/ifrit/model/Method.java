@@ -90,7 +90,7 @@ public class Method extends Family<Function> implements Executable
     @Override
     public String toSourceRep()
     {
-        throw new UnsupportedOperationException("The method entity has no source representation");
+        throw new RuntimeException("Not yet implemented.");
     }
 
     @Override

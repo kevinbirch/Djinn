@@ -53,7 +53,7 @@ public class REPL
     private ConsoleReader reader;
     private Dictionary dictionary;
     private Context context;
-    
+
     private boolean done;
 
     public REPL() throws Exception
@@ -62,7 +62,7 @@ public class REPL
         Dictionary root = Dictionary.getRootDictionary();
 
         this.parseFile("djinn/primitives.djinn", root);
-        
+
         this.dictionary = root.newChild();
         this.context = new Context(new Stack(), this.dictionary);
     }
@@ -112,7 +112,17 @@ public class REPL
         }
         else if(":help".equalsIgnoreCase(input))
         {
-            return this.help();
+            return "coming soon.";
+        }
+        else if(":no-warranty".equalsIgnoreCase(input))
+        {
+            return "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
+                   "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
+                   "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
+                   "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
+                   "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
+                   "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
+                   "SOFTWARE.";
         }
         else if(":stack".equalsIgnoreCase(input))
         {
@@ -126,11 +136,6 @@ public class REPL
         {
             return "error: command \"" + input.substring(1) + "\" was not understood";
         }
-    }
-
-    private String help() throws Exception
-    {
-        return "coming soon.";
     }
 
     private String evalStatement(String input) throws Exception
@@ -210,8 +215,9 @@ public class REPL
             REPL repl = new REPL();
             repl.run();
         }
-        catch(Exception e)
+        catch(Throwable e)
         {
+            System.err.println("error: Unhandled fatal exception.  No restarts available, exiting.");
             e.printStackTrace();
         }
     }

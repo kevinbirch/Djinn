@@ -1,5 +1,16 @@
 target
 
+# intellij files
+
+Djinn.iws
+.idea/workspace.xml
+.idea/ant.xml
+.idea/uiDesigner.xml
+.idea/libraries
+.idea/dictionaries
+.idea/copyright
+.idea/inspectionProfiles
+
 # eclipse files
 .project
 .classpath
