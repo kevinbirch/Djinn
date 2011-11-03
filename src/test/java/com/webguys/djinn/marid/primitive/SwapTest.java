@@ -35,7 +35,7 @@ public class SwapTest extends AbstractBuiltinTest
     @Before
     public void setUp() throws Exception
     {
-        super.setUp("swap", Swap.FACTORY);
+        super.setUp(Swap.NAME, Swap.FACTORY);
 
         this.stack.push(new StringAtom("bar"));
         this.stack.push(new StringAtom("foo"));

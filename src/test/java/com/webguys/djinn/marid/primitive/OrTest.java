@@ -35,7 +35,7 @@ public class OrTest extends AbstractBuiltinTest
     @Before
     public void setUp() throws Exception
     {
-        super.setUp("or", Or.FACTORY);
+        super.setUp(Or.NAME, Or.FACTORY);
     }
 
     @Test

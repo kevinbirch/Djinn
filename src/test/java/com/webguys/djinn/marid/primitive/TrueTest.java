@@ -34,7 +34,7 @@ public class TrueTest extends AbstractBuiltinTest
     @Before
     public void setUp() throws Exception
     {
-        super.setUp("true", True.FACTORY);
+        super.setUp(True.NAME, True.FACTORY);
     }
 
     @Test
