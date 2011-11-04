@@ -1,4 +1,4 @@
-grammar Mk1_Mod0;
+grammar Djinn;
 options {output=AST;}
 
 tokens {

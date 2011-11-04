@@ -26,8 +26,8 @@
 
 package com.webguys.djinn.ifrit;
 
-import com.webguys.djinn.ifrit.Mk1_Mod0Parser.lambda_return;
-import com.webguys.djinn.ifrit.Mk1_Mod0Parser.statement_return;
+import com.webguys.djinn.ifrit.DjinnParser.lambda_return;
+import com.webguys.djinn.ifrit.DjinnParser.statement_return;
 import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.runtime.Dictionary;
 import org.antlr.runtime.ANTLRInputStream;
@@ -38,7 +38,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Mk1_Mod0Test
+public class ParserTest
 {
     private Dictionary dictionary;
 
@@ -51,7 +51,7 @@ public class Mk1_Mod0Test
     @Test
     public void stringLiteralAssignment() throws Exception
     {
-        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/stringLiteralAssignment.djinn");
+        AstToModelTransformer walker = this.parseAndWalk("djinn/stringLiteralAssignment.djinn");
         Executable result = walker.assignment_statement(this.dictionary);
 
         Assert.assertNotNull(result);
@@ -66,7 +66,7 @@ public class Mk1_Mod0Test
     @Test
     public void integerLiteralAssignment() throws Exception
     {
-        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/integerLiteralAssignment.djinn");
+        AstToModelTransformer walker = this.parseAndWalk("djinn/integerLiteralAssignment.djinn");
         Executable result = walker.assignment_statement(this.dictionary);
 
         Assert.assertNotNull(result);
@@ -81,7 +81,7 @@ public class Mk1_Mod0Test
     @Test
     public void decimalLiteralAssignment() throws Exception
     {
-        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/decimalLiteralAssignment.djinn");
+        AstToModelTransformer walker = this.parseAndWalk("djinn/decimalLiteralAssignment.djinn");
         Executable result = walker.assignment_statement(this.dictionary);
 
         Assert.assertNotNull(result);
@@ -96,7 +96,7 @@ public class Mk1_Mod0Test
     @Test
     public void compoundAssignment() throws Exception
     {
-        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/compoundAssignment.djinn");
+        AstToModelTransformer walker = this.parseAndWalk("djinn/compoundAssignment.djinn");
         Declaration result = walker.assignment_statement(this.dictionary);
 
         Assert.assertNotNull(result);
@@ -113,7 +113,7 @@ public class Mk1_Mod0Test
     @Test
     public void immediate() throws Exception
     {
-        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/immediate.djinn");
+        AstToModelTransformer walker = this.parseAndWalk("djinn/immediate.djinn");
         Lambda result = walker.immediate_statement();
 
         Assert.assertNotNull(result);
@@ -127,11 +127,11 @@ public class Mk1_Mod0Test
     public void lambda() throws Exception
     {
         ClassLoader loader = this.getClass().getClassLoader();
-        ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream("mk1_mod0/lambda.djinn"));
-        Mk1_Mod0Lexer lexer = new Mk1_Mod0Lexer(input);
+        ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream("djinn/lambda.djinn"));
+        DjinnLexer lexer = new DjinnLexer(input);
 
         CommonTokenStream stream = new CommonTokenStream(lexer);
-        Mk1_Mod0Parser parser = new Mk1_Mod0Parser(stream);
+        DjinnParser parser = new DjinnParser(stream);
 
         lambda_return result11 = parser.lambda();
         CommonTree tree = (CommonTree)result11.getTree();
@@ -139,7 +139,7 @@ public class Mk1_Mod0Test
         CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
         nodes.setTokenStream(stream);
 
-        Mk1_Mod0ModelGenerator walker = new Mk1_Mod0ModelGenerator(nodes, this.dictionary);
+        AstToModelTransformer walker = new AstToModelTransformer(nodes, this.dictionary);
         Lambda result = walker.lambda();
 
         Assert.assertNotNull(result);
@@ -149,14 +149,14 @@ public class Mk1_Mod0Test
         Assert.assertEquals(4, result.getBody().size());
     }
 
-    private Mk1_Mod0ModelGenerator parseAndWalk(String path) throws Exception
+    private AstToModelTransformer parseAndWalk(String path) throws Exception
     {
         ClassLoader loader = this.getClass().getClassLoader();
         ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream(path));
-        Mk1_Mod0Lexer lexer = new Mk1_Mod0Lexer(input);
+        DjinnLexer lexer = new DjinnLexer(input);
 
         CommonTokenStream stream = new CommonTokenStream(lexer);
-        Mk1_Mod0Parser parser = new Mk1_Mod0Parser(stream);
+        DjinnParser parser = new DjinnParser(stream);
 
         statement_return result = parser.statement();
         CommonTree tree = (CommonTree)result.getTree();
@@ -164,6 +164,6 @@ public class Mk1_Mod0Test
         CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
         nodes.setTokenStream(stream);
 
-        return new Mk1_Mod0ModelGenerator(nodes, this.dictionary);
+        return new AstToModelTransformer(nodes, this.dictionary);
     }
 }

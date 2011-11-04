@@ -1,6 +1,6 @@
-tree grammar Mk1_Mod0ModelGenerator;
+tree grammar AstToModelTransformer;
 options {
-	tokenVocab=Mk1_Mod0;
+	tokenVocab=Djinn;
 	ASTLabelType=CommonTree; 
 }
 
@@ -20,7 +20,7 @@ import com.webguys.djinn.ifrit.model.*;
 @members {
 	private Dictionary dictionary;
 	
-	public Mk1_Mod0ModelGenerator(TreeNodeStream input, Dictionary dictionary)
+	public AstToModelTransformer(TreeNodeStream input, Dictionary dictionary)
 	{
 		this(input);
 		this.dictionary = dictionary;

@@ -28,10 +28,10 @@ package com.webguys.djinn.ifrit.model;
 
 import com.google.common.collect.Iterables;
 import com.webguys.djinn.AbstractDjinnTest;
-import com.webguys.djinn.ifrit.Mk1_Mod0Lexer;
-import com.webguys.djinn.ifrit.Mk1_Mod0ModelGenerator;
-import com.webguys.djinn.ifrit.Mk1_Mod0Parser;
-import com.webguys.djinn.ifrit.Mk1_Mod0Parser.translation_unit_return;
+import com.webguys.djinn.ifrit.AstToModelTransformer;
+import com.webguys.djinn.ifrit.DjinnLexer;
+import com.webguys.djinn.ifrit.DjinnParser;
+import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
 import com.webguys.djinn.marid.runtime.Dictionary;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -63,7 +63,7 @@ public class FunctionTest extends AbstractDjinnTest
     @Test
     public void simpleFunction() throws Exception
     {
-        this.parseAndLoad("mk1_mod0/simpleFunction.djinn", "inc");
+        this.parseAndLoad("djinn/simpleFunction.djinn", "inc");
 
         Assert.assertNotNull(this.method);
         Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
@@ -79,7 +79,7 @@ public class FunctionTest extends AbstractDjinnTest
     @Test
     public void simpleFunctionWithPattern_match() throws Exception
     {
-        this.parseAndLoad("mk1_mod0/simpleFunctionWithPattern.djinn", "inc?");
+        this.parseAndLoad("djinn/simpleFunctionWithPattern.djinn", "inc?");
 
         Assert.assertNotNull(this.method);
         Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
@@ -95,7 +95,7 @@ public class FunctionTest extends AbstractDjinnTest
     @Test
     public void simpleFunctionWithPattern_noMatch() throws Exception
     {
-        this.parseAndLoad("mk1_mod0/simpleFunctionWithPattern.djinn", "inc?");
+        this.parseAndLoad("djinn/simpleFunctionWithPattern.djinn", "inc?");
 
         Assert.assertNotNull(this.method);
         Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
@@ -111,7 +111,7 @@ public class FunctionTest extends AbstractDjinnTest
     @Test
     public void method_match() throws Exception
     {
-        this.parseAndLoad("mk1_mod0/method.djinn", "inc!");
+        this.parseAndLoad("djinn/method.djinn", "inc!");
 
         Assert.assertNotNull(this.method);
         Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
@@ -127,7 +127,7 @@ public class FunctionTest extends AbstractDjinnTest
     @Test
     public void method_noMatch() throws Exception
     {
-        this.parseAndLoad("mk1_mod0/method.djinn", "inc!");
+        this.parseAndLoad("djinn/method.djinn", "inc!");
 
         Assert.assertNotNull(this.method);
         Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
@@ -151,10 +151,10 @@ public class FunctionTest extends AbstractDjinnTest
     {
         ClassLoader loader = this.getClass().getClassLoader();
         ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream(path));
-        Mk1_Mod0Lexer lexer = new Mk1_Mod0Lexer(input);
+        DjinnLexer lexer = new DjinnLexer(input);
 
         CommonTokenStream stream = new CommonTokenStream(lexer);
-        Mk1_Mod0Parser parser = new Mk1_Mod0Parser(stream);
+        DjinnParser parser = new DjinnParser(stream);
 
         translation_unit_return result = parser.translation_unit();
         CommonTree tree = (CommonTree)result.getTree();
@@ -162,7 +162,7 @@ public class FunctionTest extends AbstractDjinnTest
         CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
         nodes.setTokenStream(stream);
 
-        Mk1_Mod0ModelGenerator generator = new Mk1_Mod0ModelGenerator(nodes, dictionary);
+        AstToModelTransformer generator = new AstToModelTransformer(nodes, dictionary);
         Module module = generator.translation_unit();
     }
 }

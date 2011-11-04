@@ -28,11 +28,11 @@ package com.webguys.djinn.marid;
 
 import java.io.IOException;
 
-import com.webguys.djinn.ifrit.Mk1_Mod0Lexer;
-import com.webguys.djinn.ifrit.Mk1_Mod0ModelGenerator;
-import com.webguys.djinn.ifrit.Mk1_Mod0Parser;
-import com.webguys.djinn.ifrit.Mk1_Mod0Parser.statement_return;
-import com.webguys.djinn.ifrit.Mk1_Mod0Parser.translation_unit_return;
+import com.webguys.djinn.ifrit.AstToModelTransformer;
+import com.webguys.djinn.ifrit.DjinnLexer;
+import com.webguys.djinn.ifrit.DjinnParser;
+import com.webguys.djinn.ifrit.DjinnParser.statement_return;
+import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
 import com.webguys.djinn.ifrit.model.Executable;
 import com.webguys.djinn.ifrit.model.ImmediateStatement;
 import com.webguys.djinn.ifrit.model.Lambda;
@@ -61,7 +61,7 @@ public class REPL
         this.reader = new ConsoleReader();
         Dictionary root = Dictionary.getRootDictionary();
 
-        this.parseFile("djinn/primitives.djinn", root);
+        this.parseFile("src/test/djinn/primitives.djinn", root);
 
         this.dictionary = root.newChild();
         this.context = new Context(new Stack(), this.dictionary);
@@ -174,10 +174,10 @@ public class REPL
     private Executable parseStatement(String input) throws Exception
     {
         CharStream inputStream = new ANTLRStringStream(input);
-        Mk1_Mod0Lexer lexer = new Mk1_Mod0Lexer(inputStream);
+        DjinnLexer lexer = new DjinnLexer(inputStream);
 
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        Mk1_Mod0Parser parser = new Mk1_Mod0Parser(tokenStream);
+        DjinnParser parser = new DjinnParser(tokenStream);
 
         statement_return result = parser.statement();
         CommonTree tree = (CommonTree)result.getTree();
@@ -185,7 +185,7 @@ public class REPL
         CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
         nodes.setTokenStream(tokenStream);
 
-        Mk1_Mod0ModelGenerator walker = new Mk1_Mod0ModelGenerator(nodes, this.dictionary);
+        AstToModelTransformer walker = new AstToModelTransformer(nodes, this.dictionary);
         return walker.statement();
     }
 
@@ -193,10 +193,10 @@ public class REPL
     {
         ClassLoader loader = this.getClass().getClassLoader();
         ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream(path));
-        Mk1_Mod0Lexer lexer = new Mk1_Mod0Lexer(input);
+        DjinnLexer lexer = new DjinnLexer(input);
 
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        Mk1_Mod0Parser parser = new Mk1_Mod0Parser(tokenStream);
+        DjinnParser parser = new DjinnParser(tokenStream);
 
         translation_unit_return result = parser.translation_unit();
         CommonTree tree = (CommonTree)result.getTree();
@@ -204,7 +204,7 @@ public class REPL
         CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
         nodes.setTokenStream(tokenStream);
 
-        Mk1_Mod0ModelGenerator walker = new Mk1_Mod0ModelGenerator(nodes, dictionary);
+        AstToModelTransformer walker = new AstToModelTransformer(nodes, dictionary);
         return walker.translation_unit();
     }
 

@@ -10,10 +10,11 @@
       <sourceFolder url="file://$MODULE_DIR$/doc/lang" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/antlr3" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/djinn" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/djinn" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire" />
