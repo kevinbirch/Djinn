@@ -42,7 +42,7 @@ public class Method extends Family<Function> implements Executable
     }
 
     @Override
-    protected Iterable<Function> getMembers()
+    public Iterable<Function> getMembers()
     {
         return super.getMembers();
     }
@@ -64,7 +64,11 @@ public class Method extends Family<Function> implements Executable
     {
         if(1 == this.memberCount())
         {
-            this.executeOne(context, Iterables.getOnlyElement(this.getMembers()));
+            Function function = Iterables.getOnlyElement(this.getMembers());
+            if(function.patternMatches(context))
+            {
+                this.executeOne(context, function);
+            }
         }
         else
         {
@@ -84,13 +88,20 @@ public class Method extends Family<Function> implements Executable
 
     private void executeAll(Context context)
     {
-        throw new RuntimeException("Not yet implemented.");
+        for(Function function : this.getMembers())
+        {
+            if(function.patternMatches(context))
+            {
+                this.executeOne(context, function);
+                break;
+            }
+        }
     }
 
     @Override
     public String toSourceRep()
     {
-        throw new RuntimeException("Not yet implemented.");
+        return this.getName() + " :: [] -> []";
     }
 
     @Override

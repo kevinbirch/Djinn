@@ -31,17 +31,15 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.webguys.djinn.ifrit.model.Declaration;
 import com.webguys.djinn.ifrit.model.Executable;
-import com.webguys.djinn.ifrit.model.Function;
 import com.webguys.djinn.ifrit.model.Method;
 
 public class Dictionary
 {
     private static final Dictionary ROOT = new Dictionary();
 
-    private Map<String, Function> functions = Maps.newHashMap();
     private Map<String, Method> methods = Maps.newHashMap();
     private Map<String, Declaration> declarations = Maps.newHashMap();
-    
+
     private Dictionary parent;
 
     public static Dictionary getRootDictionary()
@@ -63,28 +61,12 @@ public class Dictionary
     {
         return new Dictionary(this);
     }
-    
-    public void defineFunction(Function function)
-    {
-        this.functions.put(function.getName(), function);
-    }
-
-    public boolean isFunctionDefined(String name)
-    {
-        return this.functions.containsKey(name) || (null != this.parent && this.parent.isFunctionDefined(name));
-    }
-
-    public Function getFunction(String name)
-    {
-        Function result = this.functions.get(name);
-        return null == result && null != this.parent ? this.parent.getFunction(name) : result;
-    }
 
     public void defineMethod(Method method)
     {
         this.methods.put(method.getName(), method);
     }
-    
+
     public boolean isMethodDefined(String name)
     {
         return this.methods.containsKey(name) || (null != this.parent && this.parent.isMethodDefined(name));

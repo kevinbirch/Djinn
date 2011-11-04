@@ -1,0 +1,5 @@
+
+inc? :: [int] -> [int]
+
+@description: if the top of the stack equals 5, adds one to the top of the stack;
+\[inc? [5 eq]? 1 add]

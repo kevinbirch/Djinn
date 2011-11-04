@@ -1,0 +1,5 @@
+
+inc :: [int] -> [int]
+
+@description: adds one to the top of the stack;
+\[inc 1 add]

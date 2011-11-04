@@ -21,47 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 10/26/11 9:35 PM
+ * Created: 11/4/11 12:13 AM
  */
 
-package com.webguys.djinn.ifrit.metamodel;
+package com.webguys.djinn.marid.runtime;
 
-import java.util.List;
+import com.webguys.djinn.ifrit.model.Lambda;
 
-import com.google.common.collect.Lists;
-
-public class Family<T extends Action> extends MetaObject
+public class FunctionPatternAlreadyDefinedException extends RuntimeException
 {
-    private List<T> members = Lists.newArrayList();
-
-    public Family(String name)
+    public FunctionPatternAlreadyDefinedException(String family, Lambda pattern)
     {
-        super(name);
-    }
-
-    protected Iterable<T> getMembers()
-    {
-        return this.members;
-    }
-
-    public void addMember(T member)
-    {
-        this.members.add(member);
-    }
-
-    public boolean isMember(T action)
-    {
-        return this.members.contains(action);
-    }
-
-    public int memberCount()
-    {
-        return this.members.size();
-    }
-
-    @Override
-    public String getTypeName()
-    {
-        return "Family";
+        super(String.format("A function for the method %s is already defined with the pattern %s", family, pattern.toSourceRep()));
     }
 }

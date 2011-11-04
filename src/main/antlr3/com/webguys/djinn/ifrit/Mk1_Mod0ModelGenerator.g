@@ -8,10 +8,11 @@ options {
 package com.webguys.djinn.ifrit;
 
 import org.apache.commons.lang3.StringUtils;
+import com.google.common.collect.Iterables;
 
-import com.webguys.djinn.marid.runtime.Dictionary;
+import com.webguys.djinn.marid.runtime.*;
 import com.webguys.djinn.marid.Runtime;
-import com.webguys.djinn.marid.builtin.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.BuiltinFactory;
 import com.webguys.djinn.ifrit.model.*;
 
 }
@@ -97,6 +98,17 @@ function returns [Function result]
 		{
 			throw new RuntimeException("The method \"" + $NAME.text + "\" is sealed and cannot have new functions added to it.");
 		}
+		if(null != $p.result)
+		{
+			for(Function function : method.getMembers())
+        	{
+				if(function.getPattern().equals($p.result))
+				{
+					throw new FunctionPatternAlreadyDefinedException($NAME.text, $p.result);
+				}
+			}
+        }
+
 		Function function;
 		if(1 == body.size() && "__primitive__".equals(body.get(0).getValue()))
 		{
@@ -111,7 +123,10 @@ function returns [Function result]
 		{
 			function = new Function($NAME.text, method, body);
 		}
-		function.setLocalDictionary(functionDictionary);
+		if(!Iterables.isEmpty(functions) || !Iterables.isEmpty(declarations))
+		{
+			function.setLocalDictionary(functionDictionary);
+		}
 		function.setPattern($p.result);
 		if(!functions.isEmpty())
 		{
@@ -121,7 +136,7 @@ function returns [Function result]
 		{
 			function.setDeclarations(declarations);
 		}
-		this.dictionary.defineFunction(function);
+
 		$result = function;
 	}
 	;
@@ -143,7 +158,7 @@ inner_function[Dictionary dictionary] returns [InnerFunction result]
 			method = new Method($NAME.text);
 			dictionary.defineMethod(method);
 		}
-		InnerFunction function = new InnerFunction($NAME.text, method, body);
+				InnerFunction function = new InnerFunction($NAME.text, method, body);
 		function.setPattern($p.result);
 		$result = function;
 	}

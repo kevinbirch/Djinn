@@ -41,7 +41,7 @@ public class DipTest extends AbstractBuiltinTest
         Method drop = new Method("drop");
 
         this.dictionary.defineMethod(drop);
-        this.dictionary.defineFunction(new Drop(drop));
+        Drop function = new Drop(drop);
     }
 
     @Test

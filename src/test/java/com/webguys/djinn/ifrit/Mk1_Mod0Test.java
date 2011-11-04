@@ -111,38 +111,6 @@ public class Mk1_Mod0Test
     }
 
     @Test
-    public void functionWithPattern() throws Exception
-    {
-        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/functionWithPattern.djinn");
-        Function result = walker.function();
-
-        Assert.assertNotNull(result);
-        Assert.assertTrue(this.dictionary.isFunctionDefined("ifel"));
-        Assert.assertTrue(this.dictionary.isMethodDefined("ifel"));
-        Function function = this.dictionary.getFunction("ifel");
-        Assert.assertNotNull(function);
-        Assert.assertNotNull(function.getPattern());
-        Assert.assertEquals(1, function.getPattern().getBody().size());
-        Assert.assertEquals(4, function.getBody().size());
-    }
-
-    @Test
-    public void functionWithoutPattern() throws Exception
-    {
-        Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/functionWithoutPattern.djinn");
-        Function result = walker.function();
-
-        Assert.assertNotNull(result);
-
-        Assert.assertTrue(this.dictionary.isFunctionDefined("ifel"));
-        Assert.assertTrue(this.dictionary.isMethodDefined("ifel"));
-        Function function = this.dictionary.getFunction("ifel");
-        Assert.assertNotNull(function);
-        Assert.assertNull(function.getPattern());
-        Assert.assertEquals(4, function.getBody().size());
-    }
-
-    @Test
     public void immediate() throws Exception
     {
         Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/immediate.djinn");

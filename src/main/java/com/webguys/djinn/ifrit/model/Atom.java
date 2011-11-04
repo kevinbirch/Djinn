@@ -43,4 +43,5 @@ public interface Atom<T> extends Executable
 
     T getValue();
 
+    String getTypeName();
 }

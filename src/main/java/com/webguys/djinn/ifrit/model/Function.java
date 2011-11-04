@@ -34,6 +34,8 @@ import com.webguys.djinn.ifrit.metamodel.Action;
 import com.webguys.djinn.ifrit.metamodel.Container;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Dictionary;
+import com.webguys.djinn.marid.runtime.PatternResultException;
+import com.webguys.djinn.marid.runtime.Stack;
 import org.apache.commons.lang3.StringUtils;
 
 public class Function extends Action<Method, Module> implements Executable, Entry, Container<InnerFunction>
@@ -80,7 +82,15 @@ public class Function extends Action<Method, Module> implements Executable, Entr
     @Override
     public void execute(Context context)
     {
-        Context functionContext = new Context(context.getStack(), this.localDictionary);
+        Context functionContext;
+        if(null != this.localDictionary)
+        {
+            functionContext = new Context(context.getStack(), this.localDictionary);
+        }
+        else
+        {
+            functionContext = context;
+        }
         for(Declaration declaration : this.declarations)
         {
             declaration.execute(functionContext);
@@ -89,6 +99,26 @@ public class Function extends Action<Method, Module> implements Executable, Entr
         for(Atom atom : this.body)
         {
             atom.execute(functionContext);
+        }
+    }
+
+    public boolean patternMatches(Context context)
+    {
+        if(null == this.pattern)
+        {
+            return true;
+        }
+        else
+        {
+            Stack patternStack = context.getStack().clone();
+            Dictionary patternDictionary = null != this.localDictionary ? this.localDictionary : context.getDictionary();
+            this.pattern.execute(new Context(patternStack, patternDictionary));
+
+            if(!(patternStack.peek() instanceof BooleanAtom))
+            {
+                throw new PatternResultException(patternStack.peek());
+            }
+            return patternStack.peek().getValue().equals(Boolean.TRUE);
         }
     }
 
