@@ -61,7 +61,7 @@ public class REPL
         this.reader = new ConsoleReader();
         Dictionary root = Dictionary.getRootDictionary();
 
-        this.parseFile("src/test/djinn/primitives.djinn", root);
+        this.parseFile("djinn/primitives.djinn", root);
 
         this.dictionary = root.newChild();
         this.context = new Context(new Stack(), this.dictionary);
