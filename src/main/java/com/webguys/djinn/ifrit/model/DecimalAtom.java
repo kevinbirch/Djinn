@@ -70,6 +70,34 @@ public class DecimalAtom extends AbstractAtom<Double> implements NumericAtom
     }
 
     @Override
+    public Atom lt(NumericAtom value)
+    {
+        double that = value.doubleValue();
+        return this.value.doubleValue() < that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
+    }
+
+    @Override
+    public Atom lte(NumericAtom value)
+    {
+        double that = value.doubleValue();
+        return this.value.doubleValue() <= that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
+    }
+
+    @Override
+    public Atom gt(NumericAtom value)
+    {
+        double that = value.doubleValue();
+        return this.value.doubleValue() > that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
+    }
+
+    @Override
+    public Atom gte(NumericAtom value)
+    {
+        double that = value.doubleValue();
+        return this.value.doubleValue() >= that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
+    }
+
+    @Override
     public int intValue()
     {
         return this.value.intValue();

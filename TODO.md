@@ -30,3 +30,6 @@
 - I/O
 - hello world example
 - repl restarts, fix and continue
+- symbols as messages?
+- gensym is uuid from tag url
+- more syntax tests for methods, comments, tags, etc

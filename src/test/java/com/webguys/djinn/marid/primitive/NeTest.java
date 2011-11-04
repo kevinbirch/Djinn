@@ -26,13 +26,14 @@
 
 package com.webguys.djinn.marid.primitive;
 
+import com.webguys.djinn.ifrit.model.IntegerAtom;
 import org.junit.Before;
 import org.junit.Test;
 
 public class NeTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
         super.setUp(Ne.NAME, Ne.FACTORY);
     }
@@ -40,12 +41,24 @@ public class NeTest extends AbstractBuiltinTest
     @Test
     public void notEqual() throws Exception
     {
+        this.stack.push(new IntegerAtom(7));
+        this.stack.push(new IntegerAtom(4));
 
+        this.function.execute(this.context);
+
+        this.assertStackSize(1);
+        this.assertStackTop(Boolean.TRUE);
     }
 
     @Test
     public void equal() throws Exception
     {
+        this.stack.push(new IntegerAtom(7));
+        this.stack.push(new IntegerAtom(7));
 
+        this.function.execute(this.context);
+
+        this.assertStackSize(1);
+        this.assertStackTop(Boolean.FALSE);
     }
 }

@@ -33,7 +33,7 @@ import org.junit.Test;
 public class OrTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
         super.setUp(Or.NAME, Or.FACTORY);
     }

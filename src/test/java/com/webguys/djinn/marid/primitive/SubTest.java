@@ -26,28 +26,17 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.*;
-import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Dictionary;
-import com.webguys.djinn.marid.runtime.Stack;
-import org.junit.Assert;
+import com.webguys.djinn.ifrit.model.DecimalAtom;
+import com.webguys.djinn.ifrit.model.IntegerAtom;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SubTest
+public class SubTest extends AbstractBuiltinTest
 {
-    private Function function;
-    private Context context;
-    private Stack stack;
-
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
-        Method method = new Method("sub");
-        this.function = new Sub(method);
-
-        this.stack = new Stack();
-        this.context = new Context(this.stack, Dictionary.getRootDictionary());
+        super.setUp(Sub.NAME, Sub.FACTORY);
     }
 
     @Test
@@ -58,8 +47,8 @@ public class SubTest
 
         this.function.execute(this.context);
 
-        Assert.assertEquals(1, this.stack.depth());
-        Assert.assertEquals(Integer.valueOf(6), this.stack.pop().getValue());
+        this.assertStackSize(1);
+        this.assertStackTop(Integer.valueOf(6));
     }
 
     @Test
@@ -70,8 +59,8 @@ public class SubTest
 
         this.function.execute(this.context);
 
-        Assert.assertEquals(1, this.stack.depth());
-        Assert.assertEquals(Double.valueOf(6.0), this.stack.pop().getValue());
+        this.assertStackSize(1);
+        this.assertStackTop(Double.valueOf(6.0));
     }
 
     @Test
@@ -82,8 +71,8 @@ public class SubTest
 
         this.function.execute(this.context);
 
-        Assert.assertEquals(1, this.stack.depth());
-        Assert.assertEquals(Double.valueOf(6.0), this.stack.pop().getValue());
+        this.assertStackSize(1);
+        this.assertStackTop(Double.valueOf(6.0));
     }
 
     @Test
@@ -94,7 +83,7 @@ public class SubTest
 
         this.function.execute(this.context);
 
-        Assert.assertEquals(1, this.stack.depth());
-        Assert.assertEquals(Integer.valueOf(6), this.stack.pop().getValue());
+        this.assertStackSize(1);
+        this.assertStackTop(Integer.valueOf(6));
     }
 }

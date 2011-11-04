@@ -21,68 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/1/11 10:17 PM
+ * Created: 11/3/11 10:16 PM
  */
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.BooleanAtom;
+import com.webguys.djinn.ifrit.model.IntegerAtom;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AndTest extends AbstractBuiltinTest
+public class DropTest extends AbstractBuiltinTest
 {
     @Before
     public void setUp()
     {
-        super.setUp(And.NAME, And.FACTORY);
+        super.setUp(Drop.NAME, Drop.FACTORY);
     }
 
     @Test
-    public void falseFalse() throws Exception
+    public void execute() throws Exception
     {
-        this.stack.push(BooleanAtom.getFalse());
-        this.stack.push(BooleanAtom.getFalse());
+        this.stack.push(new IntegerAtom(1));
 
         this.function.execute(this.context);
 
-        this.assertStackSize(1);
-        this.assertStackTop(Boolean.FALSE);
-    }
-
-    @Test
-    public void trueTrue() throws Exception
-    {
-        this.stack.push(BooleanAtom.getTrue());
-        this.stack.push(BooleanAtom.getTrue());
-
-        this.function.execute(this.context);
-
-        this.assertStackSize(1);
-        this.assertStackTop(Boolean.TRUE);
-    }
-
-    @Test
-    public void trueFalse() throws Exception
-    {
-        this.stack.push(BooleanAtom.getTrue());
-        this.stack.push(BooleanAtom.getFalse());
-
-        this.function.execute(this.context);
-
-        this.assertStackSize(1);
-        this.assertStackTop(Boolean.FALSE);
-    }
-
-    @Test
-    public void falseTrue() throws Exception
-    {
-        this.stack.push(BooleanAtom.getFalse());
-        this.stack.push(BooleanAtom.getTrue());
-
-        this.function.execute(this.context);
-
-        this.assertStackSize(1);
-        this.assertStackTop(Boolean.FALSE);
+        this.assertStackSize(0);
     }
 }

@@ -71,6 +71,34 @@ public class IntegerAtom extends AbstractAtom<Integer> implements NumericAtom
     }
 
     @Override
+    public Atom lt(NumericAtom value)
+    {
+        int that = value.intValue();
+        return this.value.intValue() < that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
+    }
+
+    @Override
+    public Atom lte(NumericAtom value)
+    {
+        int that = value.intValue();
+        return this.value.intValue() <= that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
+    }
+
+    @Override
+    public Atom gt(NumericAtom value)
+    {
+        int that = value.intValue();
+        return this.value.intValue() > that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
+    }
+
+    @Override
+    public Atom gte(NumericAtom value)
+    {
+        int that = value.intValue();
+        return this.value.intValue() >= that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
+    }
+
+    @Override
     public int intValue()
     {
         return this.value.intValue();

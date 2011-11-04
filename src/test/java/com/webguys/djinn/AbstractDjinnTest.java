@@ -21,25 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/1/11 9:59 PM
+ * Created: 11/3/11 9:19 PM
  */
 
-package com.webguys.djinn.marid.primitive;
+package com.webguys.djinn;
 
-import com.webguys.djinn.AbstractDjinnTest;
-import com.webguys.djinn.ifrit.model.Function;
-import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.marid.runtime.Context;
+import com.webguys.djinn.marid.runtime.Dictionary;
+import com.webguys.djinn.marid.runtime.Stack;
+import org.junit.Assert;
 
-public abstract class AbstractBuiltinTest extends AbstractDjinnTest
+public abstract class AbstractDjinnTest
 {
-    protected Function function;
+    protected Stack stack;
+    protected Dictionary dictionary;
+    protected Context context;
 
-    public void setUp(String name, BuiltinFactory factory)
+    public void setUp()
     {
-        super.setUp();
-
-        Method method = new Method(name);
-        this.function = factory.makeInstance(method);
+        this.stack = new Stack();
+        this.dictionary = Dictionary.getRootDictionary().newChild();
+        this.context = new Context(this.stack, this.dictionary);
     }
 
+    protected void assertStackSize(int expected)
+    {
+        Assert.assertEquals(expected, this.stack.depth());
+    }
+
+    protected void assertStackTop(Object expected)
+    {
+        Assert.assertEquals(expected, this.stack.peek().getValue());
+    }
+
+    protected void assertStackIndex(int index, Object expected)
+    {
+        Assert.assertEquals(expected, this.stack.peek(index).getValue());
+    }
 }

@@ -26,45 +26,44 @@
 
 package com.webguys.djinn.marid.runtime;
 
+import com.webguys.djinn.AbstractDjinnTest;
 import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.StringAtom;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StackTest
+public class StackTest extends AbstractDjinnTest
 {
-    private Stack stack;
-
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
-        this.stack = new Stack();
+        super.setUp();
     }
 
     @Test
     public void push() throws Exception
     {
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
 
         this.stack.push(new StringAtom("foo"));
 
-        Assert.assertEquals(1, this.stack.depth());
+        this.assertStackSize(1);
         System.out.println(this.stack);
     }
 
     @Test
     public void pop() throws Exception
     {
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
 
         this.stack.push(new StringAtom("foo"));
 
-        Assert.assertEquals(1, this.stack.depth());
+        this.assertStackSize(1);
 
         Atom atom = this.stack.pop();
 
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
         Assert.assertNotNull(atom);
         Assert.assertEquals("foo", atom.getValue());
     }
@@ -72,15 +71,15 @@ public class StackTest
     @Test
     public void peek() throws Exception
     {
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
 
         this.stack.push(new StringAtom("foo"));
 
-        Assert.assertEquals(1, this.stack.depth());
+        this.assertStackSize(1);
 
         Atom atom = this.stack.peek();
 
-        Assert.assertEquals(1, this.stack.depth());
+        this.assertStackSize(1);
         Assert.assertNotNull(atom);
         Assert.assertEquals("foo", atom.getValue());
     }
@@ -88,16 +87,16 @@ public class StackTest
     @Test
     public void peekDepth() throws Exception
     {
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
 
         this.stack.push(new StringAtom("foo"));
         this.stack.push(new StringAtom("bar"));
 
-        Assert.assertEquals(2, this.stack.depth());
+        this.assertStackSize(2);
 
         Atom atom = this.stack.peek(1);
 
-        Assert.assertEquals(2, this.stack.depth());
+        this.assertStackSize(2);
         Assert.assertNotNull(atom);
         Assert.assertEquals("foo", atom.getValue());
     }
@@ -105,29 +104,29 @@ public class StackTest
     @Test
     public void drop() throws Exception
     {
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
 
         this.stack.push(new StringAtom("foo"));
 
-        Assert.assertEquals(1, this.stack.depth());
+        this.assertStackSize(1);
 
         this.stack.drop();
 
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
     }
 
     @Test
     public void dup() throws Exception
     {
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
 
         this.stack.push(new StringAtom("foo"));
 
-        Assert.assertEquals(1, this.stack.depth());
+        this.assertStackSize(1);
 
         this.stack.dup();
 
-        Assert.assertEquals(2, this.stack.depth());
+        this.assertStackSize(2);
         Assert.assertEquals("foo", this.stack.peek().getValue());
         Assert.assertEquals("foo", this.stack.peek(1).getValue());
     }
@@ -135,16 +134,16 @@ public class StackTest
     @Test
     public void swap() throws Exception
     {
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
 
         this.stack.push(new StringAtom("foo"));
         this.stack.push(new StringAtom("bar"));
 
-        Assert.assertEquals(2, this.stack.depth());
+        this.assertStackSize(2);
 
         this.stack.swap();
 
-        Assert.assertEquals(2, this.stack.depth());
+        this.assertStackSize(2);
         Assert.assertEquals("foo", this.stack.peek().getValue());
         Assert.assertEquals("bar", this.stack.peek(1).getValue());
     }

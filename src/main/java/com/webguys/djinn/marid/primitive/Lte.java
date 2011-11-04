@@ -28,9 +28,10 @@ package com.webguys.djinn.marid.primitive;
 
 import com.webguys.djinn.ifrit.model.Function;
 import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.NumericAtom;
 import com.webguys.djinn.marid.runtime.Context;
 
-public class Lte extends BinaryFunction
+public class Lte extends ArithmeticFunction
 {
     public static final String NAME = "lte";
 
@@ -49,8 +50,8 @@ public class Lte extends BinaryFunction
     }
 
     @Override
-    public void execute(Context context)
+    protected void execute(Context context, NumericAtom a, NumericAtom b)
     {
-        throw new RuntimeException("Not yet implemented");
+        context.getStack().push(a.lte(b));
     }
 }

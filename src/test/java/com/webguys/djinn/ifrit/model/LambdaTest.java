@@ -29,38 +29,33 @@ package com.webguys.djinn.ifrit.model;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Dictionary;
-import com.webguys.djinn.marid.runtime.Stack;
+import com.webguys.djinn.AbstractDjinnTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LambdaTest
+public class LambdaTest extends AbstractDjinnTest
 {
     private Lambda lambda;
-    private Context context;
-    private Stack stack;
     private List<Atom> body;
 
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
+        super.setUp();
+
         this.body = ImmutableList.<Atom>of(new StringAtom("foo"), new StringAtom("bar"));
         this.lambda = new Lambda(this.body);
-
-        this.stack = new Stack();
-        this.context = new Context(this.stack, Dictionary.getRootDictionary());
     }
 
     @Test
     public void execute() throws Exception
     {
-        Assert.assertEquals(0, this.stack.depth());
+        this.assertStackSize(0);
 
         this.lambda.execute(this.context);
 
-        Assert.assertEquals(2, this.stack.depth());
+        this.assertStackSize(2);
         Assert.assertEquals("bar", this.stack.peek().getValue());
         Assert.assertEquals("foo", this.stack.peek(1).getValue());
     }
@@ -86,6 +81,6 @@ public class LambdaTest
     @Test
     public void getTypeName() throws Exception
     {
-
+        Assert.assertEquals("Lambda", this.lambda.getTypeName());
     }
 }

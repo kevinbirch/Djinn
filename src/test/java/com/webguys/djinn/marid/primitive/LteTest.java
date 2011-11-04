@@ -21,28 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/1/11 10:17 PM
+ * Created: 11/3/11 9:30 PM
  */
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.BooleanAtom;
+import com.webguys.djinn.ifrit.model.IntegerAtom;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AndTest extends AbstractBuiltinTest
+public class LteTest extends AbstractBuiltinTest
 {
     @Before
     public void setUp()
     {
-        super.setUp(And.NAME, And.FACTORY);
+        super.setUp(Lte.NAME, Lte.FACTORY);
     }
 
     @Test
-    public void falseFalse() throws Exception
+    public void greaterThan()
     {
-        this.stack.push(BooleanAtom.getFalse());
-        this.stack.push(BooleanAtom.getFalse());
+        this.stack.push(new IntegerAtom(7));
+        this.stack.push(new IntegerAtom(4));
 
         this.function.execute(this.context);
 
@@ -51,10 +51,10 @@ public class AndTest extends AbstractBuiltinTest
     }
 
     @Test
-    public void trueTrue() throws Exception
+    public void lessThan()
     {
-        this.stack.push(BooleanAtom.getTrue());
-        this.stack.push(BooleanAtom.getTrue());
+        this.stack.push(new IntegerAtom(4));
+        this.stack.push(new IntegerAtom(7));
 
         this.function.execute(this.context);
 
@@ -63,26 +63,14 @@ public class AndTest extends AbstractBuiltinTest
     }
 
     @Test
-    public void trueFalse() throws Exception
+    public void equal()
     {
-        this.stack.push(BooleanAtom.getTrue());
-        this.stack.push(BooleanAtom.getFalse());
+        this.stack.push(new IntegerAtom(7));
+        this.stack.push(new IntegerAtom(7));
 
         this.function.execute(this.context);
 
         this.assertStackSize(1);
-        this.assertStackTop(Boolean.FALSE);
-    }
-
-    @Test
-    public void falseTrue() throws Exception
-    {
-        this.stack.push(BooleanAtom.getFalse());
-        this.stack.push(BooleanAtom.getTrue());
-
-        this.function.execute(this.context);
-
-        this.assertStackSize(1);
-        this.assertStackTop(Boolean.FALSE);
+        this.assertStackTop(Boolean.TRUE);
     }
 }

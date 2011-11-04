@@ -43,7 +43,7 @@ public class Mk1_Mod0Test
     private Dictionary dictionary;
 
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
         this.dictionary = new Dictionary(Dictionary.getRootDictionary());
     }
@@ -115,7 +115,7 @@ public class Mk1_Mod0Test
     {
         Mk1_Mod0ModelGenerator walker = this.parseAndWalk("mk1_mod0/functionWithPattern.djinn");
         Function result = walker.function();
-        
+
         Assert.assertNotNull(result);
         Assert.assertTrue(this.dictionary.isFunctionDefined("ifel"));
         Assert.assertTrue(this.dictionary.isMethodDefined("ifel"));

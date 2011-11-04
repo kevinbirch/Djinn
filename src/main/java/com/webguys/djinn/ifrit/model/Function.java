@@ -81,6 +81,11 @@ public class Function extends Action<Method, Module> implements Executable, Entr
     public void execute(Context context)
     {
         Context functionContext = new Context(context.getStack(), this.localDictionary);
+        for(Declaration declaration : this.declarations)
+        {
+            declaration.execute(functionContext);
+        }
+
         for(Atom atom : this.body)
         {
             atom.execute(functionContext);

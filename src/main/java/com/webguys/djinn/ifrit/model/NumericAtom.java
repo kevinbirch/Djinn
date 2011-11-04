@@ -36,6 +36,14 @@ public interface NumericAtom
 
     Atom mul(NumericAtom value);
 
+    Atom lt(NumericAtom value);
+
+    Atom lte(NumericAtom value);
+
+    Atom gt(NumericAtom value);
+
+    Atom gte(NumericAtom value);
+
     int intValue();
 
     double doubleValue();
