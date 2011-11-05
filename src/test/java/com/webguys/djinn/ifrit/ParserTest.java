@@ -108,7 +108,6 @@ public class ParserTest
         Assert.assertTrue(Iterables.contains(declaration.getNames(), "c"));
         Assert.assertNotNull(declaration.getDefinition());
         Assert.assertEquals(3, declaration.getDefinition().getBody().size());
-        Assert.assertTrue(this.dictionary.isNameDefined(result.getName()));
     }
 
     @Test

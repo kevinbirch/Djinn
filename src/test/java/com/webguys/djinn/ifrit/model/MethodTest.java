@@ -140,11 +140,6 @@ public class MethodTest extends AbstractDjinnTest
         this.assertStackTop(Integer.valueOf(3));
     }
 
-    // function with declarations
-    // function with inner function
-    // function with inner method
-    // function with both
-
     @Test
     public void functionWithSingleDeclaration() throws Exception
     {
@@ -180,6 +175,10 @@ public class MethodTest extends AbstractDjinnTest
         this.assertStackIndex(1, Integer.valueOf(2));
         this.assertStackIndex(2, Integer.valueOf(9));
     }
+
+    // function with inner function
+    // function with inner method
+    // function with inner function and declaration
 
     private void parseAndLoad(String path, String name) throws Exception
     {
