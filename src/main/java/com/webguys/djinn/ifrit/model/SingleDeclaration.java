@@ -32,7 +32,8 @@ import com.webguys.djinn.ifrit.metamodel.Member;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Stack;
 
-public class SingleDeclaration<T extends Container<? extends SingleDeclaration>> extends Attribute<T> implements Member<T>, Declaration
+public class SingleDeclaration<T extends Container<? extends SingleDeclaration>> extends Attribute<T>
+    implements Member<T>, Declaration
 {
     private Lambda definition;
     private Atom cache;
@@ -66,9 +67,9 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     {
         if(null == this.cache)
         {
-            Stack clone = context.getStack().clone();
-            this.definition.execute(new Context(clone, context.getDictionary()));
-            this.cache = clone.pop();
+            Stack declarationStack = context.getStack().clone();
+            this.definition.execute(new Context(declarationStack, context.getDictionary()));
+            this.cache = declarationStack.pop();
         }
 
         context.getStack().push(this.cache);
@@ -90,6 +91,6 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     @Override
     public String getTypeName()
     {
-        return "Declaration";
+        return "SingleDeclaration";
     }
 }

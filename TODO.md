@@ -33,3 +33,6 @@
 - symbols as messages?
 - gensym is uuid from tag url
 - more syntax tests for methods, comments, tags, etc
+- roll up, down primitives
+- declarations inside methods don't cache
+

@@ -46,7 +46,7 @@ public class InnerFunction extends Action<Method, Function> implements Executabl
     };
 
     private Lambda pattern;
-    private List<Atom> body;
+    private ImmutableList<Atom> body;
     private int depthRequirement = -1;
 
     public InnerFunction(String name, Method family, List<Atom> body)
@@ -95,7 +95,7 @@ public class InnerFunction extends Action<Method, Function> implements Executabl
         this.pattern = pattern;
     }
 
-    public List<Atom> getBody()
+    public ImmutableList<Atom> getBody()
     {
         return this.body;
     }

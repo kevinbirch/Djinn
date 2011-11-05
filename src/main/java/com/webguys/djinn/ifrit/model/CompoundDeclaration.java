@@ -26,26 +26,33 @@
 
 package com.webguys.djinn.ifrit.model;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Maps;
 import com.webguys.djinn.ifrit.metamodel.Attribute;
 import com.webguys.djinn.ifrit.metamodel.Container;
 import com.webguys.djinn.ifrit.metamodel.Member;
 import com.webguys.djinn.marid.runtime.Context;
+import com.webguys.djinn.marid.runtime.Stack;
 
-public class CompoundDeclaration<T extends Container<? extends CompoundDeclaration>> extends Attribute<T> implements Member<T>, Declaration
+public class CompoundDeclaration<T extends Container<? extends CompoundDeclaration>> extends Attribute<T>
+    implements Member<T>, Declaration
 {
-    private List<String> names;
+    private ImmutableList<String> names;
     private Lambda definition;
+    private Map<String, Declaration> cache = Maps.newHashMap();
 
     public CompoundDeclaration(List<String> names, Lambda definition)
     {
         super(gensym("compound-declaration"));
-        this.names = names;
+        this.names = ImmutableList.copyOf(names);
         this.definition = definition;
     }
 
-    public List<String> getNames()
+    public Iterable<String> getNames()
     {
         return this.names;
     }
@@ -61,6 +68,11 @@ public class CompoundDeclaration<T extends Container<? extends CompoundDeclarati
         super.setParent(parent);
     }
 
+    public Iterable<Declaration> getChildren()
+    {
+        return Collections.unmodifiableCollection(this.cache.values());
+    }
+
     @Override
     public T getContainer()
     {
@@ -70,7 +82,17 @@ public class CompoundDeclaration<T extends Container<? extends CompoundDeclarati
     @Override
     public void execute(Context context)
     {
-        throw new RuntimeException("not yet implemented");
+        if(this.cache.isEmpty())
+        {
+            Stack declarationStack = context.getStack().clone();
+            this.definition.execute(new Context(declarationStack, context.getDictionary()));
+            for(String name : this.names.reverse())
+            {
+                ChildDeclarationProxy proxy = new ChildDeclarationProxy(name, declarationStack.pop());
+                this.cache.put(name, proxy);
+                context.getDictionary().defineName(proxy);
+            }
+        }
     }
 
     @Override
@@ -106,6 +128,42 @@ public class CompoundDeclaration<T extends Container<? extends CompoundDeclarati
     @Override
     public String getTypeName()
     {
-        return "Declaration";
+        return "CompoundDeclaration";
+    }
+
+    private class ChildDeclarationProxy implements Declaration
+    {
+        private String name;
+        private Atom cache;
+
+        public ChildDeclarationProxy(String name, Atom cacheValue)
+        {
+            this.name = name;
+            this.cache = cacheValue;
+        }
+
+        @Override
+        public String getName()
+        {
+            return this.name;
+        }
+
+        @Override
+        public Lambda getDefinition()
+        {
+            return CompoundDeclaration.this.definition;
+        }
+
+        @Override
+        public void execute(Context context)
+        {
+            context.getStack().push(this.cache);
+        }
+
+        @Override
+        public String toSourceRep()
+        {
+            throw new RuntimeException("this method should not be called.");
+        }
     }
 }

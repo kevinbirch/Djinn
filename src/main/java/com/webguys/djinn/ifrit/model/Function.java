@@ -41,7 +41,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Function extends Action<Method, Module> implements Executable, Entry, Container<InnerFunction>
 {
     private Lambda pattern;
-    private List<Atom> body;
+    private ImmutableList<Atom> body;
     private int depthRequirement = -1;
 
     private Dictionary localDictionary;
@@ -79,29 +79,6 @@ public class Function extends Action<Method, Module> implements Executable, Entr
         return super.getFamily();
     }
 
-    @Override
-    public void execute(Context context)
-    {
-        Context functionContext;
-        if(null != this.localDictionary)
-        {
-            functionContext = new Context(context.getStack(), this.localDictionary);
-        }
-        else
-        {
-            functionContext = context;
-        }
-        for(Declaration declaration : this.declarations)
-        {
-            declaration.execute(functionContext);
-        }
-
-        for(Atom atom : this.body)
-        {
-            atom.execute(functionContext);
-        }
-    }
-
     public boolean patternMatches(Context context)
     {
         if(null == this.pattern)
@@ -119,6 +96,30 @@ public class Function extends Action<Method, Module> implements Executable, Entr
                 throw new PatternResultException(patternStack.peek());
             }
             return patternStack.peek().getValue().equals(Boolean.TRUE);
+        }
+    }
+
+    @Override
+    public void execute(Context context)
+    {
+        Context functionContext;
+        if(null != this.localDictionary)
+        {
+            functionContext = new Context(context.getStack(), this.localDictionary);
+        }
+        else
+        {
+            functionContext = context;
+        }
+        for(Declaration declaration : this.declarations)
+        {
+            Context declarationContext = new Context(functionContext.getStack().clone(), functionContext.getDictionary());
+            declaration.execute(declarationContext);
+        }
+
+        for(Atom atom : this.body)
+        {
+            atom.execute(functionContext);
         }
     }
 
@@ -148,7 +149,7 @@ public class Function extends Action<Method, Module> implements Executable, Entr
         this.declarations = ImmutableList.copyOf(declarations);
     }
 
-    public List<Atom> getBody()
+    public ImmutableList<Atom> getBody()
     {
         return this.body;
     }

@@ -175,14 +175,13 @@ lambda returns [Lambda result]
 assignment_statement[Dictionary dictionary] returns [Declaration result]
 	:	single_assignment_statment
 		{
-			Declaration single = $single_assignment_statment.result;
+			SingleDeclaration single = $single_assignment_statment.result;
 			dictionary.defineName(single);
 			$result = single;
 		}
 	|	compound_assignment_statement
 		{
-			Declaration compound = $compound_assignment_statement.result;
-			dictionary.defineName(compound);
+			CompoundDeclaration compound = $compound_assignment_statement.result;
 			$result = compound;
 		}
 	;

@@ -26,6 +26,7 @@
 
 package com.webguys.djinn.ifrit;
 
+import com.google.common.collect.Iterables;
 import com.webguys.djinn.ifrit.DjinnParser.lambda_return;
 import com.webguys.djinn.ifrit.DjinnParser.statement_return;
 import com.webguys.djinn.ifrit.model.*;
@@ -102,9 +103,9 @@ public class ParserTest
         Assert.assertNotNull(result);
         Assert.assertTrue(result instanceof CompoundDeclaration);
         CompoundDeclaration declaration = (CompoundDeclaration)result;
-        Assert.assertTrue(declaration.getNames().contains("a"));
-        Assert.assertTrue(declaration.getNames().contains("b"));
-        Assert.assertTrue(declaration.getNames().contains("c"));
+        Assert.assertTrue(Iterables.contains(declaration.getNames(), "a"));
+        Assert.assertTrue(Iterables.contains(declaration.getNames(), "b"));
+        Assert.assertTrue(Iterables.contains(declaration.getNames(), "c"));
         Assert.assertNotNull(declaration.getDefinition());
         Assert.assertEquals(3, declaration.getDefinition().getBody().size());
         Assert.assertTrue(this.dictionary.isNameDefined(result.getName()));

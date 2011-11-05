@@ -1,0 +1,7 @@
+
+dipinc :: [int any] -> [int any]
+
+@description: adds one to the second item in the stack;
+\[dipinc drop 1 add top'
+      \top' [id]
+]

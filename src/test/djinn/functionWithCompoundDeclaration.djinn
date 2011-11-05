@@ -1,0 +1,7 @@
+
+foo :: [int] -> [int int string]
+
+@description: returns the square of the top of the stack, the stack top minus one and a string;
+\[foo dup mul a b
+      \a, \b [1 sub "foo"]
+]

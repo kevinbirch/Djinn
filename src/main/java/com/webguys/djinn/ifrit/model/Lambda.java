@@ -37,7 +37,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Lambda extends MetaObject implements Atom<List<Atom>>
 {
     private static final String TYPE_NAME = "Lambda";
-    
+
     private ImmutableList<Atom> body;
 
     public Lambda(List<Atom> body)
@@ -61,13 +61,13 @@ public class Lambda extends MetaObject implements Atom<List<Atom>>
         }
     }
 
-    public List<Atom> getBody()
+    public ImmutableList<Atom> getBody()
     {
         return this.body;
     }
 
     @Override
-    public List<Atom> getValue()
+    public ImmutableList<Atom> getValue()
     {
         return this.body;
     }

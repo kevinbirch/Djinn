@@ -41,7 +41,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FunctionTest extends AbstractDjinnTest
+public class MethodTest extends AbstractDjinnTest
 {
     private Method method;
 
@@ -138,6 +138,47 @@ public class FunctionTest extends AbstractDjinnTest
 
         this.assertStackSize(1);
         this.assertStackTop(Integer.valueOf(3));
+    }
+
+    // function with declarations
+    // function with inner function
+    // function with inner method
+    // function with both
+
+    @Test
+    public void functionWithSingleDeclaration() throws Exception
+    {
+        this.parseAndLoad("djinn/functionWithSingleDeclaration.djinn", "dipinc");
+
+        Assert.assertNotNull(this.method);
+        Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
+
+        this.stack.push(new IntegerAtom(2));
+        this.stack.push(new StringAtom("foo"));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(2);
+        this.assertStackTop("foo");
+        this.assertStackIndex(1, Integer.valueOf(3));
+    }
+
+    @Test
+    public void functionWithCompoundDeclaration() throws Exception
+    {
+        this.parseAndLoad("djinn/functionWithCompoundDeclaration.djinn", "foo");
+
+        Assert.assertNotNull(this.method);
+        Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
+
+        this.stack.push(new IntegerAtom(3));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(3);
+        this.assertStackTop("foo");
+        this.assertStackIndex(1, Integer.valueOf(2));
+        this.assertStackIndex(2, Integer.valueOf(9));
     }
 
     private void parseAndLoad(String path, String name) throws Exception

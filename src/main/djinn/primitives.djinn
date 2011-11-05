@@ -124,7 +124,7 @@ mul :: [number number] -> [number]
 
 @description: negates the boolean at the top of the stack;
 @sealed: true;
-div :: [bool] -> [bool]
+div :: [number number] -> [number]
 
 \[div __primitive__]
 

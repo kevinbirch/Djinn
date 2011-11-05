@@ -26,6 +26,7 @@
 
 package com.webguys.djinn.ifrit.metamodel;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -41,7 +42,7 @@ public class Family<T extends Action> extends MetaObject
 
     protected Iterable<T> getMembers()
     {
-        return this.members;
+        return Collections.unmodifiableList(this.members);
     }
 
     public void addMember(T member)
