@@ -26,12 +26,12 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.Function;
 import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Stack;
 
-public class Swap extends Function
+public class Swap extends ModuleFunction
 {
 
     public static final String NAME = "swap";
@@ -39,7 +39,7 @@ public class Swap extends Function
     public static final BuiltinFactory FACTORY = new BuiltinFactory()
     {
         @Override
-        public Function makeInstance(Method method)
+        public ModuleFunction makeInstance(Method method)
         {
             return new Swap(method);
         }

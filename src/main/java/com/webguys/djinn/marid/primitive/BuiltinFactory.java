@@ -26,10 +26,10 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.Function;
 import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
 
 public interface BuiltinFactory
 {
-    Function makeInstance(Method method);
+    ModuleFunction makeInstance(Method method);
 }

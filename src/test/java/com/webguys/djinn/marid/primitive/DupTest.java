@@ -45,7 +45,7 @@ public class DupTest extends AbstractBuiltinTest
 
         this.assertStackSize(1);
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(2);
         this.assertStackTop(Integer.valueOf(1));

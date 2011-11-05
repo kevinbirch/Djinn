@@ -26,13 +26,13 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.Function;
 import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Stack;
 import com.webguys.djinn.marid.runtime.StackUnderflowException;
 
-public abstract class UnaryFunction extends Function
+public abstract class UnaryFunction extends ModuleFunction
 {
     public UnaryFunction(String name, Method family)
     {

@@ -35,4 +35,5 @@
 - more syntax tests for methods, comments, tags, etc
 - roll up, down primitives
 - declarations inside methods don't cache
+- version info properties file from build
 

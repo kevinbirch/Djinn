@@ -1,0 +1,8 @@
+
+foo :: [int] -> [int]
+
+@description: returns the square of the top, and if the top is then 9 adds 2 otherwise add 1;
+\[foo dup mul foo'
+      \[foo' [9 eq]? 2 add]
+      \[foo' 1 add]
+]

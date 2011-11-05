@@ -21,34 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 10/31/11 10:25 PM
+ * Created: 11/4/11 12:13 AM
  */
 
-package com.webguys.djinn.ifrit.model;
+package com.webguys.djinn.marid.runtime;
 
-import java.util.List;
+import com.webguys.djinn.ifrit.model.Lambda;
 
-import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
-
-public class ImmediateStatement extends Lambda
+public class FunctionConditionAlreadyDefinedException extends RuntimeException
 {
-    private static final String TYPE_NAME = "ImmediateStatement";
-
-    public ImmediateStatement(List<Atom> body)
+    public FunctionConditionAlreadyDefinedException(String family, Lambda pattern)
     {
-        super(gensym(TYPE_NAME), body);
-    }
-
-    @Override
-    public String toSourceRep()
-    {
-        return StringUtils.join(Lists.transform(this.getBody(), Atom.TO_SOURCE_REP), " ");
-    }
-
-    @Override
-    public String getTypeName()
-    {
-        return TYPE_NAME;
+        super(String.format("A function for the method %s is already defined with the pattern %s", family, pattern.toSourceRep()));
     }
 }

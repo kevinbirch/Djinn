@@ -43,7 +43,7 @@ public class IdTest extends AbstractBuiltinTest
     {
         this.stack.push(new StringAtom("foo"));
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop("foo");

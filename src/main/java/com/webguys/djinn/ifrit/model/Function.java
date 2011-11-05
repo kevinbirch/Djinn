@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 9/25/11 10:22 PM
+ * Created: 11/5/11 1:27 PM
  */
 
 package com.webguys.djinn.ifrit.model;
@@ -29,59 +29,35 @@ package com.webguys.djinn.ifrit.model;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import com.webguys.djinn.ifrit.metamodel.Action;
+import com.webguys.djinn.ifrit.metamodel.Cluster;
 import com.webguys.djinn.ifrit.metamodel.Container;
+import com.webguys.djinn.ifrit.metamodel.Member;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Dictionary;
 import com.webguys.djinn.marid.runtime.PatternResultException;
 import com.webguys.djinn.marid.runtime.Stack;
-import org.apache.commons.lang3.StringUtils;
 
-public class Function extends Action<Method, Module> implements Executable, Entry, Container<InnerFunction>
+public abstract class Function<FamilyType extends Cluster, ContainerType extends Container<? extends Member>>
+    extends Action<FamilyType, ContainerType> implements ConditionalExecutable
 {
-    private Lambda pattern;
-    private ImmutableList<Atom> body;
     private int depthRequirement = -1;
 
-    private Dictionary localDictionary;
+    protected Lambda condition;
+    protected ImmutableList<Atom> body;
 
-    private ImmutableList<InnerFunction> inner = ImmutableList.of();
-    private ImmutableList<Declaration> declarations = ImmutableList.of();
+    protected Dictionary localDictionary;
 
-    public Function(String name, Method family, List<Atom> body)
+    public Function(String name, FamilyType family, List<Atom> body)
     {
         super(name, family);
         this.body = ImmutableList.copyOf(body);
     }
 
-    protected Function(String name, Method family)
-    {
-        super(name, family);
-        this.body = ImmutableList.<Atom>of();
-    }
-
     @Override
-    public Module getContainer()
+    public boolean canExecute(Context context)
     {
-        return super.getContainer();
-    }
-
-    @Override
-    public void setContainer(Module container)
-    {
-        super.setContainer(container);
-    }
-
-    @Override
-    public Method getFamily()
-    {
-        return super.getFamily();
-    }
-
-    public boolean patternMatches(Context context)
-    {
-        if(null == this.pattern)
+        if(null == this.condition)
         {
             return true;
         }
@@ -89,7 +65,7 @@ public class Function extends Action<Method, Module> implements Executable, Entr
         {
             Stack patternStack = context.getStack().clone();
             Dictionary patternDictionary = null != this.localDictionary ? this.localDictionary : context.getDictionary();
-            this.pattern.execute(new Context(patternStack, patternDictionary));
+            this.condition.execute(new Context(patternStack, patternDictionary));
 
             if(!(patternStack.peek() instanceof BooleanAtom))
             {
@@ -99,61 +75,22 @@ public class Function extends Action<Method, Module> implements Executable, Entr
         }
     }
 
-    @Override
-    public void execute(Context context)
+    public void setLocalDictionary(Dictionary localDictionary)
     {
-        Context functionContext;
-        if(null != this.localDictionary)
-        {
-            functionContext = new Context(context.getStack(), this.localDictionary);
-        }
-        else
-        {
-            functionContext = context;
-        }
-        for(Declaration declaration : this.declarations)
-        {
-            Context declarationContext = new Context(functionContext.getStack().clone(), functionContext.getDictionary());
-            declaration.execute(declarationContext);
-        }
-
-        for(Atom atom : this.body)
-        {
-            atom.execute(functionContext);
-        }
+        this.localDictionary = localDictionary;
     }
 
-    public Lambda getPattern()
+    public Lambda getCondition()
     {
-        return this.pattern;
+        return this.condition;
     }
 
-    public void setPattern(Lambda pattern)
+    public void setCondition(Lambda pattern)
     {
-        this.pattern = pattern;
+        this.condition = pattern;
     }
 
     @Override
-    public Iterable<InnerFunction> getChildren()
-    {
-        return this.inner;
-    }
-
-    public void setInner(List<InnerFunction> inner)
-    {
-        this.inner = ImmutableList.copyOf(inner);
-    }
-
-    public void setDeclarations(List<Declaration> declarations)
-    {
-        this.declarations = ImmutableList.copyOf(declarations);
-    }
-
-    public ImmutableList<Atom> getBody()
-    {
-        return this.body;
-    }
-
     public int getDepthRequirement()
     {
         return this.depthRequirement;
@@ -162,49 +99,5 @@ public class Function extends Action<Method, Module> implements Executable, Entr
     public void setDepthRequirement(int depthRequirement)
     {
         this.depthRequirement = depthRequirement;
-    }
-
-    public void setLocalDictionary(Dictionary localDictionary)
-    {
-        this.localDictionary = localDictionary;
-    }
-
-    @Override
-    public String getTypeName()
-    {
-        return "Function";
-    }
-
-    @Override
-    public String toString()
-    {
-        String string = super.toString();
-        return null != this.pattern ? string + " pattern=" + this.pattern.toSourceRep() : string;
-    }
-
-    @Override
-    public String toSourceRep()
-    {
-        StringBuilder sb = new StringBuilder("\\[");
-        sb.append(this.getName());
-        sb.append(" ");
-        if(null != this.pattern)
-        {
-            sb.append(this.pattern.toSourceRep());
-            sb.append(" ");
-        }
-        sb.append(StringUtils.join(Lists.transform(this.body, Atom.TO_SOURCE_REP), " "));
-        if(null != this.inner && !this.inner.isEmpty())
-        {
-            sb.append("\n");
-            sb.append(StringUtils.join(Lists.transform(this.inner, InnerFunction.TO_SOURCE_REP), "\n"));
-        }
-        if(null != this.declarations && !this.declarations.isEmpty())
-        {
-            sb.append("\n");
-            sb.append(StringUtils.join(Lists.transform(this.declarations, Declaration.TO_SOURCE_REP), "\n"));
-        }
-        sb.append("]");
-        return sb.toString();
     }
 }

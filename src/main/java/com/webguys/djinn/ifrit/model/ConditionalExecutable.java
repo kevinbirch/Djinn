@@ -21,43 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 10/26/11 9:34 PM
+ * Created: 11/5/11 1:19 PM
  */
 
-package com.webguys.djinn.ifrit.metamodel;
+package com.webguys.djinn.ifrit.model;
 
-public class Action<O extends Cluster, T extends Container<? extends Member>> extends MetaObject
-    implements Member<T>, Type
+import com.webguys.djinn.marid.runtime.Context;
+
+public interface ConditionalExecutable extends Executable
 {
-    private O family;
-    private T container;
+    boolean canExecute(Context context);
 
-    public Action(String name, O family)
-    {
-        super(name);
-        this.family = family;
-        this.family.addMember(this);
-    }
+    Lambda getCondition();
 
-    public O getFamily()
-    {
-        return this.family;
-    }
-
-    @Override
-    public T getContainer()
-    {
-        return this.container;
-    }
-
-    public void setContainer(T container)
-    {
-        this.container = container;
-    }
-
-    @Override
-    public String getTypeName()
-    {
-        return "Action";
-    }
+    int getDepthRequirement();
 }

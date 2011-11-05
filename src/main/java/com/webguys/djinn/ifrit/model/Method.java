@@ -27,12 +27,12 @@
 package com.webguys.djinn.ifrit.model;
 
 import com.google.common.collect.Iterables;
-import com.webguys.djinn.ifrit.metamodel.Family;
+import com.webguys.djinn.ifrit.metamodel.Cluster;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Stack;
 import com.webguys.djinn.marid.runtime.StackUnderflowException;
 
-public class Method extends Family<Function> implements Executable
+public class Method extends Cluster<Function> implements Executable
 {
     private boolean sealed;
 
@@ -64,8 +64,8 @@ public class Method extends Family<Function> implements Executable
     {
         if(1 == this.memberCount())
         {
-            Function function = Iterables.getOnlyElement(this.getMembers());
-            if(function.patternMatches(context))
+            ConditionalExecutable function = Iterables.getOnlyElement(this.getMembers());
+            if(function.canExecute(context))
             {
                 this.executeOne(context, function);
             }
@@ -76,21 +76,21 @@ public class Method extends Family<Function> implements Executable
         }
     }
 
-    private void executeOne(Context context, Function function)
+    private void executeOne(Context context, ConditionalExecutable executable)
     {
         Stack stack = context.getStack();
-        if(-1 != function.getDepthRequirement() && stack.depth() < function.getDepthRequirement())
+        if(-1 != executable.getDepthRequirement() && stack.depth() < executable.getDepthRequirement())
         {
-            throw new StackUnderflowException(function.getDepthRequirement(), stack.depth());
+            throw new StackUnderflowException(executable.getDepthRequirement(), stack.depth());
         }
-        function.execute(context);
+        executable.execute(context);
     }
 
     private void executeAll(Context context)
     {
         for(Function function : this.getMembers())
         {
-            if(function.patternMatches(context))
+            if(function.canExecute(context))
             {
                 this.executeOne(context, function);
                 break;

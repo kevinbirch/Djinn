@@ -45,7 +45,7 @@ public class MulTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(8));
         this.stack.push(new IntegerAtom(2));
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Integer.valueOf(16));
@@ -57,7 +57,7 @@ public class MulTest extends AbstractBuiltinTest
         this.stack.push(new DecimalAtom(8.0));
         this.stack.push(new DecimalAtom(2.0));
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Double.valueOf(16.0));
@@ -69,7 +69,7 @@ public class MulTest extends AbstractBuiltinTest
         this.stack.push(new DecimalAtom(8.0));
         this.stack.push(new IntegerAtom(2));
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Double.valueOf(16.0));
@@ -81,7 +81,7 @@ public class MulTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(8));
         this.stack.push(new DecimalAtom(2.0));
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Integer.valueOf(16));

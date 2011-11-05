@@ -28,4 +28,7 @@ package com.webguys.djinn.ifrit.metamodel;
 
 public interface Type
 {
+    String getName();
+
+    String getTypeName();
 }

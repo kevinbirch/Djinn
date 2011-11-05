@@ -26,11 +26,11 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.Function;
 import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.marid.runtime.Context;
 
-public abstract class NullaryFunction extends Function
+public abstract class NullaryFunction extends ModuleFunction
 {
     public NullaryFunction(String name, Method family)
     {

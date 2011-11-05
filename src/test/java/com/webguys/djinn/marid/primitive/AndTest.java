@@ -44,7 +44,7 @@ public class AndTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getFalse());
         this.stack.push(BooleanAtom.getFalse());
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.FALSE);
@@ -56,7 +56,7 @@ public class AndTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getTrue());
         this.stack.push(BooleanAtom.getTrue());
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);
@@ -68,7 +68,7 @@ public class AndTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getTrue());
         this.stack.push(BooleanAtom.getFalse());
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.FALSE);
@@ -80,7 +80,7 @@ public class AndTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getFalse());
         this.stack.push(BooleanAtom.getTrue());
 
-        this.function.execute(this.context);
+        this.conditionalExecutable.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.FALSE);

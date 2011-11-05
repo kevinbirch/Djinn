@@ -26,8 +26,8 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.Function;
 import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.ifrit.model.NumericAtom;
 import com.webguys.djinn.marid.runtime.Context;
 
@@ -38,7 +38,7 @@ public class Gte extends ArithmeticFunction
     public static final BuiltinFactory FACTORY = new BuiltinFactory()
     {
         @Override
-        public Function makeInstance(Method method)
+        public ModuleFunction makeInstance(Method method)
         {
             return new Gte(method);
         }

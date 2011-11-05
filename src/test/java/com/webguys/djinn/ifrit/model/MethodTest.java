@@ -176,9 +176,53 @@ public class MethodTest extends AbstractDjinnTest
         this.assertStackIndex(2, Integer.valueOf(9));
     }
 
-    // function with inner function
-    // function with inner method
-    // function with inner function and declaration
+    @Test
+    public void functionWithInnerFunction() throws Exception
+    {
+        this.parseAndLoad("djinn/functionWithInnerFunction.djinn", "foo");
+
+        Assert.assertNotNull(this.method);
+        Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
+
+        this.stack.push(new IntegerAtom(3));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(1);
+        this.assertStackTop(10);
+    }
+
+    @Test
+    public void functionWithInnerMethod() throws Exception
+    {
+        this.parseAndLoad("djinn/functionWithInnerMethod.djinn", "foo");
+
+        Assert.assertNotNull(this.method);
+        Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
+
+        this.stack.push(new IntegerAtom(3));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(1);
+        this.assertStackTop(11);
+    }
+
+    @Test
+    public void functionWithInnerFunctionAndDeclaration() throws Exception
+    {
+        this.parseAndLoad("djinn/functionWithInnerFunctionAndDeclaration.djinn", "foo");
+
+        Assert.assertNotNull(this.method);
+        Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
+
+        this.stack.push(new IntegerAtom(3));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(1);
+        this.assertStackTop(14);
+    }
 
     private void parseAndLoad(String path, String name) throws Exception
     {

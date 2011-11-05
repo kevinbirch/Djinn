@@ -31,11 +31,11 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-public class Family<T extends Action> extends MetaObject
+public class Cluster<T extends Action> extends MetaObject implements Type
 {
     private List<T> members = Lists.newArrayList();
 
-    public Family(String name)
+    public Cluster(String name)
     {
         super(name);
     }
@@ -63,6 +63,6 @@ public class Family<T extends Action> extends MetaObject
     @Override
     public String getTypeName()
     {
-        return "Family";
+        return "Cluster";
     }
 }

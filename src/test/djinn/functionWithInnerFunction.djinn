@@ -1,0 +1,7 @@
+
+foo :: [int] -> [int]
+
+@description: returns the square of the top plus one;
+\[foo dup mul foo'
+      \[foo' 1 add]
+]

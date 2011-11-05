@@ -98,18 +98,19 @@ function returns [Function result]
 		{
 			throw new RuntimeException("The method \"" + $NAME.text + "\" is sealed and cannot have new functions added to it.");
 		}
+
 		if(null != $p.result)
 		{
 			for(Function function : method.getMembers())
         	{
-				if(function.getPattern().equals($p.result))
+				if(function.getCondition().equals($p.result))
 				{
-					throw new FunctionPatternAlreadyDefinedException($NAME.text, $p.result);
+					throw new FunctionConditionAlreadyDefinedException($NAME.text, $p.result);
 				}
 			}
         }
 
-		Function function;
+		ModuleFunction function;
 		if(1 == body.size() && "__primitive__".equals(body.get(0).getValue()))
 		{
 			BuiltinFactory factory = Runtime.getBuiltinFactory($NAME.text);
@@ -121,16 +122,19 @@ function returns [Function result]
 		}
 		else
 		{
-			function = new Function($NAME.text, method, body);
+			function = new ModuleFunction($NAME.text, method, body);
 		}
+		
+		function.setCondition($p.result);
+
 		if(!Iterables.isEmpty(functions) || !Iterables.isEmpty(declarations))
 		{
 			function.setLocalDictionary(functionDictionary);
 		}
-		function.setPattern($p.result);
+
 		if(!functions.isEmpty())
 		{
-			function.setInner(functions);
+			function.setChildren(functions);
 		}
 		if(!declarations.isEmpty())
 		{
@@ -158,8 +162,10 @@ inner_function[Dictionary dictionary] returns [InnerFunction result]
 			method = new Method($NAME.text);
 			dictionary.defineMethod(method);
 		}
-				InnerFunction function = new InnerFunction($NAME.text, method, body);
-		function.setPattern($p.result);
+		
+		InnerFunction function = new InnerFunction($NAME.text, method, body);
+		function.setCondition($p.result);
+		
 		$result = function;
 	}
 	;

@@ -28,34 +28,35 @@ package com.webguys.djinn.ifrit.model;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.webguys.djinn.ifrit.metamodel.Container;
 import com.webguys.djinn.marid.runtime.Context;
+import org.apache.commons.lang3.StringUtils;
 
-public class InnerFunction extends Function<Method, ModuleFunction>
+public class ModuleFunction extends Function<Method, Module> implements Entry, Container<InnerFunction>
 {
-    public static final com.google.common.base.Function<InnerFunction, String> TO_SOURCE_REP = new com.google.common.base.Function<InnerFunction, String>()
-    {
-        @Override
-        public String apply(@Nullable InnerFunction function)
-        {
-            return function.toSourceRep();
-        }
-    };
+    private ImmutableList<InnerFunction> inner = ImmutableList.of();
+    private ImmutableList<Declaration> declarations = ImmutableList.of();
 
-    public InnerFunction(String name, Method family, List<Atom> body)
+    public ModuleFunction(String name, Method family, List<Atom> body)
     {
         super(name, family, body);
     }
 
+    protected ModuleFunction(String name, Method family)
+    {
+        super(name, family, ImmutableList.<Atom>of());
+    }
+
     @Override
-    public ModuleFunction getContainer()
+    public Module getContainer()
     {
         return super.getContainer();
     }
 
     @Override
-    public void setContainer(ModuleFunction container)
+    public void setContainer(Module container)
     {
         super.setContainer(container);
     }
@@ -64,6 +65,22 @@ public class InnerFunction extends Function<Method, ModuleFunction>
     public Method getFamily()
     {
         return super.getFamily();
+    }
+
+    @Override
+    public Iterable<InnerFunction> getChildren()
+    {
+        return this.inner;
+    }
+
+    public void setChildren(List<InnerFunction> inner)
+    {
+        this.inner = ImmutableList.copyOf(inner);
+    }
+
+    public void setDeclarations(List<Declaration> declarations)
+    {
+        this.declarations = ImmutableList.copyOf(declarations);
     }
 
     @Override
@@ -79,6 +96,12 @@ public class InnerFunction extends Function<Method, ModuleFunction>
             functionContext = context;
         }
 
+        for(Declaration declaration : this.declarations)
+        {
+            Context declarationContext = new Context(functionContext.getStack().clone(), functionContext.getDictionary());
+            declaration.execute(declarationContext);
+        }
+
         for(Atom atom : this.body)
         {
             atom.execute(functionContext);
@@ -88,7 +111,7 @@ public class InnerFunction extends Function<Method, ModuleFunction>
     @Override
     public String getTypeName()
     {
-        return "InnerFunction";
+        return "Function";
     }
 
     @Override
@@ -109,12 +132,17 @@ public class InnerFunction extends Function<Method, ModuleFunction>
             sb.append(this.condition.toSourceRep());
             sb.append(" ");
         }
-        for(Atom atom : this.body)
+        sb.append(StringUtils.join(Lists.transform(this.body, Atom.TO_SOURCE_REP), " "));
+        if(null != this.inner && !this.inner.isEmpty())
         {
-            sb.append(atom.toSourceRep());
-            sb.append(' ');
+            sb.append("\n");
+            sb.append(StringUtils.join(Lists.transform(this.inner, InnerFunction.TO_SOURCE_REP), "\n"));
         }
-        sb.replace(sb.lastIndexOf(" "), sb.length(), "]");
+        if(null != this.declarations && !this.declarations.isEmpty())
+        {
+            sb.append("\n");
+            sb.append(StringUtils.join(Lists.transform(this.declarations, Declaration.TO_SOURCE_REP), "\n"));
+        }
         sb.append("]");
         return sb.toString();
     }
