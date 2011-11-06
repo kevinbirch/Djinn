@@ -64,7 +64,7 @@ public class REPL
         this.parseFile("djinn/primitives.djinn", root);
 
         this.dictionary = root.newChild();
-        this.context = new Context(new Stack(), this.dictionary);
+        this.context = new Context(new Stack(), this.dictionary, this.reader.getInput(), this.reader.getOutput());
     }
 
     private void run() throws Exception

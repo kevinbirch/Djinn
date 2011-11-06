@@ -98,6 +98,13 @@ public class DecimalAtom extends AbstractAtom<Double> implements NumericAtom
     }
 
     @Override
+    public Atom mod(NumericAtom value)
+    {
+        double result = this.value.doubleValue() % value.doubleValue();
+        return new DecimalAtom(result);
+    }
+
+    @Override
     public int intValue()
     {
         return this.value.intValue();
@@ -107,23 +114,5 @@ public class DecimalAtom extends AbstractAtom<Double> implements NumericAtom
     public double doubleValue()
     {
         return this.value.doubleValue();
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if(this == o)
-        {
-            return true;
-        }
-        if(!(o instanceof DecimalAtom))
-        {
-            return false;
-        }
-
-        DecimalAtom that = (DecimalAtom)o;
-
-        return this.value.equals(that.value);
-
     }
 }

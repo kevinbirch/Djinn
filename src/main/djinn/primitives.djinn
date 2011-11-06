@@ -134,13 +134,13 @@ div :: [number number] -> [number]
 @sealed: true;
 mod :: [int int] -> [int]
 
-//\[mod __primitive__]
+\[mod __primitive__]
 
 @description: pushes the result of raising the second element to the power of the top element's value;
 @sealed: true;
 pow :: [int int] -> [int]
 
-//\[pow __primitive__]
+\[pow __primitive__]
 
 // Higher order functions
 
@@ -148,25 +148,25 @@ pow :: [int int] -> [int]
 @sealed: true;
 apply :: A [(A -> B)] -> B
 
-//\[apply __primitive__]
+\[apply __primitive__]
 
-@description: composes two functions together;
+@description: composes two lambdas together;
 @sealed: true;
 compose :: [(A -> B) (B -> C)] -> [(A -> C)]
 
-//\[compose __primitive__]
+\[compose __primitive__]
 
-@description: binds the second element to the function at the top of the stack, pushing a new function;
+@description: binds the second element to the lambda at the top of the stack, pushing a new lambda;
 @sealed: true;
 bind :: [a (A [a] -> B)] -> [(A -> B)]
 
-//\[bind __primitive__]
+\[bind __primitive__]
 
-@description: pushes a new function that will return the value at the top of the stack;
+@description: pushes a new lambda that will return the value at the top of the stack;
 @sealed: true;
 quote :: [a] -> [( -> a)]
 
-//\[quote __primitive__]
+\[quote __primitive__]
 
 // Standard IO functions
 
@@ -174,11 +174,22 @@ quote :: [a] -> [( -> a)]
 @sealed: true;
 readln :: [] -> [string]
 
-//\[readln __primitive__]
+\[readln __primitive__]
+
+@description: prints a string to the standard output;
+@sealed: true;
+print :: [string] -> []
+
+\[print __primitive__]
+
+@description: prints a newline to the standard output;
+@sealed: true;
+eol :: [] -> []
+
+\[eol __primitive__]
 
 @description: prints a string to the standard output followed by a newline;
 @sealed: true;
 println :: [string] -> []
 
-//\[println __primitive__]
-
+\[println __primitive__]

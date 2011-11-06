@@ -21,34 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:11 PM
+ * Created: 11/3/11 10:08 PM
  */
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.IntegerAtom;
+import java.io.ByteArrayInputStream;
+
 import org.junit.Before;
 import org.junit.Test;
 
-public class DupTest extends AbstractBuiltinTest
+public class ReadlnTest extends AbstractBuiltinTest
 {
     @Before
     public void setUp()
     {
-        super.setUp(Dup.NAME, Dup.FACTORY);
+        super.setUp(Readln.NAME, Readln.FACTORY);
     }
 
     @Test
     public void execute() throws Exception
     {
-        this.stack.push(new IntegerAtom(1));
-
-        this.assertStackSize(1);
+        this.context.setStdin(new ByteArrayInputStream("monkey\n".getBytes()));
 
         this.function.execute(this.context);
 
-        this.assertStackSize(2);
-        this.assertStackTop(Integer.valueOf(1));
-        this.assertStackIndex(1, Integer.valueOf(1));
+        this.assertStackSize(1);
+        this.assertStackTop("monkey");
     }
 }

@@ -45,7 +45,7 @@ public class DivTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(8));
         this.stack.push(new IntegerAtom(2));
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Integer.valueOf(4));
@@ -57,7 +57,7 @@ public class DivTest extends AbstractBuiltinTest
         this.stack.push(new DecimalAtom(8.0));
         this.stack.push(new DecimalAtom(2.0));
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Double.valueOf(4.0));
@@ -69,7 +69,7 @@ public class DivTest extends AbstractBuiltinTest
         this.stack.push(new DecimalAtom(8.0));
         this.stack.push(new IntegerAtom(2));
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Double.valueOf(4.0));
@@ -81,7 +81,7 @@ public class DivTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(8));
         this.stack.push(new DecimalAtom(2.0));
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Integer.valueOf(4));

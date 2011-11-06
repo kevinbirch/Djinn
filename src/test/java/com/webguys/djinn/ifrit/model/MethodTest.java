@@ -28,15 +28,7 @@ package com.webguys.djinn.ifrit.model;
 
 import com.google.common.collect.Iterables;
 import com.webguys.djinn.AbstractDjinnTest;
-import com.webguys.djinn.ifrit.AstToModelTransformer;
-import com.webguys.djinn.ifrit.DjinnLexer;
-import com.webguys.djinn.ifrit.DjinnParser;
-import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
-import com.webguys.djinn.marid.runtime.Dictionary;
-import org.antlr.runtime.ANTLRInputStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.tree.CommonTree;
-import org.antlr.runtime.tree.CommonTreeNodeStream;
+import com.webguys.djinn.marid.Runtime;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,20 +36,14 @@ import org.junit.Test;
 public class MethodTest extends AbstractDjinnTest
 {
     private Method method;
+    private Runtime runtime;
 
     @Before
     public void setUp()
     {
         super.setUp();
 
-        try
-        {
-            this.parse("djinn/primitives.djinn", Dictionary.getRootDictionary());
-        }
-        catch(Exception e)
-        {
-            Assert.fail(e.getMessage());
-        }
+        this.runtime = new Runtime();
     }
 
     @Test
@@ -226,27 +212,8 @@ public class MethodTest extends AbstractDjinnTest
 
     private void parseAndLoad(String path, String name) throws Exception
     {
-        this.parse(path, this.dictionary);
+        this.runtime.loadSourceFile(path, this.dictionary);
 
         this.method = this.dictionary.getMethod(name);
-    }
-
-    private void parse(String path, Dictionary dictionary) throws Exception
-    {
-        ClassLoader loader = this.getClass().getClassLoader();
-        ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream(path));
-        DjinnLexer lexer = new DjinnLexer(input);
-
-        CommonTokenStream stream = new CommonTokenStream(lexer);
-        DjinnParser parser = new DjinnParser(stream);
-
-        translation_unit_return result = parser.translation_unit();
-        CommonTree tree = (CommonTree)result.getTree();
-
-        CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
-        nodes.setTokenStream(stream);
-
-        AstToModelTransformer generator = new AstToModelTransformer(nodes, dictionary);
-        Module module = generator.translation_unit();
     }
 }

@@ -44,7 +44,7 @@ public class OrTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getFalse());
         this.stack.push(BooleanAtom.getFalse());
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.FALSE);
@@ -56,7 +56,7 @@ public class OrTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getTrue());
         this.stack.push(BooleanAtom.getTrue());
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);
@@ -68,7 +68,7 @@ public class OrTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getTrue());
         this.stack.push(BooleanAtom.getFalse());
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);
@@ -80,7 +80,7 @@ public class OrTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getFalse());
         this.stack.push(BooleanAtom.getTrue());
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);

@@ -21,15 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 10/31/11 8:46 PM
+ * Created: 11/6/11 1:36 AM
  */
 
-package com.webguys.djinn.marid.runtime;
+package com.webguys.djinn.marid.primitive;
 
-public class SymbolNotDefinedException extends RuntimeException
+import com.google.common.collect.ImmutableList;
+import com.webguys.djinn.ifrit.model.IntegerAtom;
+import org.junit.Before;
+import org.junit.Test;
+
+public class QuoteTest extends AbstractBuiltinTest
 {
-    public SymbolNotDefinedException(String symbol)
+    @Before
+    public void setUp()
     {
-        super("The symbol " + symbol + " is not defined.");
+        super.setUp(Quote.NAME, Quote.FACTORY);
+    }
+
+    @Test
+    public void execute() throws Exception
+    {
+        this.stack.push(new IntegerAtom(1));
+
+        this.function.execute(this.context);
+
+        this.assertStackSize(1);
+        this.assertStackTop(ImmutableList.of(new IntegerAtom(1)));
     }
 }

@@ -32,14 +32,14 @@ import com.webguys.djinn.ifrit.model.Method;
 
 public abstract class AbstractBuiltinTest extends AbstractDjinnTest
 {
-    protected ConditionalExecutable conditionalExecutable;
+    protected ConditionalExecutable function;
 
     public void setUp(String name, BuiltinFactory factory)
     {
         super.setUp();
 
         Method method = new Method(name);
-        this.conditionalExecutable = factory.makeInstance(method);
+        this.function = factory.makeInstance(method);
     }
 
 }

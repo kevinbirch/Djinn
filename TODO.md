@@ -3,11 +3,13 @@
 ## Features
 
 - list type
+- hash type
 - module support
 - user types
 - full prelude
 - java interop
 - static type support
+- macros
 
 ## Enhancements
 
@@ -32,8 +34,28 @@
 - repl restarts, fix and continue
 - symbols as messages?
 - gensym is uuid from tag url
-- more syntax tests for methods, comments, tags, etc
+- more syntax tests for tags, etc
 - roll up, down primitives
 - declarations inside methods don't cache
 - version info properties file from build
+- full numeric intrinsics primitive impls
+- eliminate context?
+- ast to markdown transformer with string template
+- split type and property grammars into separate files
+- dylan style modules with external file descriptor
+- source file name is stored with meta object
+- model to source transformer
+- move the primitive factory code entirely inside the runtime class, expose only a getPrimitive method
+- add module repository to runtime class
+- add module parser to runtime class
+- add inputs and outputs to action class
+- exceptions?
+- additional predicates: odd?, even?, etc
+- refactor binary function to have type variable for stack item types
+- should compose throw if the lambdas have more than one atom? no?
+- fix terminal problem on mac os
+- apache commons cli
+- apache commons launcher
+- logging
+
 

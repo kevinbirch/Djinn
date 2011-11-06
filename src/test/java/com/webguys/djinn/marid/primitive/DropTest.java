@@ -43,7 +43,7 @@ public class DropTest extends AbstractBuiltinTest
     {
         this.stack.push(new IntegerAtom(1));
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(0);
     }

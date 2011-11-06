@@ -21,34 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:11 PM
+ * Created: 11/5/11 2:37 PM
  */
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.IntegerAtom;
-import org.junit.Before;
-import org.junit.Test;
+import com.webguys.djinn.ifrit.model.DecimalAtom;
+import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
+import com.webguys.djinn.ifrit.model.NumericAtom;
+import com.webguys.djinn.marid.runtime.Context;
 
-public class DupTest extends AbstractBuiltinTest
+public class Pow extends ArithmeticFunction
 {
-    @Before
-    public void setUp()
+    public static final String NAME = "pow";
+
+    public static final BuiltinFactory FACTORY = new BuiltinFactory()
     {
-        super.setUp(Dup.NAME, Dup.FACTORY);
+        @Override
+        public ModuleFunction makeInstance(Method method)
+        {
+            return new Pow(method);
+        }
+    };
+
+    public Pow(Method family)
+    {
+        super(NAME, family);
     }
 
-    @Test
-    public void execute() throws Exception
+    @Override
+    protected void execute(Context context, NumericAtom a, NumericAtom b)
     {
-        this.stack.push(new IntegerAtom(1));
-
-        this.assertStackSize(1);
-
-        this.function.execute(this.context);
-
-        this.assertStackSize(2);
-        this.assertStackTop(Integer.valueOf(1));
-        this.assertStackIndex(1, Integer.valueOf(1));
+        DecimalAtom result = new DecimalAtom(Math.pow(a.doubleValue(), b.doubleValue()));
+        context.getStack().push(result);
     }
 }

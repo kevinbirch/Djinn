@@ -42,23 +42,6 @@ public class StringAtom extends AbstractAtom<String>
     }
 
     @Override
-    public boolean equals(Object o)
-    {
-        if(this == o)
-        {
-            return true;
-        }
-        if(!(o instanceof StringAtom))
-        {
-            return false;
-        }
-
-        StringAtom that = (StringAtom)o;
-
-        return this.value.equals(that.value);
-    }
-
-    @Override
     public String toSourceRep()
     {
         return "\"" + super.toSourceRep() + "\"";

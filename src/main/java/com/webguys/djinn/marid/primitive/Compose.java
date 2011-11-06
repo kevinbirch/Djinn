@@ -21,40 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 9/28/11 11:59 PM
+ * Created: 10/28/11 10:06 PM
  */
 
-package com.webguys.djinn.ifrit.model;
+package com.webguys.djinn.marid.primitive;
 
+import com.google.common.collect.ImmutableList;
+import com.webguys.djinn.ifrit.model.Atom;
+import com.webguys.djinn.ifrit.model.Lambda;
+import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.WordNotDefinedException;
+import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
+import com.webguys.djinn.marid.runtime.Stack;
 
-public class Symbol extends AbstractAtom<String>
+public class Compose extends BinaryFunction
 {
-    private static final String TYPE_NAME = "Symbol";
+    public static final String NAME = "compose";
 
-    public Symbol(String value)
+    public static final BuiltinFactory FACTORY = new BuiltinFactory()
     {
-        super(gensym(TYPE_NAME), value);
+        @Override
+        public ModuleFunction makeInstance(Method method)
+        {
+            return new Compose(method);
+        }
+    };
+
+    public Compose(Method family)
+    {
+        super(NAME, family);
     }
 
     @Override
     public void execute(Context context)
     {
-        if(context.getDictionary().isSymbolDefined(this.getValue()))
-        {
-            Executable definition = context.getDictionary().getSymbol(this.getValue());
-            definition.execute(context);
-        }
-        else
-        {
-            throw new WordNotDefinedException(this.getValue());
-        }
-    }
+        super.execute(context);
 
-    @Override
-    public String getTypeName()
-    {
-        return TYPE_NAME;
+        Stack stack = context.getStack();
+        if(!(stack.peek() instanceof Lambda))
+        {
+            throw new DoesNotUnderstandException("Top of stack is not a lambda.");
+        }
+        if(!(stack.peek(1) instanceof Lambda))
+        {
+            throw new DoesNotUnderstandException("Second element of stack is not a boolean value.");
+        }
+
+        Lambda b = (Lambda)stack.pop();
+        Lambda a = (Lambda)stack.pop();
+
+        stack.push(new Lambda(ImmutableList.<Atom>builder().addAll(a.getBody()).addAll(b.getBody()).build()));
     }
 }

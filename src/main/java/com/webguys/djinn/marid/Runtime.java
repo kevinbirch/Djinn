@@ -27,17 +27,32 @@
 package com.webguys.djinn.marid;
 
 import com.google.common.collect.ImmutableMap;
+import com.webguys.djinn.ifrit.AstToModelTransformer;
+import com.webguys.djinn.ifrit.DjinnLexer;
+import com.webguys.djinn.ifrit.DjinnParser;
+import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
+import com.webguys.djinn.ifrit.model.Module;
 import com.webguys.djinn.marid.primitive.*;
+import com.webguys.djinn.marid.runtime.Dictionary;
+import com.webguys.djinn.marid.runtime.InitializationException;
+import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.CommonTreeNodeStream;
 
 public class Runtime
 {
     private static final ImmutableMap<String, BuiltinFactory> factories = ImmutableMap.<String, BuiltinFactory>builder()
         .put(Add.NAME, Add.FACTORY)
         .put(And.NAME, And.FACTORY)
+        .put(Apply.NAME, Apply.FACTORY)
+        .put(Bind.NAME, Bind.FACTORY)
+        .put(Compose.NAME, Compose.FACTORY)
         .put(Dip.NAME, Dip.FACTORY)
         .put(Div.NAME, Div.FACTORY)
         .put(Drop.NAME, Drop.FACTORY)
         .put(Dup.NAME, Dup.FACTORY)
+        .put(Eol.NAME, Eol.FACTORY)
         .put(Eq.NAME, Eq.FACTORY)
         .put(False.NAME, False.FACTORY)
         .put(Gt.NAME, Gt.FACTORY)
@@ -45,10 +60,16 @@ public class Runtime
         .put(Id.NAME, Id.FACTORY)
         .put(Lt.NAME, Lt.FACTORY)
         .put(Lte.NAME, Lte.FACTORY)
+        .put(Mod.NAME, Mod.FACTORY)
         .put(Mul.NAME, Mul.FACTORY)
         .put(Ne.NAME, Ne.FACTORY)
         .put(Not.NAME, Not.FACTORY)
         .put(Or.NAME, Or.FACTORY)
+        .put(Pow.NAME, Pow.FACTORY)
+        .put(Println.NAME, Println.FACTORY)
+        .put(Print.NAME, Print.FACTORY)
+        .put(Quote.NAME, Quote.FACTORY)
+        .put(Readln.NAME, Readln.FACTORY)
         .put(Sub.NAME, Sub.FACTORY)
         .put(Swap.NAME, Swap.FACTORY)
         .put(True.NAME, True.FACTORY)
@@ -57,5 +78,36 @@ public class Runtime
     public static BuiltinFactory getBuiltinFactory(String name)
     {
         return factories.get(name);
+    }
+
+    public Runtime()
+    {
+        try
+        {
+            loadSourceFile("djinn/primitives.djinn", Dictionary.getRootDictionary());
+        }
+        catch(Exception e)
+        {
+            throw new InitializationException(e);
+        }
+    }
+
+    public Module loadSourceFile(String path, Dictionary dictionary) throws Exception
+    {
+        ClassLoader loader = Runtime.class.getClassLoader();
+        ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream(path));
+        DjinnLexer lexer = new DjinnLexer(input);
+
+        CommonTokenStream stream = new CommonTokenStream(lexer);
+        DjinnParser parser = new DjinnParser(stream);
+
+        translation_unit_return result = parser.translation_unit();
+        CommonTree tree = (CommonTree)result.getTree();
+
+        CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
+        nodes.setTokenStream(stream);
+
+        AstToModelTransformer generator = new AstToModelTransformer(nodes, dictionary);
+        return generator.translation_unit();
     }
 }

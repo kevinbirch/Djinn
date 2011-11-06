@@ -21,34 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:11 PM
+ * Created: 11/6/11 12:20 AM
  */
 
-package com.webguys.djinn.marid.primitive;
+package com.webguys.djinn.marid.runtime;
 
-import com.webguys.djinn.ifrit.model.IntegerAtom;
-import org.junit.Before;
-import org.junit.Test;
-
-public class DupTest extends AbstractBuiltinTest
+public class InitializationException extends RuntimeException
 {
-    @Before
-    public void setUp()
+    public InitializationException(Exception e)
     {
-        super.setUp(Dup.NAME, Dup.FACTORY);
-    }
-
-    @Test
-    public void execute() throws Exception
-    {
-        this.stack.push(new IntegerAtom(1));
-
-        this.assertStackSize(1);
-
-        this.function.execute(this.context);
-
-        this.assertStackSize(2);
-        this.assertStackTop(Integer.valueOf(1));
-        this.assertStackIndex(1, Integer.valueOf(1));
+        super(e);
     }
 }

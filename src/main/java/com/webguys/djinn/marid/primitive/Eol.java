@@ -21,34 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:11 PM
+ * Created: 10/28/11 10:06 PM
  */
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.IntegerAtom;
-import org.junit.Before;
-import org.junit.Test;
+import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
+import com.webguys.djinn.marid.runtime.Context;
 
-public class DupTest extends AbstractBuiltinTest
+public class Eol extends NullaryFunction
 {
-    @Before
-    public void setUp()
+    public static final String NAME = "eol";
+
+    public static final BuiltinFactory FACTORY = new BuiltinFactory()
     {
-        super.setUp(Dup.NAME, Dup.FACTORY);
+        @Override
+        public ModuleFunction makeInstance(Method method)
+        {
+            return new Eol(method);
+        }
+    };
+
+    public Eol(Method family)
+    {
+        super(NAME, family);
     }
 
-    @Test
-    public void execute() throws Exception
+    @Override
+    public void execute(Context context)
     {
-        this.stack.push(new IntegerAtom(1));
+        super.execute(context);
 
-        this.assertStackSize(1);
-
-        this.function.execute(this.context);
-
-        this.assertStackSize(2);
-        this.assertStackTop(Integer.valueOf(1));
-        this.assertStackIndex(1, Integer.valueOf(1));
+        context.getStdout().println();
+        context.getStdout().flush();
     }
 }

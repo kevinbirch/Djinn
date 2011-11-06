@@ -26,15 +26,14 @@
 
 package com.webguys.djinn.marid.runtime;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 public class Context
 {
     private Stack stack;
     private Dictionary dictionary;
-    private InputStream stdin = System.in;
-    private OutputStream stdout = System.out;
+    private BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+    private PrintWriter stdout = new PrintWriter(System.out, true);
 
     public Context(Stack stack, Dictionary dictionary)
     {
@@ -42,12 +41,12 @@ public class Context
         this.dictionary = dictionary;
     }
 
-    public Context(Stack stack, Dictionary dictionary, InputStream stdin, OutputStream stdout)
+    public Context(Stack stack, Dictionary dictionary, InputStream stdin, Writer stdout)
     {
         this.stack = stack;
         this.dictionary = dictionary;
-        this.stdin = stdin;
-        this.stdout = stdout;
+        this.stdin = new BufferedReader(new InputStreamReader(stdin));
+        this.stdout = new PrintWriter(stdout, true);
     }
 
     @Override
@@ -75,23 +74,23 @@ public class Context
         return this.dictionary;
     }
 
-    public InputStream getStdin()
+    public BufferedReader getStdin()
     {
         return this.stdin;
     }
 
     public void setStdin(InputStream stdin)
     {
-        this.stdin = stdin;
+        this.stdin = new BufferedReader(new InputStreamReader(stdin));
     }
 
-    public OutputStream getStdout()
+    public PrintWriter getStdout()
     {
         return this.stdout;
     }
 
     public void setStdout(OutputStream stdout)
     {
-        this.stdout = stdout;
+        this.stdout = new PrintWriter(stdout, true);
     }
 }

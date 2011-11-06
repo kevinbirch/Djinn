@@ -31,6 +31,8 @@ public class BooleanAtom extends AbstractAtom<Boolean>
     private static final BooleanAtom TRUE = new BooleanAtom("true", Boolean.TRUE);
     private static final BooleanAtom FALSE = new BooleanAtom("false", Boolean.FALSE);
 
+    private static final String TYPE_NAME = "Boolean";
+
     public static BooleanAtom getTrue()
     {
         return TRUE;
@@ -40,27 +42,15 @@ public class BooleanAtom extends AbstractAtom<Boolean>
     {
         return FALSE;
     }
-    
+
     protected BooleanAtom(String name, Boolean value)
     {
         super(name, value);
     }
 
     @Override
-    public boolean equals(Object o)
+    public String getTypeName()
     {
-        if(this == o)
-        {
-            return true;
-        }
-        if(!(o instanceof BooleanAtom))
-        {
-            return false;
-        }
-
-        BooleanAtom that = (BooleanAtom)o;
-
-        return this.value.equals(that.value);
-
+        return TYPE_NAME;
     }
 }

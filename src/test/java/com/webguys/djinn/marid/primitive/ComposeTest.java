@@ -21,34 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:11 PM
+ * Created: 11/6/11 1:36 AM
  */
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.IntegerAtom;
+import com.google.common.collect.ImmutableList;
+import com.webguys.djinn.ifrit.model.Atom;
+import com.webguys.djinn.ifrit.model.Lambda;
+import com.webguys.djinn.ifrit.model.Symbol;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DupTest extends AbstractBuiltinTest
+public class ComposeTest extends AbstractBuiltinTest
 {
     @Before
     public void setUp()
     {
-        super.setUp(Dup.NAME, Dup.FACTORY);
+        super.setUp(Compose.NAME, Compose.FACTORY);
     }
 
     @Test
     public void execute() throws Exception
     {
-        this.stack.push(new IntegerAtom(1));
-
-        this.assertStackSize(1);
+        this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("add"))));
+        this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("sub"))));
 
         this.function.execute(this.context);
 
-        this.assertStackSize(2);
-        this.assertStackTop(Integer.valueOf(1));
-        this.assertStackIndex(1, Integer.valueOf(1));
+        this.assertStackSize(1);
+        this.assertStackTop(ImmutableList.of(new Symbol("add"), new Symbol("sub")));
     }
 }

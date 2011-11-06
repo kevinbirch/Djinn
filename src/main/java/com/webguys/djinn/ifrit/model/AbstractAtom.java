@@ -68,4 +68,22 @@ public class AbstractAtom<T> extends SimpleType implements Atom<T>
     {
         return this.value.hashCode();
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o)
+        {
+            return true;
+        }
+        if(!(o instanceof AbstractAtom))
+        {
+            return false;
+        }
+
+        AbstractAtom atom = (AbstractAtom)o;
+
+        return value.equals(atom.value);
+
+    }
 }

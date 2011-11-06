@@ -49,7 +49,7 @@ public abstract class UnaryFunction extends ModuleFunction
     public void execute(Context context)
     {
         Stack stack = context.getStack();
-        if(1 >= stack.depth())
+        if(0 == stack.depth())
         {
             throw new StackUnderflowException(1, stack.depth());
         }

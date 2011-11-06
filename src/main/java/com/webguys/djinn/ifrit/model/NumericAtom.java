@@ -44,6 +44,8 @@ public interface NumericAtom
 
     Atom gte(NumericAtom value);
 
+    Atom mod(NumericAtom value);
+
     int intValue();
 
     double doubleValue();

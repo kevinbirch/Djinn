@@ -42,7 +42,7 @@ public class TrueTest extends AbstractBuiltinTest
     {
         this.assertStackSize(0);
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);

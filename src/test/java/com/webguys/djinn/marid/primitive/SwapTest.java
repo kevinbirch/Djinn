@@ -46,7 +46,7 @@ public class SwapTest extends AbstractBuiltinTest
     {
         this.assertStackTop("foo");
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackTop("bar");
     }

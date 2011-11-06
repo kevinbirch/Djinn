@@ -21,34 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:11 PM
+ * Created: 10/28/11 10:06 PM
  */
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.IntegerAtom;
-import org.junit.Before;
-import org.junit.Test;
+import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
+import com.webguys.djinn.ifrit.model.StringAtom;
+import com.webguys.djinn.marid.runtime.Context;
+import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
+import com.webguys.djinn.marid.runtime.Stack;
 
-public class DupTest extends AbstractBuiltinTest
+public class Println extends UnaryFunction
 {
-    @Before
-    public void setUp()
+    public static final String NAME = "println";
+
+    public static final BuiltinFactory FACTORY = new BuiltinFactory()
     {
-        super.setUp(Dup.NAME, Dup.FACTORY);
+        @Override
+        public ModuleFunction makeInstance(Method method)
+        {
+            return new Println(method);
+        }
+    };
+
+    public Println(Method family)
+    {
+        super(NAME, family);
     }
 
-    @Test
-    public void execute() throws Exception
+    @Override
+    public void execute(Context context)
     {
-        this.stack.push(new IntegerAtom(1));
+        super.execute(context);
 
-        this.assertStackSize(1);
+        Stack stack = context.getStack();
+        if(!(stack.peek() instanceof StringAtom))
+        {
+            throw new DoesNotUnderstandException("The top of stack is not a string.");
+        }
 
-        this.function.execute(this.context);
+        StringAtom a = (StringAtom)stack.pop();
 
-        this.assertStackSize(2);
-        this.assertStackTop(Integer.valueOf(1));
-        this.assertStackIndex(1, Integer.valueOf(1));
+        context.getStdout().println(a.getValue());
     }
 }

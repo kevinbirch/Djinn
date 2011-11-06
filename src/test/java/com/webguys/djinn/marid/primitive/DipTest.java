@@ -51,7 +51,7 @@ public class DipTest extends AbstractBuiltinTest
         this.stack.push(new StringAtom("foo"));
         this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("drop"))));
 
-        this.conditionalExecutable.execute(this.context);
+        this.function.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop("foo");

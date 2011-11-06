@@ -41,7 +41,7 @@ import com.webguys.djinn.marid.runtime.Stack;
 public abstract class Function<FamilyType extends Cluster, ContainerType extends Container<? extends Member>>
     extends Action<FamilyType, ContainerType> implements ConditionalExecutable
 {
-    private int depthRequirement = -1;
+    private int depthRequirement = 0;
 
     protected Lambda condition;
     protected ImmutableList<Atom> body;

@@ -79,7 +79,7 @@ public class Method extends Cluster<Function> implements Executable
     private void executeOne(Context context, ConditionalExecutable executable)
     {
         Stack stack = context.getStack();
-        if(-1 != executable.getDepthRequirement() && stack.depth() < executable.getDepthRequirement())
+        if(stack.depth() < executable.getDepthRequirement())
         {
             throw new StackUnderflowException(executable.getDepthRequirement(), stack.depth());
         }
