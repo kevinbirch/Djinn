@@ -62,6 +62,7 @@ public class REPL
         Dictionary root = Dictionary.getRootDictionary();
 
         this.parseFile("djinn/primitives.djinn", root);
+        this.parseFile("djinn/prelude.djinn", root);
 
         this.dictionary = root.newChild();
         this.context = new Context(new Stack(), this.dictionary, this.reader.getInput(), this.reader.getOutput());
@@ -73,6 +74,7 @@ public class REPL
 
         this.reader.println("Welcome to Djinn.");
         this.reader.println("Type \":quit\" or \":exit\" to end your session.  Type \":help\" for instructions.");
+        this.reader.println();
 
         while(!this.done)
         {

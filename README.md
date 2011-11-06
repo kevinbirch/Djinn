@@ -16,6 +16,16 @@ Djinn is a concatenative, functional, stack-based programming language.
 
 3. Enjoy
 
+## The Canonical "Hello World" Example
+
+    $ java -jar target/djinn-1.0-SNAPSHOT-uber.jar
+    Welcome to Djinn.
+    Type ":quit" or ":exit" to end your session.  Type ":help" for instructions.
+
+    User> "hello, world" println
+    hello, world
+    stack:
+
 ## Syntax and Semantics
 
 The REPL supports three forms of statements: declarations, functions and immediate statements.
@@ -55,10 +65,10 @@ patterns and bodies.  If a function is a member of a method family, then the mem
 determine which one should be activated. If a member does not have a pattern defined and none of the pattern-bearing
 members were suitable then that default function will be activated.
 
-For example, the definition for the method "if" (from the Djinn prelude):
+For example, the definition for the method "ifel" (from the Djinn prelude):
 
-    \[if [id]? drop apply]
-    \[if drop drop]
+    \[ifel [id]? drop [drop] dip apply]
+    \[ifel drop drop apply]
 
 ### Immediate Statements
 

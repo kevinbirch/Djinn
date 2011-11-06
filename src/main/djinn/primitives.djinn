@@ -116,13 +116,13 @@ sub :: [number number] -> [number]
 
 \[sub __primitive__]
 
-@description: divides the top two elements of the stack;
+@description: multiplies the top two elements of the stack;
 @sealed: true;
 mul :: [number number] -> [number]
 
 \[mul __primitive__]
 
-@description: negates the boolean at the top of the stack;
+@description: divides the top two elements of the stack;
 @sealed: true;
 div :: [number number] -> [number]
 
