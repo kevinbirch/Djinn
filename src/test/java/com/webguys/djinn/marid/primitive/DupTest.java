@@ -27,6 +27,7 @@
 package com.webguys.djinn.marid.primitive;
 
 import com.webguys.djinn.ifrit.model.IntegerAtom;
+import com.webguys.djinn.marid.primitive.stack.Dup;
 import org.junit.Before;
 import org.junit.Test;
 

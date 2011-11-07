@@ -31,6 +31,7 @@ import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.IntegerAtom;
 import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.ifrit.model.Symbol;
+import com.webguys.djinn.marid.primitive.higher.Bind;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -28,6 +28,8 @@ package com.webguys.djinn.marid.primitive;
 
 import com.google.common.collect.ImmutableList;
 import com.webguys.djinn.ifrit.model.*;
+import com.webguys.djinn.marid.primitive.stack.Dip;
+import com.webguys.djinn.marid.primitive.stack.Drop;
 import org.junit.Before;
 import org.junit.Test;
 

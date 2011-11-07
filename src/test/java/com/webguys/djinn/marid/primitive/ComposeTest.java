@@ -30,6 +30,7 @@ import com.google.common.collect.ImmutableList;
 import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.ifrit.model.Symbol;
+import com.webguys.djinn.marid.primitive.higher.Compose;
 import org.junit.Before;
 import org.junit.Test;
 

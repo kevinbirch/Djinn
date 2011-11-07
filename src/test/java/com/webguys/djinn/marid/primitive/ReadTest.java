@@ -28,6 +28,7 @@ package com.webguys.djinn.marid.primitive;
 
 import java.io.ByteArrayInputStream;
 
+import com.webguys.djinn.marid.primitive.io.Read;
 import org.junit.Before;
 import org.junit.Test;
 

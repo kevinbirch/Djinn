@@ -27,6 +27,7 @@
 package com.webguys.djinn.marid.primitive;
 
 import com.webguys.djinn.ifrit.model.DecimalAtom;
+import com.webguys.djinn.marid.primitive.math.Pow;
 import org.junit.Before;
 import org.junit.Test;
 

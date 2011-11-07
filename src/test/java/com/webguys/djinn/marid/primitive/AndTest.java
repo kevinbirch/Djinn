@@ -27,6 +27,7 @@
 package com.webguys.djinn.marid.primitive;
 
 import com.webguys.djinn.ifrit.model.BooleanAtom;
+import com.webguys.djinn.marid.primitive.bool.And;
 import org.junit.Before;
 import org.junit.Test;
 

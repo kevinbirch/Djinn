@@ -29,6 +29,7 @@ package com.webguys.djinn.marid.primitive;
 import java.io.ByteArrayOutputStream;
 
 import com.webguys.djinn.ifrit.model.StringAtom;
+import com.webguys.djinn.marid.primitive.io.Println;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

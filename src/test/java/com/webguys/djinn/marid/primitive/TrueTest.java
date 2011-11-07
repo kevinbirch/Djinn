@@ -26,6 +26,7 @@
 
 package com.webguys.djinn.marid.primitive;
 
+import com.webguys.djinn.marid.primitive.bool.True;
 import org.junit.Before;
 import org.junit.Test;
 
