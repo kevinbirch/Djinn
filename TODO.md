@@ -19,6 +19,7 @@
 - repl server & client
 - type and predicate based method dispatch
 - pre/post method functions, next-method
+- user types: record, algebraic, union, protocol
 - user types w/ versioning, persistence, immutability
 - wiki
 - web repl w/ JS ANTLR target & jquery.console, jquery
