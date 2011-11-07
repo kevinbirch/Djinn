@@ -71,9 +71,7 @@ public class REPL
     {
         this.reader.setPrompt("User> ");
 
-        this.reader.println(version.getWelcome());
-        this.reader.println(version.getBuildEnvironment());
-        this.reader.println();
+        this.reader.println("Welcome to Djinn.");
         this.reader.println("Type \":quit\" or \":exit\" to end your session.  Type \":help\" for instructions.");
         this.reader.println();
 
@@ -117,6 +115,10 @@ public class REPL
         else if(":help".equalsIgnoreCase(input))
         {
             return "coming soon.";
+        }
+        else if(":version".equalsIgnoreCase(input))
+        {
+            return String.format("%s%n%s", this.version.getVersionDetails(), this.version.getBuildEnvironment());
         }
         else if(":no-warranty".equalsIgnoreCase(input))
         {

@@ -38,9 +38,9 @@ public class Version
         this.properties.load(this.getClass().getClassLoader().getResourceAsStream("version.properties"));
     }
 
-    public String getWelcome()
+    public String getVersionDetails()
     {
-        return String.format("Welcome to Djinn %s (%s@%s, %s)", this.getVersion(), this.getBuildNumber(), this.getBuildHostname(), this.getBuildDate());
+        return String.format("Djinn %s (%s@%s, %s)", this.getVersion(), this.getBuildNumber(), this.getBuildHostname(), this.getBuildDate());
     }
 
     public String getBuildEnvironment()
