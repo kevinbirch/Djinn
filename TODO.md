@@ -15,9 +15,12 @@
   - should dictionary/module be c'tor arg for functions et al?
 - regex type
 - runtime image storage format
+- standalone runtime mode
+- repl server & client
 - type and predicate based method dispatch
 - user types w/ versioning, persistence, immutability
 - java interop
+- bytecode compiler
 - static type support
 - macros
 - MOP
