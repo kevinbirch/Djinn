@@ -3,6 +3,7 @@
 ## Features
 
 - list type
+- lazy sequence builder
 - hash type
 - modules - رزمة (rezmuh, .rez)
   - split type and property grammars into separate files
@@ -13,10 +14,18 @@
   - replace dictionary with modules
   - should dictionary/module be c'tor arg for functions et al?
 - regex type
-- user types
+- runtime image storage format
+- type and predicate based method dispatch
+- user types w/ versioning, persistence, immutability
 - java interop
 - static type support
 - macros
+- MOP
+- IntelliJ plugin
+- eclipse plugin
+- MDE: XMI, OCF support
+- live object graph across associations for calculated slots
+- concurrency model (STM)
 
 ## Enhancements
 
