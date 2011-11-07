@@ -20,6 +20,8 @@
 - type and predicate based method dispatch
 - pre/post method functions, next-method
 - user types w/ versioning, persistence, immutability
+- wiki
+- web repl w/ JS ANTLR target & jquery.console, jquery
 - java interop
 - bytecode compiler
 - static type support
