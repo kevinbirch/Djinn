@@ -94,6 +94,7 @@ public class REPL
     {
         if(null == input)
         {
+            this.reader.println("^D");
             return this.evalCommand(":exit");
         }
         else if(input.startsWith(":"))
