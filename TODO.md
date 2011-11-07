@@ -18,6 +18,7 @@
 - standalone runtime mode
 - repl server & client
 - type and predicate based method dispatch
+- pre/post method functions, next-method
 - user types w/ versioning, persistence, immutability
 - java interop
 - bytecode compiler
