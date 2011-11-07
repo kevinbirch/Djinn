@@ -30,6 +30,8 @@
 - MDE: XMI, OCF support
 - live object graph across associations for calculated slots
 - concurrency model (STM)
+- standalone LLVM port with C FFI
+- ANTLR Djinn target
 
 ## Enhancements
 
