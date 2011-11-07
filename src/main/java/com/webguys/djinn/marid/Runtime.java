@@ -69,6 +69,7 @@ public class Runtime
         .put(Println.NAME, Println.FACTORY)
         .put(Print.NAME, Print.FACTORY)
         .put(Quote.NAME, Quote.FACTORY)
+        .put(Read.NAME, Read.FACTORY)
         .put(Readln.NAME, Readln.FACTORY)
         .put(Sub.NAME, Sub.FACTORY)
         .put(Swap.NAME, Swap.FACTORY)

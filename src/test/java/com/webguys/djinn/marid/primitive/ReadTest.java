@@ -21,50 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 9/28/11 11:53 PM
+ * Created: 11/3/11 10:08 PM
  */
 
-package com.webguys.djinn.ifrit.metamodel;
+package com.webguys.djinn.marid.primitive;
 
-import java.nio.charset.Charset;
-import java.util.UUID;
+import java.io.ByteArrayInputStream;
 
-public abstract class MetaObject
+import org.junit.Before;
+import org.junit.Test;
+
+public class ReadTest extends AbstractBuiltinTest
 {
-    private String name;
-
-    public MetaObject(String name)
+    @Before
+    public void setUp()
     {
-        this.name = name;
+        super.setUp(Read.NAME, Read.FACTORY);
     }
 
-    public String getName()
+    @Test
+    public void execute() throws Exception
     {
-        return this.name;
-    }
+        this.context.setStdin(new ByteArrayInputStream("monkey\n".getBytes()));
 
-    @Override
-    public String toString()
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<<").append(this.getTypeName()).append(">> ");
-        if(this instanceof Element)
-        {
-            Container container = ((Element)this).getContainer();
-            if(null != container)
-            {
-                sb.append(container.getTypeName()).append("::");
-            }
-        }
-        sb.append("\"").append(this.getName()).append("\"");
-        return sb.toString();
-    }
+        this.function.execute(this.context);
 
-    public abstract String getTypeName();
-
-    protected static String gensym(String base)
-    {
-        String tag = String.format("tag:djinn,%s:%s", System.currentTimeMillis(), base);
-        return UUID.nameUUIDFromBytes(tag.getBytes(Charset.forName("UTF-8"))).toString();
+        this.assertStackSize(1);
+        this.assertStackTop("m");
     }
 }

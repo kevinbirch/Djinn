@@ -36,10 +36,7 @@ import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
 import com.webguys.djinn.ifrit.model.Executable;
 import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.ifrit.model.Module;
-import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Dictionary;
-import com.webguys.djinn.marid.runtime.ImmediateStatement;
-import com.webguys.djinn.marid.runtime.Stack;
+import com.webguys.djinn.marid.runtime.*;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
@@ -53,11 +50,13 @@ public class REPL
     private ConsoleReader reader;
     private Dictionary dictionary;
     private Context context;
+    private Version version;
 
     private boolean done;
 
     public REPL() throws Exception
     {
+        this.version = new Version();
         this.reader = new ConsoleReader();
         Dictionary root = Dictionary.getRootDictionary();
 
@@ -72,7 +71,9 @@ public class REPL
     {
         this.reader.setPrompt("User> ");
 
-        this.reader.println("Welcome to Djinn.");
+        this.reader.println(version.getWelcome());
+        this.reader.println(version.getBuildEnvironment());
+        this.reader.println();
         this.reader.println("Type \":quit\" or \":exit\" to end your session.  Type \":help\" for instructions.");
         this.reader.println();
 

@@ -170,11 +170,17 @@ quote :: [a] -> [( -> a)]
 
 // Standard IO functions
 
-@description: reads a line of text from the standard input and pushes onto the stack;
+@description: reads a line of text from the standard input and pushes it onto the stack;
 @sealed: true;
 readln :: [] -> [string]
 
 \[readln __primitive__]
+
+@description: reads a character from the standard input and pushes it onto the stack;
+@sealed: true;
+read :: [] -> [string]
+
+\[read __primitive__]
 
 @description: prints a string to the standard output;
 @sealed: true;

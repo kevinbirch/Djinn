@@ -21,50 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 9/28/11 11:53 PM
+ * Created: 10/28/11 10:06 PM
  */
 
-package com.webguys.djinn.ifrit.metamodel;
+package com.webguys.djinn.marid.primitive;
 
-import java.nio.charset.Charset;
-import java.util.UUID;
+import java.io.IOException;
 
-public abstract class MetaObject
+import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
+import com.webguys.djinn.ifrit.model.StringAtom;
+import com.webguys.djinn.marid.runtime.Context;
+import com.webguys.djinn.marid.runtime.ExecutionException;
+import com.webguys.djinn.marid.runtime.Stack;
+
+public class Read extends NullaryFunction
 {
-    private String name;
+    public static final String NAME = "read";
 
-    public MetaObject(String name)
+    public static final BuiltinFactory FACTORY = new BuiltinFactory()
     {
-        this.name = name;
-    }
+        @Override
+        public ModuleFunction makeInstance(Method method)
+        {
+            return new Read(method);
+        }
+    };
 
-    public String getName()
+    public Read(Method family)
     {
-        return this.name;
+        super(NAME, family);
     }
 
     @Override
-    public String toString()
+    public void execute(Context context)
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<<").append(this.getTypeName()).append(">> ");
-        if(this instanceof Element)
+        Stack stack = context.getStack();
+
+        try
         {
-            Container container = ((Element)this).getContainer();
-            if(null != container)
-            {
-                sb.append(container.getTypeName()).append("::");
-            }
+            char value = (char)context.getStdin().read();
+            stack.push(new StringAtom(String.valueOf(value)));
         }
-        sb.append("\"").append(this.getName()).append("\"");
-        return sb.toString();
-    }
-
-    public abstract String getTypeName();
-
-    protected static String gensym(String base)
-    {
-        String tag = String.format("tag:djinn,%s:%s", System.currentTimeMillis(), base);
-        return UUID.nameUUIDFromBytes(tag.getBytes(Charset.forName("UTF-8"))).toString();
+        catch(IOException e)
+        {
+            throw new ExecutionException(NAME, e);
+        }
     }
 }

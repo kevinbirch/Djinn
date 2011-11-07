@@ -4,7 +4,7 @@
 
 - list type
 - hash type
-- modules
+- modules - رزمة (rezmuh, .rez)
   - split type and property grammars into separate files
   - dylan style modules with external file descriptor
   - source file name is stored with meta object
@@ -20,11 +20,7 @@
 
 ## Enhancements
 
-- hello world example
-- gensym is uuid from tag url
-- declarations inside methods don't cache
-- version info properties file from build
-- track sealed methods in method builder and seal at the end of a xlation unit
+- track sealed methods in method builder and seal at the end of a translation unit
 - mapping of type declaration literals to builtin types ("bool" -> BooleanAtom)
 - move the primitive factory code entirely inside the runtime class, expose only a getPrimitive method
 - upgrade jline to standalone version (not scala version)
@@ -56,5 +52,3 @@
 - apache commons cli
 - apache commons launcher
 - logging
-
-
