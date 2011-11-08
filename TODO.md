@@ -6,9 +6,7 @@
 - lazy sequence builder
 - hash type
 - modules - رزمة (rezmuh, .rez)
-  - split type and property grammars into separate files
   - dylan style modules with external file descriptor
-  - source file name is stored with meta object
   - add module repository to runtime class
   - add module parser to runtime class
   - replace dictionary with modules
@@ -22,7 +20,9 @@
 - user types: record, algebraic, union, protocol
 - user types w/ versioning, persistence, immutability
 - wiki
-- web repl w/ JS ANTLR target & jquery.console, jquery
+- web repl w/ ANTLR JavaScript target & jquery.console, jquery
+  - ref: [amber smalltalk] (http://amber-lang.net/)
+  - ref: [try-clojure] (https://github.com/Raynes/tryclojure)
 - java interop
 - bytecode compiler
 - static type support
@@ -33,15 +33,22 @@
 - MDE: XMI, OCF support
 - live object graph across associations for calculated slots
 - concurrency model (STM)
+- atom optimizer (atomizer)
+- rundjinn tool for shebang scripts
+- Djinn to JavaScript compiler
 - standalone LLVM port with C FFI
 - ANTLR Djinn target
 
 ## Enhancements
 
+- warning when a declaration shadows a function name
+- utf-8 identifiers
+  - using AntlrInputStream, charVocabulary grammar option, '\u00c0' .. '\uFEFC' | <ascii range>
 - track sealed methods in method builder and seal at the end of a translation unit
 - mapping of type declaration literals to builtin types ("bool" -> BooleanAtom)
 - move the primitive factory code entirely inside the runtime class, expose only a getPrimitive method
 - upgrade jline to standalone version (not scala version)
+- gather additional features from dylan, cat, factor, joy, clojure, plot
 - model
   - add inputs and outputs to action class
   - symbols as messages?
@@ -64,9 +71,11 @@
   - exceptions?
   - escape sequences in strings
 - parser
+  - split type and property grammars into separate files
+  - source file name is stored with meta object
   - ast to markdown transformer with string template
   - model to source transformer
 - fix terminal problem on mac os
-- apache commons cli
+- apache commons cli or http://code.google.com/p/java-cli-api/
 - apache commons launcher
 - logging
