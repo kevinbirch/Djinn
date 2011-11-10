@@ -85,6 +85,18 @@ dig5 :: [a b c d e] -> [b c d e a]
 
 \[dig5 [dig4] dip swap]
 
+// Predicates
+
+@description: executes the lambda at the second element if the boolean at the top of the stack is true;
+even? :: [num] -> [bool]
+
+\[even? 2 mod 0 eq]
+
+@description: executes the lambda at the second element if the boolean at the top of the stack is true;
+odd? :: [num] -> [bool]
+
+\[odd? 2 mod 1 eq]
+
 // Conditional functions
 
 @description: executes the lambda at the second element if the boolean at the top of the stack is true;

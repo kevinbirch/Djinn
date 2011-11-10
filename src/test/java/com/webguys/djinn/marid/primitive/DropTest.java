@@ -34,9 +34,9 @@ import org.junit.Test;
 public class DropTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Drop.NAME, Drop.FACTORY);
+        super.setUp(Drop.NAME);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class DropTest extends AbstractBuiltinTest
     {
         this.stack.push(new IntegerAtom(1));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(0);
     }

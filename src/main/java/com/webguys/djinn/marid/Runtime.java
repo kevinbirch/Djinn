@@ -26,68 +26,59 @@
 
 package com.webguys.djinn.marid;
 
+import java.lang.reflect.Constructor;
+import java.util.Set;
+
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMap.Builder;
 import com.webguys.djinn.ifrit.AstToModelTransformer;
 import com.webguys.djinn.ifrit.DjinnLexer;
 import com.webguys.djinn.ifrit.DjinnParser;
+import com.webguys.djinn.ifrit.DjinnParser.statement_return;
 import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
+import com.webguys.djinn.ifrit.model.Executable;
+import com.webguys.djinn.ifrit.model.Method;
 import com.webguys.djinn.ifrit.model.Module;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
-import com.webguys.djinn.marid.primitive.bool.*;
-import com.webguys.djinn.marid.primitive.compare.*;
-import com.webguys.djinn.marid.primitive.higher.Apply;
-import com.webguys.djinn.marid.primitive.higher.Bind;
-import com.webguys.djinn.marid.primitive.higher.Compose;
-import com.webguys.djinn.marid.primitive.higher.Quote;
-import com.webguys.djinn.marid.primitive.io.*;
-import com.webguys.djinn.marid.primitive.math.*;
-import com.webguys.djinn.marid.primitive.stack.*;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.runtime.Dictionary;
 import com.webguys.djinn.marid.runtime.InitializationException;
 import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
+import org.reflections.Reflections;
 
 public class Runtime
 {
-    private static final ImmutableMap<String, BuiltinFactory> factories = ImmutableMap.<String, BuiltinFactory>builder()
-        .put(Add.NAME, Add.FACTORY)
-        .put(And.NAME, And.FACTORY)
-        .put(Apply.NAME, Apply.FACTORY)
-        .put(Bind.NAME, Bind.FACTORY)
-        .put(Compose.NAME, Compose.FACTORY)
-        .put(Dip.NAME, Dip.FACTORY)
-        .put(Div.NAME, Div.FACTORY)
-        .put(Drop.NAME, Drop.FACTORY)
-        .put(Dup.NAME, Dup.FACTORY)
-        .put(Eol.NAME, Eol.FACTORY)
-        .put(Eq.NAME, Eq.FACTORY)
-        .put(False.NAME, False.FACTORY)
-        .put(Gt.NAME, Gt.FACTORY)
-        .put(Gte.NAME, Gte.FACTORY)
-        .put(Id.NAME, Id.FACTORY)
-        .put(Lt.NAME, Lt.FACTORY)
-        .put(Lte.NAME, Lte.FACTORY)
-        .put(Mod.NAME, Mod.FACTORY)
-        .put(Mul.NAME, Mul.FACTORY)
-        .put(Ne.NAME, Ne.FACTORY)
-        .put(Not.NAME, Not.FACTORY)
-        .put(Or.NAME, Or.FACTORY)
-        .put(Pow.NAME, Pow.FACTORY)
-        .put(Println.NAME, Println.FACTORY)
-        .put(Print.NAME, Print.FACTORY)
-        .put(Quote.NAME, Quote.FACTORY)
-        .put(Read.NAME, Read.FACTORY)
-        .put(Readln.NAME, Readln.FACTORY)
-        .put(Sub.NAME, Sub.FACTORY)
-        .put(Swap.NAME, Swap.FACTORY)
-        .put(True.NAME, True.FACTORY)
-        .build();
+    private static final Reflections reflections = Reflections.collect();
+    private static final ImmutableMap<String, Class<? extends ModuleFunction>> primitiveImplementations;
 
-    public static BuiltinFactory getBuiltinFactory(String name)
+    static
     {
-        return factories.get(name);
+        Builder<String, Class<? extends ModuleFunction>> builder = ImmutableMap.builder();
+        Set<Class<?>> builtins = reflections.getTypesAnnotatedWith(Builtin.class);
+        for(Class<?> builtin : builtins)
+        {
+            String name = builtin.getAnnotation(Builtin.class).value();
+            builder.put(name, (Class<? extends ModuleFunction>)builtin);
+        }
+        primitiveImplementations = builder.build();
+    }
+
+    public static ModuleFunction getBuiltinFunction(Method method) throws Exception
+    {
+        Class<? extends ModuleFunction> builtin = primitiveImplementations.get(method.getName());
+        ModuleFunction result = null;
+        if(null != builtin)
+        {
+            Constructor<? extends ModuleFunction> constructor = builtin.getConstructor(Method.class);
+            result = constructor.newInstance(method);
+        }
+
+        return result;
     }
 
     public Runtime()
@@ -119,5 +110,23 @@ public class Runtime
 
         AstToModelTransformer generator = new AstToModelTransformer(nodes, dictionary);
         return generator.translation_unit();
+    }
+
+    public Executable parseStatement(String input, Dictionary dictionary) throws Exception
+    {
+        CharStream inputStream = new ANTLRStringStream(input);
+        DjinnLexer lexer = new DjinnLexer(inputStream);
+
+        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+        DjinnParser parser = new DjinnParser(tokenStream);
+
+        statement_return result = parser.statement();
+        CommonTree tree = (CommonTree)result.getTree();
+
+        CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
+        nodes.setTokenStream(tokenStream);
+
+        AstToModelTransformer walker = new AstToModelTransformer(nodes, dictionary);
+        return walker.statement();
     }
 }

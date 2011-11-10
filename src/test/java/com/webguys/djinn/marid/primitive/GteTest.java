@@ -34,9 +34,9 @@ import org.junit.Test;
 public class GteTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Gte.NAME, Gte.FACTORY);
+        super.setUp(Gte.NAME);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class GteTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(7));
         this.stack.push(new IntegerAtom(4));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);
@@ -57,7 +57,7 @@ public class GteTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(4));
         this.stack.push(new IntegerAtom(7));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.FALSE);
@@ -69,7 +69,7 @@ public class GteTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(7));
         this.stack.push(new IntegerAtom(7));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);

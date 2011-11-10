@@ -90,7 +90,22 @@
             <artifactId>guava</artifactId>
             <version>10.0.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.6</version>
+        </dependency>
+
     </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>reflections-repo</id>
+            <name>Reflections Maven2 Repository</name>
+            <url>http://reflections.googlecode.com/svn/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
         <resources>
@@ -192,6 +207,21 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections-maven</artifactId>
+                <version>0.9.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>reflections</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 </project>

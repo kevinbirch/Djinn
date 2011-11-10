@@ -27,23 +27,14 @@
 package com.webguys.djinn.marid.primitive.stack;
 
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.primitive.UnaryFunction;
 import com.webguys.djinn.marid.runtime.Context;
 
+@Builtin(Id.NAME)
 public class Id extends UnaryFunction
 {
     public static final String NAME = "id";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Id(method);
-        }
-    };
 
     public Id(Method family)
     {

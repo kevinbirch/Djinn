@@ -29,25 +29,15 @@ package com.webguys.djinn.marid.primitive.stack;
 import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Dip.NAME)
 public class Dip extends BinaryFunction
 {
     public static final String NAME = "dip";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Dip(method);
-        }
-    };
 
     public Dip(Method family)
     {
@@ -59,12 +49,7 @@ public class Dip extends BinaryFunction
     {
         Stack stack = context.getStack();
 
-        if(!(stack.peek() instanceof Lambda))
-        {
-            throw new DoesNotUnderstandException("Top of stack is not a lambda");
-        }
-
-        Lambda lambda = (Lambda)stack.pop();
+        Lambda lambda = this.ensureStackTop(stack, Lambda.class, "lambda");
         Atom second = stack.pop();
 
         lambda.execute(context);

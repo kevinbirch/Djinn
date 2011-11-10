@@ -34,9 +34,9 @@ import org.junit.Test;
 public class AndTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(And.NAME, And.FACTORY);
+        super.setUp(And.NAME);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class AndTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getFalse());
         this.stack.push(BooleanAtom.getFalse());
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.FALSE);
@@ -57,7 +57,7 @@ public class AndTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getTrue());
         this.stack.push(BooleanAtom.getTrue());
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);
@@ -69,7 +69,7 @@ public class AndTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getTrue());
         this.stack.push(BooleanAtom.getFalse());
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.FALSE);
@@ -81,7 +81,7 @@ public class AndTest extends AbstractBuiltinTest
         this.stack.push(BooleanAtom.getFalse());
         this.stack.push(BooleanAtom.getTrue());
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.FALSE);

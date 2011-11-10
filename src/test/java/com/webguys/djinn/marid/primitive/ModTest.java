@@ -34,9 +34,9 @@ import org.junit.Test;
 public class ModTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Mod.NAME, Mod.FACTORY);
+        super.setUp(Mod.NAME);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ModTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(8));
         this.stack.push(new IntegerAtom(2));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(0);

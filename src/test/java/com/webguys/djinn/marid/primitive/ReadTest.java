@@ -35,9 +35,9 @@ import org.junit.Test;
 public class ReadTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Read.NAME, Read.FACTORY);
+        super.setUp(Read.NAME);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ReadTest extends AbstractBuiltinTest
     {
         this.context.setStdin(new ByteArrayInputStream("monkey\n".getBytes()));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop("m");

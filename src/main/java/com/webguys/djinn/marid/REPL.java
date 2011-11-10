@@ -28,21 +28,9 @@ package com.webguys.djinn.marid;
 
 import java.io.IOException;
 
-import com.webguys.djinn.ifrit.AstToModelTransformer;
-import com.webguys.djinn.ifrit.DjinnLexer;
-import com.webguys.djinn.ifrit.DjinnParser;
-import com.webguys.djinn.ifrit.DjinnParser.statement_return;
-import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
 import com.webguys.djinn.ifrit.model.Executable;
 import com.webguys.djinn.ifrit.model.Lambda;
-import com.webguys.djinn.ifrit.model.Module;
 import com.webguys.djinn.marid.runtime.*;
-import org.antlr.runtime.ANTLRInputStream;
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.CharStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.tree.CommonTree;
-import org.antlr.runtime.tree.CommonTreeNodeStream;
 import scala.tools.jline.console.ConsoleReader;
 
 public class REPL
@@ -51,6 +39,7 @@ public class REPL
     private Dictionary dictionary;
     private Context context;
     private Version version;
+    private Runtime runtime;
 
     private boolean done;
 
@@ -60,11 +49,11 @@ public class REPL
         this.reader = new ConsoleReader();
         Dictionary root = Dictionary.getRootDictionary();
 
-        this.parseFile("djinn/primitives.djinn", root);
-        this.parseFile("djinn/prelude.djinn", root);
+        this.runtime = new Runtime();
+        this.runtime.loadSourceFile("djinn/prelude.djinn", root);
 
         this.dictionary = root.newChild();
-        this.context = new Context(new Stack(), this.dictionary, this.reader.getInput(), this.reader.getOutput());
+        this.context = new Context(new StandardStack(), this.dictionary, this.reader.getInput(), this.reader.getOutput());
     }
 
     private void run() throws Exception
@@ -148,7 +137,7 @@ public class REPL
     {
         try
         {
-            Executable result = this.parseStatement(input);
+            Executable result = this.runtime.parseStatement(input, this.dictionary);
             if(result instanceof ImmediateStatement)
             {
                 result.execute(this.context);
@@ -175,43 +164,6 @@ public class REPL
         this.reader.println(result);
         this.reader.flush();
         this.reader.println();
-    }
-
-    private Executable parseStatement(String input) throws Exception
-    {
-        CharStream inputStream = new ANTLRStringStream(input);
-        DjinnLexer lexer = new DjinnLexer(inputStream);
-
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        DjinnParser parser = new DjinnParser(tokenStream);
-
-        statement_return result = parser.statement();
-        CommonTree tree = (CommonTree)result.getTree();
-
-        CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
-        nodes.setTokenStream(tokenStream);
-
-        AstToModelTransformer walker = new AstToModelTransformer(nodes, this.dictionary);
-        return walker.statement();
-    }
-
-    private Module parseFile(String path, Dictionary dictionary) throws Exception
-    {
-        ClassLoader loader = this.getClass().getClassLoader();
-        ANTLRInputStream input = new ANTLRInputStream(loader.getResourceAsStream(path));
-        DjinnLexer lexer = new DjinnLexer(input);
-
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        DjinnParser parser = new DjinnParser(tokenStream);
-
-        translation_unit_return result = parser.translation_unit();
-        CommonTree tree = (CommonTree)result.getTree();
-
-        CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
-        nodes.setTokenStream(tokenStream);
-
-        AstToModelTransformer walker = new AstToModelTransformer(nodes, dictionary);
-        return walker.translation_unit();
     }
 
     public static void main(String[] args)

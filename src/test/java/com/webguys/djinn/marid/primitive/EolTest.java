@@ -36,9 +36,9 @@ import org.junit.Test;
 public class EolTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Eol.NAME, Eol.FACTORY);
+        super.setUp(Eol.NAME);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class EolTest extends AbstractBuiltinTest
         ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         this.context.setStdout(stdout);
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(0);
         Assert.assertEquals("\n", stdout.toString());

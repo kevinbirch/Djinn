@@ -27,29 +27,18 @@
 package com.webguys.djinn.marid.primitive.higher;
 
 import com.google.common.collect.ImmutableList;
-import com.webguys.djinn.ifrit.metamodel.SimpleType;
 import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Bind.NAME)
 public class Bind extends BinaryFunction
 {
     public static final String NAME = "bind";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Bind(method);
-        }
-    };
 
     public Bind(Method family)
     {
@@ -62,17 +51,9 @@ public class Bind extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        if(!(stack.peek() instanceof Lambda))
-        {
-            throw new DoesNotUnderstandException("Top of stack is not a lambda.");
-        }
-        if(!(stack.peek(1) instanceof SimpleType))
-        {
-            throw new DoesNotUnderstandException("Second element of stack is not a value.");
-        }
 
-        Lambda b = (Lambda)stack.pop();
-        Atom a = stack.pop();
+        Lambda b = this.ensureStackTop(stack, Lambda.class, "lambda");
+        Atom a = this.ensureStackSecondIsSimpleType(stack);
 
         stack.push(new Lambda(ImmutableList.<Atom>builder().add(a).addAll(b.getBody()).build()));
     }

@@ -27,25 +27,15 @@
 package com.webguys.djinn.marid.primitive.math;
 
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.ifrit.model.NumericAtom;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Sub.NAME)
 public class Sub extends ArithmeticFunction
 {
-
     public static final String NAME = "sub";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Sub(method);
-        }
-    };
 
     public Sub(Method family)
     {

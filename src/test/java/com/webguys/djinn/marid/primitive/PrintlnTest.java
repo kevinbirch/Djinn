@@ -37,9 +37,9 @@ import org.junit.Test;
 public class PrintlnTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Println.NAME, Println.FACTORY);
+        super.setUp(Println.NAME);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PrintlnTest extends AbstractBuiltinTest
 
         this.stack.push(new StringAtom("monkey"));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(0);
         Assert.assertEquals("monkey\n", stdout.toString());

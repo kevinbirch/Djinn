@@ -21,35 +21,71 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:17 PM
+ * Created: 11/9/11 8:47 PM
  */
 
-package com.webguys.djinn.marid.primitive;
+package com.webguys.djinn.ifrit.model;
 
-import com.google.common.collect.ImmutableList;
-import com.webguys.djinn.ifrit.model.*;
-import com.webguys.djinn.marid.primitive.stack.Dip;
-import org.junit.Before;
-import org.junit.Test;
+import com.webguys.djinn.marid.runtime.Stack;
 
-public class DipTest extends AbstractBuiltinTest
+class ShortStack implements Stack
 {
-    @Before
-    public void setUp() throws Exception
+    private Atom top;
+
+    @Override
+    public void push(Atom atom)
     {
-        super.setUp(Dip.NAME);
+        this.top = atom;
     }
 
-    @Test
-    public void execute() throws Exception
+    @Override
+    public <T extends Atom> T pop()
     {
-        this.stack.push(new IntegerAtom(1));
-        this.stack.push(new StringAtom("foo"));
-        this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("drop"))));
+        return (T)this.top;
+    }
 
-        this.method.execute(this.context);
+    @Override
+    public Atom peek()
+    {
+        return this.top;
+    }
 
-        this.assertStackSize(1);
-        this.assertStackTop("foo");
+    @Override
+    public Atom peek(int depth)
+    {
+        return 0 == depth ? this.top : null;
+    }
+
+    @Override
+    public void drop()
+    {
+    }
+
+    @Override
+    public void dup()
+    {
+    }
+
+    @Override
+    public void swap()
+    {
+    }
+
+    @Override
+    public int depth()
+    {
+        return 1;
+    }
+
+    @Override
+    public void clear()
+    {
+        this.top = null;
+    }
+
+    @Override
+    public Stack clone()
+    {
+        throw new RuntimeException("not supported");
     }
 }

@@ -29,26 +29,17 @@ package com.webguys.djinn.marid.primitive.io;
 import java.io.IOException;
 
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.ifrit.model.StringAtom;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.primitive.NullaryFunction;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.ExecutionException;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Readln.NAME)
 public class Readln extends NullaryFunction
 {
     public static final String NAME = "readln";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Readln(method);
-        }
-    };
 
     public Readln(Method family)
     {

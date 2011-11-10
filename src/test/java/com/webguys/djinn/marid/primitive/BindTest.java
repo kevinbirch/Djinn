@@ -38,9 +38,9 @@ import org.junit.Test;
 public class BindTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Bind.NAME, Bind.FACTORY);
+        super.setUp(Bind.NAME);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class BindTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(1));
         this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("sub"))));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(ImmutableList.of(new IntegerAtom(1), new Symbol("sub")));

@@ -26,7 +26,7 @@
 
 package com.webguys.djinn.ifrit.model;
 
-public interface NumericAtom
+public interface NumericAtom<T> extends Atom<T>
 {
     Atom add(NumericAtom value);
 

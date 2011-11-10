@@ -28,25 +28,15 @@ package com.webguys.djinn.marid.primitive.bool;
 
 import com.webguys.djinn.ifrit.model.BooleanAtom;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Or.NAME)
 public class Or extends BinaryFunction
 {
     public static final String NAME = "or";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Or(method);
-        }
-    };
 
     public Or(Method family)
     {
@@ -59,17 +49,9 @@ public class Or extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        if(!(stack.peek() instanceof BooleanAtom))
-        {
-            throw new DoesNotUnderstandException("Top of stack is not a boolean value.");
-        }
-        if(!(stack.peek(1) instanceof BooleanAtom))
-        {
-            throw new DoesNotUnderstandException("Second element of stack is not a boolean value.");
-        }
+        BooleanAtom b = this.ensureStackTop(stack, BooleanAtom.class, "boolean");
+        BooleanAtom a = this.ensureStackSecond(stack, BooleanAtom.class, "boolean");
 
-        BooleanAtom b = (BooleanAtom)stack.pop();
-        BooleanAtom a = (BooleanAtom)stack.pop();
         if(a.getValue() || b.getValue())
         {
             stack.push(BooleanAtom.getTrue());

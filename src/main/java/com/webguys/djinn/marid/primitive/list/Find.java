@@ -21,35 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:17 PM
+ * Created: 11/8/11 10:26 PM
  */
 
-package com.webguys.djinn.marid.primitive;
+package com.webguys.djinn.marid.primitive.list;
 
-import com.google.common.collect.ImmutableList;
-import com.webguys.djinn.ifrit.model.*;
-import com.webguys.djinn.marid.primitive.stack.Dip;
-import org.junit.Before;
-import org.junit.Test;
+import com.webguys.djinn.ifrit.model.Atom;
+import com.webguys.djinn.ifrit.model.Lambda;
+import com.webguys.djinn.ifrit.model.ListAtom;
+import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.marid.primitive.BinaryFunction;
+import com.webguys.djinn.marid.primitive.Builtin;
+import com.webguys.djinn.marid.runtime.Context;
+import com.webguys.djinn.marid.runtime.Stack;
 
-public class DipTest extends AbstractBuiltinTest
+@Builtin(Find.NAME)
+public class Find extends BinaryFunction
 {
-    @Before
-    public void setUp() throws Exception
+    public static final String NAME = "find";
+
+    public Find(Method family)
     {
-        super.setUp(Dip.NAME);
+        super(NAME, family);
     }
 
-    @Test
-    public void execute() throws Exception
+    @Override
+    public void execute(Context context)
     {
-        this.stack.push(new IntegerAtom(1));
-        this.stack.push(new StringAtom("foo"));
-        this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("drop"))));
+        super.execute(context);
 
-        this.method.execute(this.context);
+        Stack stack = context.getStack();
+        Lambda a = this.ensureStackTop(stack, Lambda.class, "lambda");
+        ListAtom b = this.ensureStackSecond(stack, ListAtom.class, "list");
 
-        this.assertStackSize(1);
-        this.assertStackTop("foo");
+        Atom result = b.find(context, a);
+
+        if(null != result)
+        {
+            stack.push(result);
+        }
     }
 }

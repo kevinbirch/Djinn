@@ -27,23 +27,20 @@
 package com.webguys.djinn.marid.primitive;
 
 import com.google.common.collect.ImmutableList;
-import com.webguys.djinn.AbstractDjinnTest;
-import com.webguys.djinn.ifrit.model.*;
-import com.webguys.djinn.marid.Runtime;
+import com.webguys.djinn.ifrit.model.Atom;
+import com.webguys.djinn.ifrit.model.IntegerAtom;
+import com.webguys.djinn.ifrit.model.Lambda;
+import com.webguys.djinn.ifrit.model.Symbol;
+import com.webguys.djinn.marid.primitive.higher.Apply;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ApplyTest extends AbstractDjinnTest
+public class ApplyTest extends AbstractBuiltinTest
 {
-    private Method method;
-
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp();
-
-        Runtime runtime = new Runtime();
-        this.method = this.dictionary.getMethod("apply");
+        super.setUp(Apply.NAME);
     }
 
     @Test

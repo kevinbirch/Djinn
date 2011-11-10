@@ -21,35 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:17 PM
+ * Created: 11/9/11 10:58 PM
  */
 
 package com.webguys.djinn.marid.primitive;
 
-import com.google.common.collect.ImmutableList;
-import com.webguys.djinn.ifrit.model.*;
-import com.webguys.djinn.marid.primitive.stack.Dip;
-import org.junit.Before;
-import org.junit.Test;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class DipTest extends AbstractBuiltinTest
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Builtin
 {
-    @Before
-    public void setUp() throws Exception
-    {
-        super.setUp(Dip.NAME);
-    }
-
-    @Test
-    public void execute() throws Exception
-    {
-        this.stack.push(new IntegerAtom(1));
-        this.stack.push(new StringAtom("foo"));
-        this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("drop"))));
-
-        this.method.execute(this.context);
-
-        this.assertStackSize(1);
-        this.assertStackTop("foo");
-    }
+    String value();
 }

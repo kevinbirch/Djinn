@@ -27,26 +27,16 @@
 package com.webguys.djinn.marid.primitive.io;
 
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.ifrit.model.StringAtom;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.primitive.UnaryFunction;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Print.NAME)
 public class Print extends UnaryFunction
 {
     public static final String NAME = "print";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Print(method);
-        }
-    };
 
     public Print(Method family)
     {
@@ -59,12 +49,7 @@ public class Print extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        if(!(stack.peek() instanceof StringAtom))
-        {
-            throw new DoesNotUnderstandException("The top of stack is not a string.");
-        }
-
-        StringAtom a = (StringAtom)stack.pop();
+        StringAtom a = this.ensureStackTop(stack, StringAtom.class, "string");
 
         context.getStdout().print(a.getValue());
         context.getStdout().flush();

@@ -199,3 +199,42 @@ eol :: [] -> []
 println :: [string] -> []
 
 \[println __primitive__]
+
+// Iteration functions
+
+@description: ;
+@sealed: true;
+filter :: [list<a> (a -> bool)] -> [list<a>]
+
+\[filter __primitive__]
+
+@description: ;
+@sealed: true;
+transform :: [list<a> (a -> b)] -> [list<b>]
+
+// \[transform __primitive__]
+
+@description: ;
+@sealed: true;
+find :: [list<a> (a -> bool)] -> [a]
+
+\[find __primitive__]
+
+@description: ;
+@sealed: true;
+any? :: [list<a> (a -> bool)] -> [bool]
+
+// \[any? __primitive__]
+
+@description: ;
+@sealed: true;
+all? :: [list<a> (a -> bool)] -> [bool]
+
+// \[all? __primitive__]
+
+@description: ;
+@sealed: true;
+reduce :: [list<a> (a -> a)] -> [a]
+
+// \[reduce __primitive__]
+

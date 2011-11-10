@@ -27,19 +27,16 @@
 package com.webguys.djinn.marid.primitive;
 
 import com.webguys.djinn.AbstractDjinnTest;
-import com.webguys.djinn.ifrit.model.ConditionalExecutable;
-import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.Executable;
 
 public abstract class AbstractBuiltinTest extends AbstractDjinnTest
 {
-    protected ConditionalExecutable function;
+    protected Executable method;
 
-    public void setUp(String name, BuiltinFactory factory)
+    public void setUp(String name) throws Exception
     {
         super.setUp();
 
-        Method method = new Method(name);
-        this.function = factory.makeInstance(method);
+        this.method = this.dictionary.getMethod(name);
     }
-
 }

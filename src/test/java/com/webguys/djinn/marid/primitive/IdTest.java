@@ -34,9 +34,9 @@ import org.junit.Test;
 public class IdTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Id.NAME, Id.FACTORY);
+        super.setUp(Id.NAME);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class IdTest extends AbstractBuiltinTest
     {
         this.stack.push(new StringAtom("foo"));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop("foo");
