@@ -37,9 +37,9 @@ import org.junit.Test;
 public class ComposeTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Compose.NAME, Compose.FACTORY);
+        super.setUp(Compose.NAME);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class ComposeTest extends AbstractBuiltinTest
         this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("add"))));
         this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("sub"))));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(ImmutableList.of(new Symbol("add"), new Symbol("sub")));

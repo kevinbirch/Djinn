@@ -21,93 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 9/29/11 12:26 AM
+ * Created: 11/8/11 11:17 PM
  */
 
 package com.webguys.djinn.marid.runtime;
 
-import java.util.ArrayList;
-
-import com.google.common.collect.Lists;
 import com.webguys.djinn.ifrit.model.Atom;
-import org.apache.commons.lang3.StringUtils;
 
-public class Stack implements Cloneable
+public interface Stack extends Cloneable
 {
-    private ArrayList<Atom> data = Lists.newArrayList();
+    void push(Atom atom);
 
-    public void push(Atom atom)
-    {
-        this.data.add(0, atom);
-    }
+    <T extends Atom> T pop();
 
-    public Atom pop()
-    {
-        if(this.data.isEmpty())
-        {
-            throw new StackUnderflowException(1, 0);
-        }
-        return this.data.remove(0);
-    }
+    Atom peek();
 
-    public Atom peek()
-    {
-        return this.peek(0);
-    }
+    Atom peek(int depth);
 
-    public Atom peek(int depth)
-    {
-        return this.data.size() > depth ? this.data.get(depth) : null;
-    }
+    void drop();
 
-    public void drop()
-    {
-        this.pop();
-    }
+    void dup();
 
-    public void dup()
-    {
-        if(this.data.isEmpty())
-        {
-            throw new StackUnderflowException(1, 0);
-        }
-        this.data.add(0, this.data.get(0));
-    }
+    void swap();
 
-    public void swap()
-    {
-        if(2 > this.data.size())
-        {
-            throw new StackUnderflowException(2, this.data.size());
-        }
-        Atom top = this.pop();
-        this.data.add(1, top);
-    }
+    int depth();
 
-    public int depth()
-    {
-        return this.data.size();
-    }
+    void clear();
+
+    Stack clone();
 
     @Override
-    public Stack clone()
-    {
-        try
-        {
-            Stack clone = (Stack)super.clone();
-            clone.data = (ArrayList<Atom>)this.data.clone();
-            return clone;
-        }
-        catch(CloneNotSupportedException e)
-        {
-            throw new RuntimeException("Received unexpected exception when cloning.", e);
-        }
-    }
-
-    @Override
-    public String toString()
-    {
-        Iterable<String> rep = Lists.transform(Lists.reverse(this.data), Atom.TO_SOURCE_REP);
-        return StringUtils.join(rep, " ");
-    }
+    String toString();
 }

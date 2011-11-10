@@ -27,23 +27,14 @@
 package com.webguys.djinn.marid.primitive.io;
 
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.primitive.NullaryFunction;
 import com.webguys.djinn.marid.runtime.Context;
 
+@Builtin(Eol.NAME)
 public class Eol extends NullaryFunction
 {
     public static final String NAME = "eol";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Eol(method);
-        }
-    };
 
     public Eol(Method family)
     {

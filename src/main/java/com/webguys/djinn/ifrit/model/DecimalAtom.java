@@ -26,7 +26,7 @@
 
 package com.webguys.djinn.ifrit.model;
 
-public class DecimalAtom extends AbstractAtom<Double> implements NumericAtom
+public class DecimalAtom extends AbstractAtom<Double> implements NumericAtom<Double>
 {
     private static final String TYPE_NAME = "Decimal";
 

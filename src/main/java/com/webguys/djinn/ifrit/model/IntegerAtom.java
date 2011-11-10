@@ -26,7 +26,7 @@
 
 package com.webguys.djinn.ifrit.model;
 
-public class IntegerAtom extends AbstractAtom<Integer> implements NumericAtom
+public class IntegerAtom extends AbstractAtom<Integer> implements NumericAtom<Integer>
 {
     private static final String TYPE_NAME = "Integer";
 

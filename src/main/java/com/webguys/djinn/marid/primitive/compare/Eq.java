@@ -29,24 +29,15 @@ package com.webguys.djinn.marid.primitive.compare;
 import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.BooleanAtom;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Eq.NAME)
 public class Eq extends BinaryFunction
 {
     public static final String NAME = "eq";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Eq(method);
-        }
-    };
 
     public Eq(Method family)
     {

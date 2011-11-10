@@ -35,9 +35,9 @@ import org.junit.Test;
 public class AddTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Add.NAME, Add.FACTORY);
+        super.setUp(Add.NAME);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class AddTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(8));
         this.stack.push(new IntegerAtom(2));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Integer.valueOf(10));
@@ -58,7 +58,7 @@ public class AddTest extends AbstractBuiltinTest
         this.stack.push(new DecimalAtom(8.0));
         this.stack.push(new DecimalAtom(2.0));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Double.valueOf(10.0));
@@ -70,7 +70,7 @@ public class AddTest extends AbstractBuiltinTest
         this.stack.push(new DecimalAtom(8.0));
         this.stack.push(new IntegerAtom(2));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Double.valueOf(10.0));
@@ -82,7 +82,7 @@ public class AddTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(8));
         this.stack.push(new DecimalAtom(2.0));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Integer.valueOf(10));

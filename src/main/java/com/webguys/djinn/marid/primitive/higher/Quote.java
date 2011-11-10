@@ -27,29 +27,18 @@
 package com.webguys.djinn.marid.primitive.higher;
 
 import com.google.common.collect.ImmutableList;
-import com.webguys.djinn.ifrit.metamodel.SimpleType;
 import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.primitive.UnaryFunction;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Quote.NAME)
 public class Quote extends UnaryFunction
 {
     public static final String NAME = "quote";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Quote(method);
-        }
-    };
 
     public Quote(Method family)
     {
@@ -62,12 +51,7 @@ public class Quote extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        if(!(stack.peek() instanceof SimpleType))
-        {
-            throw new DoesNotUnderstandException("The top stack is not a value.");
-        }
-
-        Atom a = stack.pop();
+        Atom a = this.ensureStackTopIsSimpleType(stack);
 
         stack.push(new Lambda(ImmutableList.<Atom>of(a)));
     }

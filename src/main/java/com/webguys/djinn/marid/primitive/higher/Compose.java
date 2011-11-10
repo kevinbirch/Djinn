@@ -30,25 +30,15 @@ import com.google.common.collect.ImmutableList;
 import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Compose.NAME)
 public class Compose extends BinaryFunction
 {
     public static final String NAME = "compose";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Compose(method);
-        }
-    };
 
     public Compose(Method family)
     {
@@ -61,17 +51,8 @@ public class Compose extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        if(!(stack.peek() instanceof Lambda))
-        {
-            throw new DoesNotUnderstandException("Top of stack is not a lambda.");
-        }
-        if(!(stack.peek(1) instanceof Lambda))
-        {
-            throw new DoesNotUnderstandException("Second element of stack is not a boolean value.");
-        }
-
-        Lambda b = (Lambda)stack.pop();
-        Lambda a = (Lambda)stack.pop();
+        Lambda b = this.ensureStackTop(stack, Lambda.class, "lambda");
+        Lambda a = this.ensureStackTop(stack, Lambda.class, "lambda");
 
         stack.push(new Lambda(ImmutableList.<Atom>builder().addAll(a.getBody()).addAll(b.getBody()).build()));
     }

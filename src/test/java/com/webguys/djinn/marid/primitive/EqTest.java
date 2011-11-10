@@ -34,9 +34,9 @@ import org.junit.Test;
 public class EqTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Eq.NAME, Eq.FACTORY);
+        super.setUp(Eq.NAME);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class EqTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(7));
         this.stack.push(new IntegerAtom(4));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.FALSE);
@@ -57,7 +57,7 @@ public class EqTest extends AbstractBuiltinTest
         this.stack.push(new IntegerAtom(7));
         this.stack.push(new IntegerAtom(7));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);

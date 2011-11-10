@@ -40,7 +40,7 @@ public class LambdaTest extends AbstractDjinnTest
     private List<Atom> body;
 
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
         super.setUp();
 

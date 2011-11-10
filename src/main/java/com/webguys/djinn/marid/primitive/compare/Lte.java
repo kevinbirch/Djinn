@@ -27,24 +27,15 @@
 package com.webguys.djinn.marid.primitive.compare;
 
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.ifrit.model.NumericAtom;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.primitive.math.ArithmeticFunction;
 import com.webguys.djinn.marid.runtime.Context;
 
+@Builtin(Lte.NAME)
 public class Lte extends ArithmeticFunction
 {
     public static final String NAME = "lte";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Lte(method);
-        }
-    };
 
     public Lte(Method family)
     {

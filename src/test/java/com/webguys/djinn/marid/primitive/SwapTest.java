@@ -34,9 +34,9 @@ import org.junit.Test;
 public class SwapTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Swap.NAME, Swap.FACTORY);
+        super.setUp(Swap.NAME);
 
         this.stack.push(new StringAtom("bar"));
         this.stack.push(new StringAtom("foo"));
@@ -47,7 +47,7 @@ public class SwapTest extends AbstractBuiltinTest
     {
         this.assertStackTop("foo");
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackTop("bar");
     }

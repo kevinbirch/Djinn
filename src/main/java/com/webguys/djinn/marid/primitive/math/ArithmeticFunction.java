@@ -30,7 +30,6 @@ import com.webguys.djinn.ifrit.model.Method;
 import com.webguys.djinn.ifrit.model.NumericAtom;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
 import com.webguys.djinn.marid.runtime.Stack;
 
 public abstract class ArithmeticFunction extends BinaryFunction
@@ -46,26 +45,12 @@ public abstract class ArithmeticFunction extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-
-        ensureNumericAtoms(stack);
-
-        NumericAtom b = (NumericAtom)stack.pop();
-        NumericAtom a = (NumericAtom)stack.pop();
+        NumericAtom b = this.ensureStackTop(stack, NumericAtom.class, "number");
+        NumericAtom a = this.ensureStackSecond(stack, NumericAtom.class, "number");
 
         this.execute(context, a, b);
     }
 
     protected abstract void execute(Context context, NumericAtom a, NumericAtom b);
 
-    protected static void ensureNumericAtoms(Stack stack)
-    {
-        if(!(stack.peek() instanceof NumericAtom))
-        {
-            throw new DoesNotUnderstandException("Stack top is not a numeric type!");
-        }
-        else if(!(stack.peek(1) instanceof NumericAtom))
-        {
-            throw new DoesNotUnderstandException("Stack second is not a numeric type!");
-        }
-    }
 }

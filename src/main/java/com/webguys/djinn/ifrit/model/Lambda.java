@@ -34,13 +34,13 @@ import com.webguys.djinn.ifrit.metamodel.MetaObject;
 import com.webguys.djinn.marid.runtime.Context;
 import org.apache.commons.lang3.StringUtils;
 
-public class Lambda extends MetaObject implements Atom<List<Atom>>
+public class Lambda extends MetaObject implements Atom<List<? extends Atom>>
 {
     private static final String TYPE_NAME = "Lambda";
 
     private ImmutableList<Atom> body;
 
-    public Lambda(List<Atom> body)
+    public Lambda(List<? extends Atom> body)
     {
         super(gensym(TYPE_NAME));
         this.body = ImmutableList.copyOf(body);

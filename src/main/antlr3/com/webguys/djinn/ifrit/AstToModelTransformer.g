@@ -112,12 +112,18 @@ function returns [Function result]
 		ModuleFunction function;
 		if(1 == body.size() && "__primitive__".equals(body.get(0).getValue()))
 		{
-			BuiltinFactory factory = Runtime.getBuiltinFactory($NAME.text);
-			if(null == factory)
+		    try
+		    {
+				function = Runtime.getBuiltinFunction(method);
+			}
+			catch(Exception e)
+			{
+				throw new RuntimeException("Unable to initialize implmentation of the primitive " + $NAME.text);
+			}
+			if(null == function)
 			{
 				throw new RuntimeException("There is no primitive defined for the method " + $NAME.text);
 			}
-			function = factory.makeInstance(method);
 		}
 		else
 		{
@@ -211,8 +217,22 @@ expression returns [Lambda result]
 			atoms.add($literal.result);
 			$result = new Lambda(atoms);
 		}
+	|	list
+		{
+			List<Atom> atoms = new ArrayList<Atom>();
+			atoms.add($list.result);
+			$result = new Lambda(atoms);
+		}
 	|	lambda
 		{ $result = $lambda.result; }
+	;
+
+list returns [ListAtom result]
+	@init {
+		List<Atom> atoms = new ArrayList<Atom>();
+	}
+	:	^(LIST_LITERAL (atom { atoms.add($atom.result); })*)
+		{ $result = new ListAtom(atoms); }
 	;
 
 immediate_statement returns [ImmediateStatement result]
@@ -224,7 +244,9 @@ immediate_statement returns [ImmediateStatement result]
 	;
 
 atom returns [Atom result]
-	:	literal
+	:	list
+		{ $result = $list.result; }
+	|	literal
 		{ $result = $literal.result; }
 	|	symbol
 		{ $result = $symbol.result; }
@@ -242,8 +264,4 @@ literal returns [Atom result]
 		{ $result = new DecimalAtom(Double.valueOf($DECIMAL.text)); }
 	|	^(STRING_LITERAL STRING)
 		{ $result = new StringAtom(StringUtils.strip($STRING.text, "\"")); }
-	|	^(LIST_LITERAL '()')
-//	|	list comprehension
-//	|	literal record
-//	|	LBRACK subscriptlist RBRACK
 	;

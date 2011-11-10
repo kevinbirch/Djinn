@@ -29,14 +29,8 @@ package com.webguys.djinn.ifrit.model;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.webguys.djinn.ifrit.metamodel.Action;
-import com.webguys.djinn.ifrit.metamodel.Cluster;
-import com.webguys.djinn.ifrit.metamodel.Container;
-import com.webguys.djinn.ifrit.metamodel.Member;
-import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Dictionary;
-import com.webguys.djinn.marid.runtime.PatternResultException;
-import com.webguys.djinn.marid.runtime.Stack;
+import com.webguys.djinn.ifrit.metamodel.*;
+import com.webguys.djinn.marid.runtime.*;
 
 public abstract class Function<FamilyType extends Cluster, ContainerType extends Container<? extends Member>>
     extends Action<FamilyType, ContainerType> implements ConditionalExecutable
@@ -99,5 +93,25 @@ public abstract class Function<FamilyType extends Cluster, ContainerType extends
     public void setDepthRequirement(int depthRequirement)
     {
         this.depthRequirement = depthRequirement;
+    }
+
+    protected <T extends Atom> T ensureStackTop(Stack stack, Class<T> clazz, String typeName)
+    {
+        if(!(clazz.isInstance(stack.peek())))
+        {
+            throw new DoesNotUnderstandException("The top of the stack is not a " + typeName + " value.");
+        }
+
+        return stack.pop();
+    }
+
+    protected Atom ensureStackTopIsSimpleType(Stack stack)
+    {
+        if(!(stack.peek() instanceof SimpleType))
+        {
+            throw new DoesNotUnderstandException("The top of the stack is not a simple value.");
+        }
+
+        return stack.pop();
     }
 }

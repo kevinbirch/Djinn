@@ -75,13 +75,20 @@ function_type_qualifier
 	;
 
 function
-	:	tag* DEF LBRACK NAME (pattern=lambda QUESTION)? (body+=lambda | body+=atom)+ functions+=inner_function* vardefs+=assignment_statement* RBRACK
-		-> ^(FUNCTION NAME tag* ^(PATTERN $pattern)? ^(BODY $body+) $functions* $vardefs*)
+	:	tag* DEF LBRACK NAME function_body functions+=inner_function* vardefs+=assignment_statement* RBRACK
+		-> ^(FUNCTION NAME tag* function_body $functions* $vardefs*)
 	;
 
 inner_function
-	:	DEF LBRACK NAME (pattern=lambda QUESTION)? (body+=lambda | body+=atom)+ RBRACK
-		-> ^(INNER_FUNCTION NAME ^(PATTERN $pattern)? ^(BODY $body+))
+	:	DEF LBRACK NAME function_body RBRACK
+		-> ^(INNER_FUNCTION NAME function_body )
+	;
+
+function_body
+	:	( lambda QUESTION ) => (pattern=lambda QUESTION) (body+=lambda | body+=atom)+
+		-> ^(PATTERN $pattern)? ^(BODY $body+)
+	|	(body+=lambda | body+=atom)+
+		-> ^(BODY $body+)
 	;
 
 lambda
@@ -103,7 +110,14 @@ compound_assignment_statement
 
 expression
 	:	literal
+	|	list
+//	|	literal record
 	|	lambda
+	;
+
+list
+	:	LPAREN atom* RPAREN -> ^(LIST_LITERAL atom*)
+//	|	list comprehension
 	;
 
 immediate_statement
@@ -113,6 +127,7 @@ immediate_statement
 atom
 	:	literal
 	|	symbol
+	|	list
 	;
 
 symbol
@@ -123,13 +138,7 @@ literal
 	:	INTEGER -> ^(INTEGER_LITERAL INTEGER)
 	|	DECIMAL -> ^(DECIMAL_LITERAL DECIMAL)
 	|	STRING -> ^(STRING_LITERAL STRING)
-	|	empty_list -> ^(LIST_LITERAL empty_list)
-//	|	list comprehension
-//	|	literal record
-//	|	LBRACK subscriptlist RBRACK
 	;
-
-empty_list  : '()';
 
 COLON    	: ':' ;
 

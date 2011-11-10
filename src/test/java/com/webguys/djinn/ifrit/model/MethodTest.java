@@ -28,7 +28,6 @@ package com.webguys.djinn.ifrit.model;
 
 import com.google.common.collect.Iterables;
 import com.webguys.djinn.AbstractDjinnTest;
-import com.webguys.djinn.marid.Runtime;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,14 +35,11 @@ import org.junit.Test;
 public class MethodTest extends AbstractDjinnTest
 {
     private Method method;
-    private Runtime runtime;
 
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
         super.setUp();
-
-        this.runtime = new Runtime();
     }
 
     @Test

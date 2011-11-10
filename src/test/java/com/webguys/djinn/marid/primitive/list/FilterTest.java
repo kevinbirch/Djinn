@@ -21,35 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/3/11 10:17 PM
+ * Created: 11/9/11 2:45 PM
  */
 
-package com.webguys.djinn.marid.primitive;
+package com.webguys.djinn.marid.primitive.list;
+
+import java.util.ArrayList;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.webguys.djinn.ifrit.model.*;
-import com.webguys.djinn.marid.primitive.stack.Dip;
+import com.webguys.djinn.marid.primitive.AbstractBuiltinTest;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DipTest extends AbstractBuiltinTest
+public class FilterTest extends AbstractBuiltinTest
 {
     @Before
     public void setUp() throws Exception
     {
-        super.setUp(Dip.NAME);
+        super.setUp(Filter.NAME);
     }
 
     @Test
     public void execute() throws Exception
     {
-        this.stack.push(new IntegerAtom(1));
-        this.stack.push(new StringAtom("foo"));
-        this.stack.push(new Lambda(ImmutableList.<Atom>of(new Symbol("drop"))));
+        ArrayList<IntegerAtom> atoms = Lists.newArrayList(new IntegerAtom(1), new IntegerAtom(2), new IntegerAtom(3), new IntegerAtom(4));
+        this.stack.push(new ListAtom(atoms));
+        this.stack.push(new Lambda(Lists.newArrayList(new Symbol("even?"))));
 
         this.method.execute(this.context);
 
         this.assertStackSize(1);
-        this.assertStackTop("foo");
+        this.assertStackTop(ImmutableList.<Atom>of(new IntegerAtom(2), new IntegerAtom(4)));
     }
 }

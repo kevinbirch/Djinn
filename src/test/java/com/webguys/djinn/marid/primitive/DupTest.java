@@ -34,9 +34,9 @@ import org.junit.Test;
 public class DupTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Dup.NAME, Dup.FACTORY);
+        super.setUp(Dup.NAME);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class DupTest extends AbstractBuiltinTest
 
         this.assertStackSize(1);
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(2);
         this.assertStackTop(Integer.valueOf(1));

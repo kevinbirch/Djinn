@@ -36,7 +36,7 @@ import org.junit.Test;
 public class StackTest extends AbstractDjinnTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
         super.setUp();
     }

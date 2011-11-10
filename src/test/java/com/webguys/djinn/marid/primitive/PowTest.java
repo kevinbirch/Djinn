@@ -34,9 +34,9 @@ import org.junit.Test;
 public class PowTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(Pow.NAME, Pow.FACTORY);
+        super.setUp(Pow.NAME);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class PowTest extends AbstractBuiltinTest
         this.stack.push(new DecimalAtom(8.0));
         this.stack.push(new DecimalAtom(2.0));
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(64.0);

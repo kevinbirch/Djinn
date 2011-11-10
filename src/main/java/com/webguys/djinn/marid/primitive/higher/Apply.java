@@ -28,26 +28,15 @@ package com.webguys.djinn.marid.primitive.higher;
 
 import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.primitive.UnaryFunction;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Apply.NAME)
 public class Apply extends UnaryFunction
 {
     public static final String NAME = "apply";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Apply(method);
-        }
-    };
-
 
     public Apply(Method family)
     {
@@ -60,12 +49,7 @@ public class Apply extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        if(!(stack.peek() instanceof Lambda))
-        {
-            throw new DoesNotUnderstandException("Top of stack is not a lambda.");
-        }
-
-        Lambda lambda = (Lambda)stack.pop();
+        Lambda lambda = this.ensureStackTop(stack, Lambda.class, "lambda");
         lambda.execute(context);
     }
 }

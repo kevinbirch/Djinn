@@ -28,25 +28,15 @@ package com.webguys.djinn.marid.primitive.bool;
 
 import com.webguys.djinn.ifrit.model.BooleanAtom;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.primitive.UnaryFunction;
 import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.DoesNotUnderstandException;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Not.NAME)
 public class Not extends UnaryFunction
 {
     public static final String NAME = "not";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Not(method);
-        }
-    };
 
     public Not(Method family)
     {
@@ -59,12 +49,8 @@ public class Not extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        if(!(stack.peek() instanceof BooleanAtom))
-        {
-            throw new DoesNotUnderstandException("Top of stack is not a boolean value.");
-        }
+        BooleanAtom atom = this.ensureStackTop(stack, BooleanAtom.class, "boolean");
 
-        BooleanAtom atom = (BooleanAtom)stack.pop();
         if(atom.getValue())
         {
             stack.push(BooleanAtom.getFalse());

@@ -33,9 +33,9 @@ import org.junit.Test;
 public class TrueTest extends AbstractBuiltinTest
 {
     @Before
-    public void setUp()
+    public void setUp() throws Exception
     {
-        super.setUp(True.NAME, True.FACTORY);
+        super.setUp(True.NAME);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class TrueTest extends AbstractBuiltinTest
     {
         this.assertStackSize(0);
 
-        this.function.execute(this.context);
+        this.method.execute(this.context);
 
         this.assertStackSize(1);
         this.assertStackTop(Boolean.TRUE);

@@ -28,22 +28,14 @@ package com.webguys.djinn.marid.primitive.stack;
 
 import com.webguys.djinn.ifrit.model.Method;
 import com.webguys.djinn.ifrit.model.ModuleFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Stack;
 
+@Builtin(Dup.NAME)
 public class Dup extends ModuleFunction
 {
     public static final String NAME = "dup";
-
-    public static final BuiltinFactory FACTORY = new BuiltinFactory()
-    {
-        @Override
-        public ModuleFunction makeInstance(Method method)
-        {
-            return new Dup(method);
-        }
-    };
 
     public Dup(Method family)
     {
