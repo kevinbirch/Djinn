@@ -91,6 +91,7 @@ dig5 :: [a b c d e] -> [b c d e a]
 if :: A [(A -> B) bool] -> B
 
 \[if [id]? drop apply]
+\[if drop drop]
 
 @description: executes the lambda at the second element if the boolean at the top of the stack is true, otherwise execute the lambda at the third element;
 ifel :: A [(A -> B) (A -> B) bool] -> B
