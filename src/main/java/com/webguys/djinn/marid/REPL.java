@@ -29,7 +29,6 @@ package com.webguys.djinn.marid;
 import java.io.IOException;
 
 import com.webguys.djinn.ifrit.model.Executable;
-import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.marid.runtime.*;
 import scala.tools.jline.console.ConsoleReader;
 
@@ -141,11 +140,6 @@ public class REPL
             if(result instanceof ImmediateStatement)
             {
                 result.execute(this.context);
-                return "stack: " + this.context.getStack();
-            }
-            else if(result instanceof Lambda)
-            {
-                this.context.getStack().push((Lambda)result);
                 return "stack: " + this.context.getStack();
             }
             else
