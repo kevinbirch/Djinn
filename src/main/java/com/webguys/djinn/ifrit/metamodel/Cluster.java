@@ -26,15 +26,10 @@
 
 package com.webguys.djinn.ifrit.metamodel;
 
-import java.util.Collections;
-import java.util.List;
-
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 
 public class Cluster<T extends Action> extends MetaObject implements Type
 {
-    private List<T> members = Lists.newArrayList();
-
     public Cluster(String name)
     {
         super(name);
@@ -42,22 +37,21 @@ public class Cluster<T extends Action> extends MetaObject implements Type
 
     protected Iterable<T> getMembers()
     {
-        return Collections.unmodifiableList(this.members);
+        return ImmutableList.of();
     }
 
     public void addMember(T member)
     {
-        this.members.add(member);
     }
 
     public boolean isMember(T action)
     {
-        return this.members.contains(action);
+        return false;
     }
 
     public int memberCount()
     {
-        return this.members.size();
+        return 0;
     }
 
     @Override

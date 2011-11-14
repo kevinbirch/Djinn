@@ -26,15 +26,18 @@
 
 package com.webguys.djinn.ifrit.model;
 
+import java.util.Collections;
+import java.util.Map;
+
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
 import com.webguys.djinn.ifrit.metamodel.Cluster;
-import com.webguys.djinn.marid.runtime.Context;
-import com.webguys.djinn.marid.runtime.Stack;
-import com.webguys.djinn.marid.runtime.StackUnderflowException;
+import com.webguys.djinn.marid.runtime.*;
 
 public class Method extends Cluster<Function> implements Executable
 {
     private boolean sealed;
+    private Map<Lambda, Function> functionsByCondition = Maps.newHashMap();
 
     public Method(String name)
     {
@@ -44,27 +47,37 @@ public class Method extends Cluster<Function> implements Executable
     @Override
     public Iterable<Function> getMembers()
     {
-        return super.getMembers();
+        return Collections.unmodifiableCollection(this.functionsByCondition.values());
     }
 
     @Override
-    public void addMember(Function member)
+    public void addMember(final Function function)
     {
-        super.addMember(member);
+        if(!Dictionary.isRedefinitionAllowed() && this.functionsByCondition.containsKey(function.getCondition()))
+        {
+            throw new FunctionConditionAlreadyDefinedException(function.getName(), function.getCondition());
+        }
+        this.functionsByCondition.put(function.getCondition(), function);
     }
 
     @Override
     public boolean isMember(Function action)
     {
-        return super.isMember(action);
+        return this.functionsByCondition.values().contains(action);
+    }
+
+    @Override
+    public int memberCount()
+    {
+        return this.functionsByCondition.size();
     }
 
     @Override
     public void execute(Context context)
     {
-        if(1 == this.memberCount())
+        if(1 == this.functionsByCondition.size())
         {
-            ConditionalExecutable function = Iterables.getOnlyElement(this.getMembers());
+            ConditionalExecutable function = Iterables.getOnlyElement(this.functionsByCondition.values());
             if(function.canExecute(context))
             {
                 this.executeOne(context, function);
@@ -88,13 +101,28 @@ public class Method extends Cluster<Function> implements Executable
 
     private void executeAll(Context context)
     {
-        for(Function function : this.getMembers())
+        Function defaultFunction = null;
+        if(this.functionsByCondition.containsKey(null))
         {
+            defaultFunction = this.functionsByCondition.get(null);
+        }
+        boolean found = false;
+        for(Function function : this.functionsByCondition.values())
+        {
+            if(null == function.getCondition())
+            {
+                continue;
+            }
             if(function.canExecute(context))
             {
+                found = true;
                 this.executeOne(context, function);
                 break;
             }
+        }
+        if(!found && null != defaultFunction)
+        {
+            this.executeOne(context, defaultFunction);
         }
     }
 

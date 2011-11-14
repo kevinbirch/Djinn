@@ -28,6 +28,8 @@ package com.webguys.djinn.ifrit.model;
 
 import com.google.common.collect.Iterables;
 import com.webguys.djinn.AbstractDjinnTest;
+import com.webguys.djinn.marid.runtime.Dictionary;
+import com.webguys.djinn.marid.runtime.FunctionConditionAlreadyDefinedException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -204,6 +206,30 @@ public class MethodTest extends AbstractDjinnTest
 
         this.assertStackSize(1);
         this.assertStackTop(14);
+    }
+
+    @Test
+    public void redefineFunction_allowed() throws Exception
+    {
+        this.parseAndLoad("djinn/redefineFunction.djinn", "inc!");
+
+        Assert.assertNotNull(this.method);
+        Assert.assertFalse(Iterables.isEmpty(this.method.getMembers()));
+
+        this.stack.push(new IntegerAtom(5));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(1);
+        this.assertStackTop(Integer.valueOf(8));
+    }
+
+    @Test(expected = FunctionConditionAlreadyDefinedException.class)
+    public void redefineFunction_forbidden() throws Exception
+    {
+        Dictionary.setRedefinitionAllowed(false);
+
+        this.parseAndLoad("djinn/redefineFunction.djinn", "inc!");
     }
 
     private void parseAndLoad(String path, String name) throws Exception

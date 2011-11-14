@@ -98,17 +98,6 @@ function returns [Function result]
 			throw new RuntimeException("The method \"" + $NAME.text + "\" is sealed and cannot have new functions added to it.");
 		}
 
-		if(null != $p.result)
-		{
-			for(Function function : method.getMembers())
-        	{
-				if(function.getCondition().equals($p.result))
-				{
-					throw new FunctionConditionAlreadyDefinedException($NAME.text, $p.result);
-				}
-			}
-        }
-
 		ModuleFunction function;
 		if(1 == body.size() && "__primitive__".equals(body.get(0).getValue()))
 		{
@@ -120,11 +109,16 @@ function returns [Function result]
 		}
 		else
 		{
-			function = new ModuleFunction($NAME.text, method, body);
+			if(null == $p.result)
+			{
+				function = new ModuleFunction($NAME.text, method, body);
+			}
+			else
+			{
+				function = new ModuleFunction($NAME.text, method, body, $p.result);
+			}
 		}
 		
-		function.setCondition($p.result);
-
 		if(!Iterables.isEmpty(functions) || !Iterables.isEmpty(declarations))
 		{
 			function.setLocalDictionary(functionDictionary);
@@ -161,8 +155,15 @@ inner_function[Dictionary dictionary] returns [InnerFunction result]
 			dictionary.defineMethod(method);
 		}
 		
-		InnerFunction function = new InnerFunction($NAME.text, method, body);
-		function.setCondition($p.result);
+		InnerFunction function;
+		if(null == $p.result)
+		{
+			function = new InnerFunction($NAME.text, method, body);
+		}
+		else
+		{
+			function = new InnerFunction($NAME.text, method, body, $p.result);
+		}
 		
 		$result = function;
 	}

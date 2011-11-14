@@ -36,7 +36,6 @@ public class Action<O extends Cluster, T extends Container<? extends Member>> ex
     {
         super(name);
         this.family = family;
-        this.family.addMember(this);
     }
 
     public O getFamily()
