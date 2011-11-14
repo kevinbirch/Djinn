@@ -40,7 +40,6 @@ statement returns [Executable result]
 	:	method									{ $result = $method.result; }
 	|	function 								{ $result = $function.result; }
 	|	assignment_statement[this.dictionary] 	{ $result = $assignment_statement.result; }
-	|	lambda 									{ $result = $lambda.result; }
 	|	immediate_statement 					{ $result = $immediate_statement.result; }
 	;
 
@@ -220,7 +219,8 @@ immediate_statement returns [ImmediateStatement result]
 	@init {
 		List<Atom> atoms = new ArrayList<Atom>();
 	}
-	:	^(IMMEDIATE (atom { atoms.add($atom.result); })+) { $result = new ImmediateStatement(atoms); }
+	:	^(IMMEDIATE (atom { atoms.add($atom.result); } | lambda { atoms.add($lambda.result); } )+)
+		{ $result = new ImmediateStatement(atoms); }
 	;
 
 atom returns [Atom result]

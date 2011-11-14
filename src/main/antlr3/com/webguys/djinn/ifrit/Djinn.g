@@ -46,7 +46,6 @@ statement
 	:	method
 	|	function
 	|	assignment_statement
-	|	lambda
 	|	immediate_statement
 	;
 
@@ -108,7 +107,7 @@ expression
 	;
 
 immediate_statement
-	:	atom+ -> ^(IMMEDIATE atom+)
+	:	( body+=atom | body+=lambda )+ -> ^(IMMEDIATE $body+ )
 	;
 
 atom

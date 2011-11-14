@@ -43,6 +43,22 @@ public class ImmediateStatement extends Lambda
     }
 
     @Override
+    public void execute(Context context)
+    {
+        for(Atom atom : this.getBody())
+        {
+            if(atom instanceof Lambda)
+            {
+                context.getStack().push(atom);
+            }
+            else
+            {
+                atom.execute(context);
+            }
+        }
+    }
+
+    @Override
     public String toSourceRep()
     {
         return StringUtils.join(Lists.transform(this.getBody(), Atom.TO_SOURCE_REP), " ");
@@ -52,5 +68,29 @@ public class ImmediateStatement extends Lambda
     public String getTypeName()
     {
         return TYPE_NAME;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o)
+        {
+            return true;
+        }
+        if(o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        ImmediateStatement statement = (ImmediateStatement)o;
+
+        return this.getBody().equals(statement.getBody());
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return this.getBody().hashCode();
     }
 }

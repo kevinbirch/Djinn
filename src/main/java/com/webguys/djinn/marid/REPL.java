@@ -34,7 +34,6 @@ import com.webguys.djinn.ifrit.DjinnParser;
 import com.webguys.djinn.ifrit.DjinnParser.statement_return;
 import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
 import com.webguys.djinn.ifrit.model.Executable;
-import com.webguys.djinn.ifrit.model.Lambda;
 import com.webguys.djinn.ifrit.model.Module;
 import com.webguys.djinn.marid.runtime.*;
 import org.antlr.runtime.ANTLRInputStream;
@@ -152,11 +151,6 @@ public class REPL
             if(result instanceof ImmediateStatement)
             {
                 result.execute(this.context);
-                return "stack: " + this.context.getStack();
-            }
-            else if(result instanceof Lambda)
-            {
-                this.context.getStack().push((Lambda)result);
                 return "stack: " + this.context.getStack();
             }
             else
