@@ -24,12 +24,11 @@
  * Created: 11/13/11 12:08 PM
  */
 
-package com.webguys.djinn.marid;
+package com.webguys.djinn.marid.primitive;
 
 import com.google.common.collect.ImmutableMap;
 import com.webguys.djinn.ifrit.model.Method;
 import com.webguys.djinn.ifrit.model.ModuleFunction;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
 import com.webguys.djinn.marid.primitive.bool.*;
 import com.webguys.djinn.marid.primitive.compare.*;
 import com.webguys.djinn.marid.primitive.higher.Apply;
@@ -37,6 +36,8 @@ import com.webguys.djinn.marid.primitive.higher.Bind;
 import com.webguys.djinn.marid.primitive.higher.Compose;
 import com.webguys.djinn.marid.primitive.higher.Quote;
 import com.webguys.djinn.marid.primitive.io.*;
+import com.webguys.djinn.marid.primitive.list.Filter;
+import com.webguys.djinn.marid.primitive.list.Find;
 import com.webguys.djinn.marid.primitive.math.*;
 import com.webguys.djinn.marid.primitive.stack.*;
 
@@ -125,6 +126,20 @@ public class BuiltinRepository
             public ModuleFunction makeInstance(Method method)
             {
                 return new False(method);
+            }
+        })
+        .put(Filter.NAME, new BuiltinFactory()
+        {
+            public ModuleFunction makeInstance(Method method)
+            {
+                return new Filter(method);
+            }
+        })
+        .put(Find.NAME, new BuiltinFactory()
+        {
+            public ModuleFunction makeInstance(Method method)
+            {
+                return new Find(method);
             }
         })
         .put(Gt.NAME, new BuiltinFactory()

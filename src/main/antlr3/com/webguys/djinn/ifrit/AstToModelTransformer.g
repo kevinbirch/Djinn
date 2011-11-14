@@ -12,7 +12,7 @@ import com.google.common.collect.Iterables;
 
 import com.webguys.djinn.marid.runtime.*;
 import com.webguys.djinn.marid.Runtime;
-import com.webguys.djinn.marid.primitive.BuiltinFactory;
+import com.webguys.djinn.marid.primitive.BuiltinRepository;
 import com.webguys.djinn.ifrit.model.*;
 
 }
