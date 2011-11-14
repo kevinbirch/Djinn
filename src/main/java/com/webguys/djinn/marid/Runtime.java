@@ -26,21 +26,13 @@
 
 package com.webguys.djinn.marid;
 
-import java.lang.reflect.Constructor;
-import java.util.Set;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMap.Builder;
 import com.webguys.djinn.ifrit.AstToModelTransformer;
 import com.webguys.djinn.ifrit.DjinnLexer;
 import com.webguys.djinn.ifrit.DjinnParser;
 import com.webguys.djinn.ifrit.DjinnParser.statement_return;
 import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
 import com.webguys.djinn.ifrit.model.Executable;
-import com.webguys.djinn.ifrit.model.Method;
 import com.webguys.djinn.ifrit.model.Module;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
-import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.runtime.Dictionary;
 import com.webguys.djinn.marid.runtime.InitializationException;
 import org.antlr.runtime.ANTLRInputStream;
@@ -49,38 +41,9 @@ import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
-import org.reflections.Reflections;
 
 public class Runtime
 {
-    private static final Reflections reflections = Reflections.collect();
-    private static final ImmutableMap<String, Class<? extends ModuleFunction>> primitiveImplementations;
-
-    static
-    {
-        Builder<String, Class<? extends ModuleFunction>> builder = ImmutableMap.builder();
-        Set<Class<?>> builtins = reflections.getTypesAnnotatedWith(Builtin.class);
-        for(Class<?> builtin : builtins)
-        {
-            String name = builtin.getAnnotation(Builtin.class).value();
-            builder.put(name, (Class<? extends ModuleFunction>)builtin);
-        }
-        primitiveImplementations = builder.build();
-    }
-
-    public static ModuleFunction getBuiltinFunction(Method method) throws Exception
-    {
-        Class<? extends ModuleFunction> builtin = primitiveImplementations.get(method.getName());
-        ModuleFunction result = null;
-        if(null != builtin)
-        {
-            Constructor<? extends ModuleFunction> constructor = builtin.getConstructor(Method.class);
-            result = constructor.newInstance(method);
-        }
-
-        return result;
-    }
-
     public Runtime()
     {
         try
