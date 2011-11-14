@@ -113,14 +113,7 @@ function returns [Function result]
 		ModuleFunction function;
 		if(1 == body.size() && "__primitive__".equals(body.get(0).getValue()))
 		{
-		    try
-		    {
-				function = Runtime.getBuiltinFunction(method);
-			}
-			catch(Exception e)
-			{
-				throw new RuntimeException("Unable to initialize implmentation of the primitive " + $NAME.text);
-			}
+			function = BuiltinRepository.getBuiltinFunction(method);
 			if(null == function)
 			{
 				throw new RuntimeException("There is no primitive defined for the method " + $NAME.text);
