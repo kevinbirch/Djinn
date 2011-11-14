@@ -44,6 +44,11 @@ public class ModuleFunction extends Function<Method, Module> implements Entry, C
         super(name, family, body);
     }
 
+    public ModuleFunction(String name, Method family, List<Atom> body, Lambda condition)
+    {
+        super(name, family, body, condition);
+    }
+
     protected ModuleFunction(String name, Method family)
     {
         super(name, family, ImmutableList.<Atom>of());

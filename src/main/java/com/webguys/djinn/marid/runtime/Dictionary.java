@@ -37,6 +37,8 @@ public class Dictionary
 {
     private static final Dictionary ROOT = new Dictionary();
 
+    private static boolean redefinitionAllowed = true;
+
     private Map<String, Method> methods = Maps.newHashMap();
     private Map<String, Declaration> declarations = Maps.newHashMap();
 
@@ -55,6 +57,16 @@ public class Dictionary
     private Dictionary()
     {
         this.parent = null;
+    }
+
+    public static boolean isRedefinitionAllowed()
+    {
+        return redefinitionAllowed;
+    }
+
+    public static void setRedefinitionAllowed(boolean redefinitionAllowed)
+    {
+        Dictionary.redefinitionAllowed = redefinitionAllowed;
     }
 
     public Dictionary newChild()

@@ -46,6 +46,15 @@ public abstract class Function<FamilyType extends Cluster, ContainerType extends
     {
         super(name, family);
         this.body = ImmutableList.copyOf(body);
+        this.getFamily().addMember(this);
+    }
+
+    public Function(String name, FamilyType family, List<Atom> body, Lambda condition)
+    {
+        super(name, family);
+        this.body = ImmutableList.copyOf(body);
+        this.condition = condition;
+        this.getFamily().addMember(this);
     }
 
     @Override
@@ -77,11 +86,6 @@ public abstract class Function<FamilyType extends Cluster, ContainerType extends
     public Lambda getCondition()
     {
         return this.condition;
-    }
-
-    public void setCondition(Lambda pattern)
-    {
-        this.condition = pattern;
     }
 
     @Override

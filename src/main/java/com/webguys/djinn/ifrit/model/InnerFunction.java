@@ -48,6 +48,11 @@ public class InnerFunction extends Function<Method, ModuleFunction>
         super(name, family, body);
     }
 
+    public InnerFunction(String name, Method family, List<Atom> body, Lambda condition)
+    {
+        super(name, family, body, condition);
+    }
+
     @Override
     public ModuleFunction getContainer()
     {
