@@ -20,3 +20,9 @@ maven-eclipse.xml
 
 # OS X files
 .DS_Store
+
+# backups
+*~
+
+# ANTLR Works generated code
+src/main/antlr3/com
