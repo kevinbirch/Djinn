@@ -32,7 +32,7 @@ import com.google.common.collect.Lists;
 import com.webguys.djinn.ifrit.model.Atom;
 import org.apache.commons.lang3.StringUtils;
 
-public class StandardStack implements Stack
+public class FullStack implements Stack
 {
     private ArrayList<Atom> data = Lists.newArrayList();
 
@@ -68,6 +68,15 @@ public class StandardStack implements Stack
     public void drop()
     {
         this.pop();
+    }
+
+    @Override
+    public void nip()
+    {
+        if(1 > this.data.size())
+        {
+            this.data.remove(1);
+        }
     }
 
     @Override
@@ -108,7 +117,7 @@ public class StandardStack implements Stack
     {
         try
         {
-            StandardStack clone = (StandardStack)super.clone();
+            FullStack clone = (FullStack)super.clone();
             clone.data = (ArrayList<Atom>)this.data.clone();
             return clone;
         }

@@ -21,37 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/8/11 11:17 PM
+ * Created: 11/8/11 10:26 PM
  */
 
-package com.webguys.djinn.marid.runtime;
+package com.webguys.djinn.marid.primitive.list;
 
-import com.webguys.djinn.ifrit.model.Atom;
+import com.webguys.djinn.ifrit.model.ListAtom;
+import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.marid.primitive.Builtin;
+import com.webguys.djinn.marid.primitive.UnaryFunction;
+import com.webguys.djinn.marid.runtime.Context;
+import com.webguys.djinn.marid.runtime.Stack;
 
-public interface Stack extends Cloneable
+@Builtin(First.NAME)
+public class First extends UnaryFunction
 {
-    void push(Atom atom);
+    public static final String NAME = "filter";
 
-    <T extends Atom> T pop();
-
-    Atom peek();
-
-    Atom peek(int depth);
-
-    void drop();
-
-    void nip();
-
-    void dup();
-
-    void swap();
-
-    int depth();
-
-    void clear();
-
-    Stack clone();
+    public First(Method family)
+    {
+        super(NAME, family);
+    }
 
     @Override
-    String toString();
+    public void execute(Context context)
+    {
+        super.execute(context);
+
+        Stack stack = context.getStack();
+        ListAtom a = this.ensureStackTop(stack, ListAtom.class, "list");
+
+        // this should be nth
+
+        stack.push(result);
+    }
 }

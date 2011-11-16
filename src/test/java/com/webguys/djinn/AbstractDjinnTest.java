@@ -29,8 +29,8 @@ package com.webguys.djinn;
 import com.webguys.djinn.marid.Runtime;
 import com.webguys.djinn.marid.runtime.Context;
 import com.webguys.djinn.marid.runtime.Dictionary;
+import com.webguys.djinn.marid.runtime.FullStack;
 import com.webguys.djinn.marid.runtime.Stack;
-import com.webguys.djinn.marid.runtime.StandardStack;
 import org.junit.Assert;
 
 public abstract class AbstractDjinnTest
@@ -42,7 +42,7 @@ public abstract class AbstractDjinnTest
 
     public void setUp() throws Exception
     {
-        this.stack = new StandardStack();
+        this.stack = new FullStack();
         this.dictionary = Dictionary.getRootDictionary().newChild();
         this.context = new Context(this.stack, this.dictionary);
 

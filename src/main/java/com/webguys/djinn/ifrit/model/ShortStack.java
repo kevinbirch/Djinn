@@ -62,6 +62,11 @@ class ShortStack implements Stack
     }
 
     @Override
+    public void nip()
+    {
+    }
+
+    @Override
     public void dup()
     {
     }

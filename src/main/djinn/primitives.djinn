@@ -20,6 +20,12 @@ drop :: [a] -> []
 
 \[drop __primitive__]
 
+@description: drops the second element of the stack;
+@sealed: true;
+nip :: [b a] -> [a]
+
+\[nip __primitive__]
+
 @description: duplicates the top element of the stack;
 @sealed: true;
 dup :: [a] -> [a a]
@@ -150,6 +156,12 @@ apply :: A [(A -> B)] -> B
 
 \[apply __primitive__]
 
+@description: applies the lambda at the top of the stack to the stack, keeping any elements normally consumed;
+@sealed: true;
+keep :: A [(A -> B)] -> B
+
+\[keep __primitive__]
+
 @description: composes two lambdas together;
 @sealed: true;
 compose :: [(A -> B) (B -> C)] -> [(A -> C)]
@@ -199,6 +211,20 @@ eol :: [] -> []
 println :: [string] -> []
 
 \[println __primitive__]
+
+// List functions
+
+@description: extracts the first item from the list;
+@sealed: true;
+first :: A [list] -> A [list a]
+
+\[first __primitive__]
+
+@description: returns the remaining items after the first from the list, the result list will be empty for a empty or single element input list;
+@sealed: true;
+rest :: A [list] -> A [list]
+
+\[rest __primitive__]
 
 // Iteration functions
 

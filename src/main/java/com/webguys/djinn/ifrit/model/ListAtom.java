@@ -31,8 +31,8 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.webguys.djinn.marid.runtime.Context;
+import com.webguys.djinn.marid.runtime.FullStack;
 import com.webguys.djinn.marid.runtime.Stack;
-import com.webguys.djinn.marid.runtime.StandardStack;
 import org.apache.commons.lang3.StringUtils;
 
 public class ListAtom extends AbstractAtom<List<? extends Atom>>
@@ -49,7 +49,7 @@ public class ListAtom extends AbstractAtom<List<? extends Atom>>
         ArrayList<Atom> filteredAtoms = Lists.newArrayList();
         ListAtom result = new ListAtom(filteredAtoms);
 
-        Stack stack = new StandardStack();
+        Stack stack = new FullStack();
         Context localContext = new Context(stack, context.getDictionary());
         for(Atom element : this.getValue())
         {
@@ -71,7 +71,7 @@ public class ListAtom extends AbstractAtom<List<? extends Atom>>
     {
         Atom result = null;
 
-        Stack stack = new StandardStack();
+        Stack stack = new FullStack();
         Context localContext = new Context(stack, context.getDictionary());
         for(Atom element : this.getValue())
         {

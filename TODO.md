@@ -18,7 +18,7 @@
 - type and predicate based method dispatch
 - pre/post method functions, next-method
 - user types: record, algebraic, union, protocol
-- user types w/ versioning, persistence, immutability
+- user types w/ versioning, persistence, immutability, ref [coherence] (http://coherence-lang.org/EmergingLangs.pdf)
 - wiki
 - web repl w/ ANTLR JavaScript target & jquery.console, jquery
   - ref: [amber smalltalk] (http://amber-lang.net/)

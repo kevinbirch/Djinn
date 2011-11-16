@@ -52,7 +52,7 @@ public class REPL
         this.runtime.loadSourceFile("djinn/prelude.djinn", root);
 
         this.dictionary = root.newChild();
-        this.context = new Context(new StandardStack(), this.dictionary, this.reader.getInput(), this.reader.getOutput());
+        this.context = new Context(new FullStack(), this.dictionary, this.reader.getInput(), this.reader.getOutput());
     }
 
     private void run() throws Exception

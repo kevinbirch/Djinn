@@ -85,6 +85,13 @@ dig5 :: [a b c d e] -> [b c d e a]
 
 \[dig5 [dig4] dip swap]
 
+// Higher order functions
+
+@description: reverse compose
+rcompose :: [(B -> C) (A -> B)] -> [(A -> C)]
+
+\[rcompose swap compose]
+
 // Predicates
 
 @description: executes the lambda at the second element if the boolean at the top of the stack is true;
@@ -111,3 +118,9 @@ ifel :: A [(A -> B) (A -> B) bool] -> B
 \[ifel [id]? drop [drop] dip apply]
 \[ifel drop drop apply]
 
+// List functions
+
+@description: applies the given lambda to each element of the list
+foreach :: A [list (A -> B)] -> A
+
+\[foreach [dip] bind [first swap] rcompose whilene]

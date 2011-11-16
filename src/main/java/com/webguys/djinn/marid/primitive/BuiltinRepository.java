@@ -198,6 +198,13 @@ public class BuiltinRepository
                 return new Ne(method);
             }
         })
+        .put(Nip.NAME, new BuiltinFactory()
+        {
+            public ModuleFunction makeInstance(Method method)
+            {
+                return new Nip(method);
+            }
+        })
         .put(Not.NAME, new BuiltinFactory()
         {
             public ModuleFunction makeInstance(Method method)
