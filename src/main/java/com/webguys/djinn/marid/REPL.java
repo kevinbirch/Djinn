@@ -30,6 +30,7 @@ import java.io.IOException;
 
 import com.webguys.djinn.ifrit.model.Executable;
 import com.webguys.djinn.marid.runtime.*;
+import org.apache.commons.lang3.StringUtils;
 import scala.tools.jline.console.ConsoleReader;
 
 public class REPL
@@ -82,6 +83,10 @@ public class REPL
         {
             this.reader.println("^D");
             return this.evalCommand(":exit");
+        }
+        else if(StringUtils.isBlank(input))
+        {
+            return input;
         }
         else if(input.startsWith(":"))
         {
