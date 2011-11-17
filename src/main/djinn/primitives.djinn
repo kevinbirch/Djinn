@@ -14,6 +14,18 @@ swap :: [a b] -> [b a]
 
 \[swap __primitive__]
 
+@description: Moves the element at the bottom of the stack to the top of the stack;
+@sealed: true;
+roll :: [a b c] -> [b c a]
+
+\[roll __primitive__]
+
+@description: Moves the element at the top of the stack to the bottom of the stack;
+@sealed: true;
+unroll :: [a b c] -> [c b a]
+
+\[unroll __primitive__]
+
 @description: drops the top element of the stack;
 @sealed: true;
 drop :: [a] -> []

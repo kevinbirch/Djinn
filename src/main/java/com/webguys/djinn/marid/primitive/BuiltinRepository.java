@@ -268,6 +268,20 @@ public class BuiltinRepository
                 return new Swap(method);
             }
         })
+        .put(Roll.NAME, new BuiltinFactory()
+        {
+            public ModuleFunction makeInstance(Method method)
+            {
+                return new Roll(method);
+            }
+        })
+        .put(Unroll.NAME, new BuiltinFactory()
+        {
+            public ModuleFunction makeInstance(Method method)
+            {
+                return new Unroll(method);
+            }
+        })
         .put(True.NAME, new BuiltinFactory()
         {
             public ModuleFunction makeInstance(Method method)
