@@ -21,39 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/8/11 11:17 PM
+ * Created: 11/16/11 7:54 PM
  */
+package com.webguys.djinn.marid.primitive;
 
-package com.webguys.djinn.marid.runtime;
+import org.junit.Before;
+import org.junit.Test;
 
-import com.webguys.djinn.ifrit.model.Atom;
+import com.webguys.djinn.ifrit.model.StringAtom;
+import com.webguys.djinn.marid.primitive.stack.Unroll;
 
-public interface Stack extends Cloneable
+public class UnrollTest extends AbstractBuiltinTest
 {
-    void push(Atom atom);
+    @Before
+    public void setUp() throws Exception
+    {
+        super.setUp(Unroll.NAME);
 
-    <T extends Atom> T pop();
+        this.stack.push(new StringAtom("bar"));
+        this.stack.push(new StringAtom("foo"));
+        this.stack.push(new StringAtom("qux"));
+    }
 
-    Atom peek();
+    @Test
+    public void execute() throws Exception
+    {
+        this.assertStackIndex(2, "bar");
+        this.assertStackIndex(1, "foo");
+        this.assertStackIndex(0, "qux");
+        
+        this.method.execute(this.context);
 
-    Atom peek(int depth);
+        this.assertStackIndex(2, "qux");
+        this.assertStackIndex(1, "bar");
+        this.assertStackIndex(0, "foo");
+    }
 
-    void drop();
-
-    void nip();
-
-    void dup();
-
-    void swap();
-
-    void roll(int movement);
-
-    int depth();
-
-    void clear();
-
-    Stack clone();
-
-    @Override
-    String toString();
 }

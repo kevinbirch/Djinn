@@ -77,6 +77,11 @@ class ShortStack implements Stack
     }
 
     @Override
+    public void roll(int movement)
+    {
+    }
+
+    @Override
     public int depth()
     {
         return 1;

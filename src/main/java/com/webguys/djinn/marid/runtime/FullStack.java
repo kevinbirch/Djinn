@@ -101,6 +101,24 @@ public class FullStack implements Stack
     }
 
     @Override
+    public void roll(int movement)
+    {
+        if (this.data.size() > 0)
+        {
+            if (movement > 0)
+            {
+                Atom last = this.data.remove(this.data.size() - 1);
+                this.data.add(0, last);
+            }
+            else
+            {
+                Atom first = this.data.remove(0);
+                this.data.add(first);
+            }
+        }
+    }
+
+    @Override
     public int depth()
     {
         return this.data.size();

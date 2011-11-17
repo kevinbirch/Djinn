@@ -21,39 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 11/8/11 11:17 PM
+ * Created: 11/16/11 7:54 PM
  */
 
-package com.webguys.djinn.marid.runtime;
+package com.webguys.djinn.marid.primitive.stack;
 
-import com.webguys.djinn.ifrit.model.Atom;
+import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.ModuleFunction;
+import com.webguys.djinn.marid.primitive.Builtin;
+import com.webguys.djinn.marid.runtime.Context;
+import com.webguys.djinn.marid.runtime.Stack;
 
-public interface Stack extends Cloneable
+@Builtin(Roll.NAME)
+public class Roll extends ModuleFunction
 {
-    void push(Atom atom);
+    public static final String NAME = "roll";
 
-    <T extends Atom> T pop();
-
-    Atom peek();
-
-    Atom peek(int depth);
-
-    void drop();
-
-    void nip();
-
-    void dup();
-
-    void swap();
-
-    void roll(int movement);
-
-    int depth();
-
-    void clear();
-
-    Stack clone();
+    public Roll(Method family)
+    {
+        super(NAME, family);
+    }
 
     @Override
-    String toString();
+    public void execute(Context context)
+    {
+        Stack result = context.getStack();
+
+        result.roll(1);
+    }
 }

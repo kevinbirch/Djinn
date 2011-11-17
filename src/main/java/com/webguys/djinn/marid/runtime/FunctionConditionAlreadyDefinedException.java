@@ -32,6 +32,6 @@ public class FunctionConditionAlreadyDefinedException extends RuntimeException
 {
     public FunctionConditionAlreadyDefinedException(String family, Lambda pattern)
     {
-        super(String.format("A function for the method %s is already defined with the pattern %s", family, pattern.toSourceRep()));
+        super(String.format("A function for the method %s is already defined with the pattern %s", family, pattern == null ? "<NULL>" : pattern.toSourceRep()));
     }
 }
