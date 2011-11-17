@@ -140,6 +140,17 @@ public class MethodTest extends AbstractDjinnTest
         this.assertStackSize(2);
         this.assertStackTop("foo");
         this.assertStackIndex(1, Integer.valueOf(3));
+
+        // Change the values and run again to make sure that the declarations
+        // are updated.
+        this.stack.drop();
+        this.stack.push(new StringAtom("bar"));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(2);
+        this.assertStackTop("bar");
+        this.assertStackIndex(1, Integer.valueOf(4));
     }
 
     @Test
@@ -158,7 +169,19 @@ public class MethodTest extends AbstractDjinnTest
         this.assertStackTop("foo");
         this.assertStackIndex(1, Integer.valueOf(2));
         this.assertStackIndex(2, Integer.valueOf(9));
-    }
+
+        // Change the values and run again to make sure that the declarations
+        // are updated.
+
+        this.stack.push(new IntegerAtom(5));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(6);
+        this.assertStackTop("foo");
+        this.assertStackIndex(1, Integer.valueOf(4));
+        this.assertStackIndex(2, Integer.valueOf(25));
+}
 
     @Test
     public void functionWithInnerFunction() throws Exception

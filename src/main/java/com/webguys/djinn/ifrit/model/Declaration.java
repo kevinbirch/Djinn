@@ -29,6 +29,7 @@ package com.webguys.djinn.ifrit.model;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
+import com.webguys.djinn.marid.runtime.Context;
 
 public interface Declaration extends Executable
 {
@@ -41,6 +42,8 @@ public interface Declaration extends Executable
         }
     };
     
+    void initialize(Context context);
+
     String getName();
     
     Lambda getDefinition();

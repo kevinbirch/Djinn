@@ -52,6 +52,19 @@ public class CompoundDeclaration<T extends Container<? extends CompoundDeclarati
         this.definition = definition;
     }
 
+    @Override
+    public void initialize(Context context)
+    {
+        Stack declarationStack = context.getStack().clone();
+        this.definition.execute(new Context(declarationStack, context.getDictionary()));
+        for(String name : this.names.reverse())
+        {
+            ChildDeclarationProxy proxy = new ChildDeclarationProxy(name, declarationStack.pop());
+            this.cache.put(name, proxy);
+            context.getDictionary().defineName(proxy);
+        }
+    }
+
     public Iterable<String> getNames()
     {
         return this.names;
@@ -82,17 +95,6 @@ public class CompoundDeclaration<T extends Container<? extends CompoundDeclarati
     @Override
     public void execute(Context context)
     {
-        if(this.cache.isEmpty())
-        {
-            Stack declarationStack = context.getStack().clone();
-            this.definition.execute(new Context(declarationStack, context.getDictionary()));
-            for(String name : this.names.reverse())
-            {
-                ChildDeclarationProxy proxy = new ChildDeclarationProxy(name, declarationStack.pop());
-                this.cache.put(name, proxy);
-                context.getDictionary().defineName(proxy);
-            }
-        }
     }
 
     @Override
@@ -140,6 +142,11 @@ public class CompoundDeclaration<T extends Container<? extends CompoundDeclarati
         {
             this.name = name;
             this.cache = cacheValue;
+        }
+
+        @Override
+        public void initialize(Context context)
+        {
         }
 
         @Override
