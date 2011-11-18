@@ -45,6 +45,14 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     }
 
     @Override
+    public void initialize(Context context)
+    {
+        Stack declarationStack = context.getStack().clone();
+        this.definition.execute(new Context(declarationStack, context.getDictionary()));
+        this.cache = declarationStack.pop();
+    }
+
+    @Override
     public Lambda getDefinition()
     {
         return definition;
@@ -65,12 +73,6 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     @Override
     public void execute(Context context)
     {
-        if(null == this.cache)
-        {
-            Stack declarationStack = context.getStack().clone();
-            this.definition.execute(new Context(declarationStack, context.getDictionary()));
-            this.cache = declarationStack.pop();
-        }
 
         context.getStack().push(this.cache);
     }
