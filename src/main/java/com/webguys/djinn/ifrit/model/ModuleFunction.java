@@ -104,7 +104,7 @@ public class ModuleFunction extends Function<Method, Module> implements Entry, C
         for(Declaration declaration : this.declarations)
         {
             Context declarationContext = new Context(functionContext.getStack().clone(), functionContext.getDictionary());
-            declaration.execute(declarationContext);
+            declaration.initialize(declarationContext);
         }
 
         for(Atom atom : this.body)
