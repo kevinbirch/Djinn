@@ -71,7 +71,6 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     @Override
     public void execute(Context context)
     {
-
         context.getStack().push(this.cache);
     }
 
@@ -84,8 +83,7 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     @Override
     public String toString()
     {
-        String result = super.toString();
-        return result + " = " + this.definition.toSourceRep();
+        return super.toString() + " = " + this.definition.toSourceRep();
     }
 
     @Override

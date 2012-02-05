@@ -42,6 +42,7 @@
 
 ## Enhancements
 
+- immediate statements should be allowed in files, ala lisp
 - list indices start at 1 or 0?
 - what does nth do if the index is out-of-bounds?
 - runtime startup much much slower! is it loading by annotation, or reflective c'tor calls? both? try ctors first.

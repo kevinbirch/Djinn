@@ -28,10 +28,7 @@ package com.webguys.djinn.marid;
 
 import java.io.IOException;
 
-import com.webguys.djinn.ifrit.model.Context;
-import com.webguys.djinn.ifrit.model.Dictionary;
-import com.webguys.djinn.ifrit.model.Executable;
-import com.webguys.djinn.ifrit.model.ImmediateStatement;
+import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.runtime.FullStack;
 import com.webguys.djinn.marid.runtime.LocalDictionary;
 import com.webguys.djinn.marid.runtime.Version;
@@ -118,6 +115,30 @@ public class REPL
         {
             return String.format("%s%n%s", this.version.getVersionDetails(), this.version.getBuildEnvironment());
         }
+        else if(":license".equalsIgnoreCase(input))
+        {
+            return " The MIT License\n" +
+                   "\n" +
+                   " Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.\n" +
+                   "\n" +
+                   " Permission is hereby granted, free of charge, to any person obtaining a copy of\n" +
+                   " this software and associated documentation files (the \"Software\"), to deal in\n" +
+                   " the Software without restriction, including without limitation the rights to\n" +
+                   " use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies\n" +
+                   " of the Software, and to permit persons to whom the Software is furnished to do\n" +
+                   " so, subject to the following conditions:\n" +
+                   "\n" +
+                   " The above copyright notice and this permission notice shall be included in all\n" +
+                   " copies or substantial portions of the Software.\n" +
+                   "\n" +
+                   " THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
+                   " IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
+                   " FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
+                   " AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
+                   " LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
+                   " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
+                   " SOFTWARE.";
+        }
         else if(":no-warranty".equalsIgnoreCase(input))
         {
             return "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
@@ -154,6 +175,10 @@ public class REPL
             }
             else
             {
+                if(result instanceof Declaration)
+                {
+                    ((Declaration)result).initialize(this.context);
+                }
                 return "=> " + result.toString();
             }
         }
