@@ -42,6 +42,8 @@
 
 ## Enhancements
 
+- list indices start at 1 or 0?
+- what does nth do if the index is out-of-bounds?
 - runtime startup much much slower! is it loading by annotation, or reflective c'tor calls? both? try ctors first.
 - allow method definition to be after function definitions, create placeholder methods and replace them later when actual definition is found
 - type predicate functions
@@ -60,9 +62,17 @@
   - add inputs and outputs to action class
   - symbols as messages?
   - tags should be implemented as properties in the metamodel
+  - refactor and simplify metamodel
+  - modules should have protocols and versioned dependency system
 - primitives
+  - defvar defun, defunp - reimplement declaration, method, function syntax as macrosx
   - roll up, down
   - full numeric intrinsics primitive impls
+  - remove impls for pow, etc, wait for jdk iterop and build on calls to those
+  - review for moving unnecessary impls to prelude
+  - dup should not clone
+  - seq protocol: cons, nth, length, remove, subseq
+  - implement Lock-free extensible hash tables back by split-ordered lists, compare with UnifiedMap?
 - prelude
   - additional predicates: odd?, even?, etc
 - repl
@@ -77,6 +87,7 @@
   - more syntax tests for tags, etc
   - exceptions?
   - escape sequences in strings
+  - placeholder values inside lambdas
 - parser
   - split type and property grammars into separate files
   - source file name is stored with meta object
@@ -86,3 +97,20 @@
 - apache commons cli or http://code.google.com/p/java-cli-api/
 - apache commons launcher
 - logging
+
+## Examples
+
+- fizzbuzz
+- http://blog.carbonfive.com/2011/11/17/explorations-in-go-solving-the-instagram-engineering-challenge/
+- http://en.wikipedia.org/wiki/Forth_(programming_language)#A_complete_RC4_cipher_program
+- http://www.reddit.com/r/Python/comments/mdoro/whats_your_shortest_fizzbuzz/
+
+## Other languages
+
+- Cat - http://www.cat-language.com/
+- Factor - http://factorcode.org/
+- Joy - http://www.latrobe.edu.au/phimvt/joy.html
+- Otuo - http://www.acooke.org/otuto.html
+- Niue - http://vmathew.in/niue/index.html
+- FIF - http://www.mailsend-online.com/blog/fif-isnt-forth.html
+- Clojure - http://clojure.org/

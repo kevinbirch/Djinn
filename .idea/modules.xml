@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Djinn.iml" filepath="$PROJECT_DIR$/Djinn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ifrit/ifrit.iml" filepath="$PROJECT_DIR$/ifrit/ifrit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/marid/marid.iml" filepath="$PROJECT_DIR$/marid/marid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/processor/processor.iml" filepath="$PROJECT_DIR$/processor/processor.iml" />
     </modules>
   </component>
 </project>
