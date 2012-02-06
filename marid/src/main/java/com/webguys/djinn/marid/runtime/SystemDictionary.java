@@ -34,9 +34,9 @@ import com.webguys.djinn.ifrit.model.Executable;
 import com.webguys.djinn.ifrit.model.Method;
 import ponzu.impl.map.mutable.UnifiedMap;
 
-public class LocalDictionary implements Dictionary
+public class SystemDictionary implements Dictionary
 {
-    private static final LocalDictionary ROOT = new LocalDictionary();
+    private static final SystemDictionary ROOT = new SystemDictionary();
 
     private static boolean redefinitionAllowed = true;
 
@@ -45,17 +45,17 @@ public class LocalDictionary implements Dictionary
 
     private Dictionary parent;
 
-    public static LocalDictionary getRootDictionary()
+    public static SystemDictionary getRootDictionary()
     {
         return ROOT;
     }
 
-    public LocalDictionary(Dictionary parent)
+    public SystemDictionary(Dictionary parent)
     {
         this.parent = parent;
     }
 
-    private LocalDictionary()
+    private SystemDictionary()
     {
         this.parent = null;
     }
@@ -67,13 +67,13 @@ public class LocalDictionary implements Dictionary
 
     public static void setRedefinitionAllowed(boolean redefinitionAllowed)
     {
-        LocalDictionary.redefinitionAllowed = redefinitionAllowed;
+        SystemDictionary.redefinitionAllowed = redefinitionAllowed;
     }
 
     @Override
     public Dictionary newChild()
     {
-        return new LocalDictionary(this);
+        return new SystemDictionary(this);
     }
 
     @Override

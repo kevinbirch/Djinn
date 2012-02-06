@@ -46,7 +46,7 @@ public class Length extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        ListAtom a = this.ensureStackTop(stack, ListAtom.class, "list");
+        ListAtom a = ensureStackTop(stack, ListAtom.class, "list");
 
         stack.push(new IntegerAtom(a.getValue().size()));
     }

@@ -37,14 +37,14 @@ public class ModuleFunction extends Function<Method, Module> implements Entry, C
     private ImmutableList<Declaration> declarations = Lists.immutable.of();
     protected Dictionary localDictionary;
 
-    public ModuleFunction(String name, Method family, ImmutableList<Atom> body)
+    public ModuleFunction(String name, Method family, ImmutableList<? extends Atom> body)
     {
         super(name, family, body);
     }
 
-    public ModuleFunction(String name, Method family, ImmutableList<Atom> body, Lambda condition)
+    public ModuleFunction(String name, Method family, ImmutableList<? extends Atom> body, Lambda predicate)
     {
-        super(name, family, body, condition);
+        super(name, family, body, predicate);
     }
 
     protected ModuleFunction(String name, Method family)
@@ -126,7 +126,7 @@ public class ModuleFunction extends Function<Method, Module> implements Entry, C
     public String toString()
     {
         String string = super.toString();
-        return null != this.condition ? string + " condition=" + this.condition.toSourceRep() : string;
+        return null != this.predicate ? string + " condition=" + this.predicate.toSourceRep() : string;
     }
 
     @Override
@@ -135,9 +135,9 @@ public class ModuleFunction extends Function<Method, Module> implements Entry, C
         StringBuilder sb = new StringBuilder("\\[");
         sb.append(this.getName());
         sb.append(" ");
-        if(null != this.condition)
+        if(null != this.predicate)
         {
-            sb.append(this.condition.toSourceRep());
+            sb.append(this.predicate.toSourceRep());
             sb.append(" ");
         }
         sb.append(this.body.transform(TO_SOURCE_REP).makeString(" "));

@@ -1,5 +1,19 @@
 module: System;
 
+// Runtime symbols
+
+@description: defines a new function (and its parent method if it doesn't already exist);
+@sealed: true;
+defun :: [(A -> B) string] -> []
+
+\[defun __primitive__]
+
+@description: defines a new function with a predicate (and its parent method if it doesn't already exist);
+@sealed: true;
+defunp :: [(A -> B) (A -> bool) string] -> []
+
+\[defunp __primitive__]
+
 // Stack manipulation functions
 
 @description: a no-op identity statement that represents the top of the stack;

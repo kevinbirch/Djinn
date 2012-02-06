@@ -30,7 +30,7 @@ import java.io.IOException;
 
 import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.runtime.FullStack;
-import com.webguys.djinn.marid.runtime.LocalDictionary;
+import com.webguys.djinn.marid.runtime.SystemDictionary;
 import com.webguys.djinn.marid.runtime.Version;
 import ponzu.impl.utility.StringIterate;
 import scala.tools.jline.console.ConsoleReader;
@@ -49,7 +49,7 @@ public class REPL
     {
         this.version = new Version();
         this.reader = new ConsoleReader();
-        LocalDictionary root = LocalDictionary.getRootDictionary();
+        SystemDictionary root = SystemDictionary.getRootDictionary();
 
         this.runtime = new Runtime();
         this.runtime.loadSourceFile("djinn/prelude.djinn", root);

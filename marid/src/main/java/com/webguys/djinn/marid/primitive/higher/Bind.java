@@ -48,8 +48,8 @@ public class Bind extends BinaryFunction
 
         Stack stack = context.getStack();
 
-        Lambda b = this.ensureStackTop(stack, Lambda.class, "lambda");
-        Atom a = this.ensureStackSecondIsSimpleType(stack);
+        Lambda b = ensureStackTop(stack, Lambda.class, "lambda");
+        Atom a = ensureStackItemIsSimpleType(stack, "second");
 
         stack.push(new Lambda(FastList.newListWith(a).withAll(b.getBody()).toImmutable()));
     }

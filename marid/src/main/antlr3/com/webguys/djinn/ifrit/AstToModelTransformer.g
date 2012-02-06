@@ -109,7 +109,7 @@ function returns [Function result]
                 if(method.isConditionDefined($p.result))
                 {
                     // xxx - need a proper way to present warnings from the parser
-                    System.out.println("WARNING: Method " + method.getName() + " already has a function defined for the condition " + $p.result.toSourceRep());
+                    System.out.println("WARNING: Method \"" + method.getName() + "\" already has a function defined for the condition " + $p.result.toSourceRep());
                 }
 				function = new ModuleFunction($NAME.text, method, body.toImmutable(), $p.result);
 			}

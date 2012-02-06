@@ -47,7 +47,7 @@ public class Quote extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        Atom a = this.ensureStackTopIsSimpleType(stack);
+        Atom a = ensureStackTopIsSimpleType(stack);
 
         stack.push(new Lambda(Lists.immutable.of(a)));
     }

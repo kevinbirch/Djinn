@@ -49,7 +49,7 @@ public class Println extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        StringAtom a = this.ensureStackTop(stack, StringAtom.class, "string");
+        StringAtom a = ensureStackTop(stack, StringAtom.class, "string");
 
         context.getStdout().println(a.getValue());
     }

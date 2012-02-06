@@ -49,8 +49,8 @@ public class Or extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        BooleanAtom b = this.ensureStackTop(stack, BooleanAtom.class, "boolean");
-        BooleanAtom a = this.ensureStackSecond(stack, BooleanAtom.class, "boolean");
+        BooleanAtom b = ensureStackTop(stack, BooleanAtom.class, "boolean");
+        BooleanAtom a = ensureStackItem(stack, "second", BooleanAtom.class, "boolean");
 
         if(a.getValue() || b.getValue())
         {

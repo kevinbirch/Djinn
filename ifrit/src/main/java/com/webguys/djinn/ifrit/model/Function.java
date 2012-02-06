@@ -34,35 +34,35 @@ public abstract class Function<FamilyType extends Cluster<Function>, ContainerTy
 {
     private int depthRequirement = 0;
 
-    protected Lambda condition;
-    protected ImmutableList<Atom> body;
+    protected Lambda predicate;
+    protected ImmutableList<? extends Atom> body;
 
-    public Function(String name, FamilyType family, ImmutableList<Atom> body)
+    public Function(String name, FamilyType family, ImmutableList<? extends Atom> body)
     {
         super(name, family);
         this.body = body;
         this.getFamily().addMember(this);
     }
 
-    public Function(String name, FamilyType family, ImmutableList<Atom> body, Lambda condition)
+    public Function(String name, FamilyType family, ImmutableList<? extends Atom> body, Lambda predicate)
     {
         super(name, family);
         this.body = body;
-        this.condition = condition;
+        this.predicate = predicate;
         this.getFamily().addMember(this);
     }
 
     @Override
     public boolean canExecute(Context context)
     {
-        if(null == this.condition)
+        if(null == this.predicate)
         {
             return true;
         }
         else
         {
             Stack patternStack = context.getStack().clone();
-            this.condition.execute(new Context(patternStack, context.getDictionary()));
+            this.predicate.execute(new Context(patternStack, context.getDictionary()));
 
             if(!(patternStack.peek() instanceof BooleanAtom))
             {
@@ -72,9 +72,9 @@ public abstract class Function<FamilyType extends Cluster<Function>, ContainerTy
         }
     }
 
-    public Lambda getCondition()
+    public Lambda getPredicate()
     {
-        return this.condition;
+        return this.predicate;
     }
 
     @Override
@@ -88,21 +88,31 @@ public abstract class Function<FamilyType extends Cluster<Function>, ContainerTy
         this.depthRequirement = depthRequirement;
     }
 
-    protected <T extends Atom> T ensureStackTop(Stack stack, Class<T> clazz, String typeName)
+    protected static <T extends Atom> T ensureStackTop(Stack stack, Class<T> clazz, String typeName)
+    {
+        return ensureStackItem(stack, "top", clazz, typeName);
+    }
+
+    protected static <T extends Atom> T ensureStackItem(Stack stack, String position, Class<T> clazz, String typeName)
     {
         if(!(clazz.isInstance(stack.peek())))
         {
-            throw new DoesNotUnderstandException("The top of the stack is not a " + typeName + " value.");
+            throw new DoesNotUnderstandException("The " + position + " of the stack is not a " + typeName + " value.");
         }
 
         return stack.pop();
     }
 
-    protected Atom ensureStackTopIsSimpleType(Stack stack)
+    protected static Atom ensureStackTopIsSimpleType(Stack stack)
+    {
+        return ensureStackItemIsSimpleType(stack, "top");
+    }
+
+    protected static Atom ensureStackItemIsSimpleType(Stack stack, String position)
     {
         if(!(stack.peek() instanceof SimpleType))
         {
-            throw new DoesNotUnderstandException("The top of the stack is not a simple value.");
+            throw new DoesNotUnderstandException("The " + position + " of the stack is not a simple value.");
         }
 
         return stack.pop();

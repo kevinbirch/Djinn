@@ -30,7 +30,7 @@ import com.webguys.djinn.ifrit.model.Context;
 import com.webguys.djinn.ifrit.model.Dictionary;
 import com.webguys.djinn.ifrit.model.Stack;
 import com.webguys.djinn.marid.runtime.FullStack;
-import com.webguys.djinn.marid.runtime.LocalDictionary;
+import com.webguys.djinn.marid.runtime.SystemDictionary;
 import org.junit.Assert;
 
 public abstract class AbstractDjinnTest
@@ -43,11 +43,11 @@ public abstract class AbstractDjinnTest
     public void setUp() throws Exception
     {
         this.stack = new FullStack();
-        this.dictionary = LocalDictionary.getRootDictionary().newChild();
+        this.dictionary = SystemDictionary.getRootDictionary().newChild();
         this.context = new Context(this.stack, this.dictionary);
 
         this.runtime = new com.webguys.djinn.marid.Runtime();
-        this.runtime.loadSourceFile("djinn/prelude.djinn", LocalDictionary.getRootDictionary());
+        this.runtime.loadSourceFile("djinn/prelude.djinn", SystemDictionary.getRootDictionary());
     }
 
     protected void assertStackSize(int expected)

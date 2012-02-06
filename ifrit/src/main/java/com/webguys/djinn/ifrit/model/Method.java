@@ -43,7 +43,7 @@ public class Method extends Cluster<Function> implements Executable
     @Override
     public void addMember(final Function function)
     {
-        this.functionsByCondition.put(function.getCondition(), function);
+        this.functionsByCondition.put(function.getPredicate(), function);
         super.addMember(function);
     }
 
@@ -89,7 +89,7 @@ public class Method extends Cluster<Function> implements Executable
         boolean found = false;
         for(Function function : this.functionsByCondition.values())
         {
-            if(null == function.getCondition())
+            if(null == function.getPredicate())
             {
                 continue;
             }

@@ -35,7 +35,7 @@ import com.webguys.djinn.ifrit.model.Dictionary;
 import com.webguys.djinn.ifrit.model.Executable;
 import com.webguys.djinn.ifrit.model.Module;
 import com.webguys.djinn.marid.runtime.InitializationException;
-import com.webguys.djinn.marid.runtime.LocalDictionary;
+import com.webguys.djinn.marid.runtime.SystemDictionary;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
@@ -49,7 +49,7 @@ public class Runtime
     {
         try
         {
-            loadSourceFile("djinn/primitives.djinn", LocalDictionary.getRootDictionary());
+            loadSourceFile("djinn/primitives.djinn", SystemDictionary.getRootDictionary());
         }
         catch(Exception e)
         {

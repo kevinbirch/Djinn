@@ -30,7 +30,7 @@ public interface ConditionalExecutable extends Executable
 {
     boolean canExecute(Context context);
 
-    Lambda getCondition();
+    Lambda getPredicate();
 
     int getDepthRequirement();
 }

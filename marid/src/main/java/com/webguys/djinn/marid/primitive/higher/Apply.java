@@ -49,7 +49,7 @@ public class Apply extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        Lambda lambda = this.ensureStackTop(stack, Lambda.class, "lambda");
+        Lambda lambda = ensureStackTop(stack, Lambda.class, "lambda");
         lambda.execute(context);
     }
 }

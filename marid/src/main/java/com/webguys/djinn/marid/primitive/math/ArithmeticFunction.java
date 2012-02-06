@@ -45,8 +45,8 @@ public abstract class ArithmeticFunction extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        NumericAtom b = this.ensureStackTop(stack, NumericAtom.class, "number");
-        NumericAtom a = this.ensureStackSecond(stack, NumericAtom.class, "number");
+        NumericAtom b = ensureStackTop(stack, NumericAtom.class, "number");
+        NumericAtom a = ensureStackItem(stack, "second", NumericAtom.class, "number");
 
         this.execute(context, a, b);
     }

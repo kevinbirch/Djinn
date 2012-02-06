@@ -26,7 +26,6 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.metamodel.SimpleType;
 import com.webguys.djinn.ifrit.model.*;
 
 public abstract class BinaryFunction extends ModuleFunction
@@ -50,25 +49,5 @@ public abstract class BinaryFunction extends ModuleFunction
         {
             throw new StackUnderflowException(2, stack.depth());
         }
-    }
-
-    protected <T extends Atom> T ensureStackSecond(Stack stack, Class<T> clazz, String typeName)
-    {
-        if(!(clazz.isInstance(stack.peek())))
-        {
-            throw new DoesNotUnderstandException("The second item of the stack is not a " + typeName + " value.");
-        }
-
-        return stack.pop();
-    }
-
-    protected Atom ensureStackSecondIsSimpleType(Stack stack)
-    {
-        if(!(stack.peek() instanceof SimpleType))
-        {
-            throw new DoesNotUnderstandException("The second item of the stack is not a simple value.");
-        }
-
-        return stack.pop();
     }
 }

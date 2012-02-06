@@ -1,7 +1,7 @@
-/**
+/*
  * The MIT License
  *
- * Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
+ * Copyright (c) 2012 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,26 +20,20 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Created: 10/28/11 10:06 PM
  */
 
-package com.webguys.djinn.marid.primitive.higher;
+package com.webguys.djinn.marid.primitive.runtime;
 
-import com.webguys.djinn.ifrit.model.Context;
-import com.webguys.djinn.ifrit.model.Lambda;
-import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.Stack;
+import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
 import com.webguys.djinn.marid.primitive.Builtin;
-import ponzu.impl.list.mutable.FastList;
 
-@Builtin(Compose.NAME)
-public class Compose extends BinaryFunction
+@Builtin(Defun.NAME)
+public class Defun extends BinaryFunction
 {
-    public static final String NAME = "compose";
+    public static final String NAME = "defun";
 
-    public Compose(Method family)
+    public Defun(Method family)
     {
         super(NAME, family);
     }
@@ -50,9 +44,10 @@ public class Compose extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        Lambda b = ensureStackTop(stack, Lambda.class, "lambda");
-        Lambda a = ensureStackItem(stack, "second", Lambda.class, "lambda");
+        StringAtom name = ensureStackTop(stack, StringAtom.class, "string");
+        Lambda body = ensureStackItem(stack, "second", Lambda.class, "lambda");
 
-        stack.push(new Lambda(FastList.newList(a.getBody()).withAll(b.getBody()).toImmutable()));
+        Method method = context.getDictionary().getOrCreateMethod(name.getValue());
+        method.addMember(new ModuleFunction(name.getValue(), method, body.getBody()));
     }
 }

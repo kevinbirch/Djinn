@@ -49,7 +49,7 @@ public class Not extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        BooleanAtom atom = this.ensureStackTop(stack, BooleanAtom.class, "boolean");
+        BooleanAtom atom = ensureStackTop(stack, BooleanAtom.class, "boolean");
 
         if(atom.getValue())
         {

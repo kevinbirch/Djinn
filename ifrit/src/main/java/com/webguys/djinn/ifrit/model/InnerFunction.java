@@ -30,12 +30,12 @@ import ponzu.api.list.ImmutableList;
 
 public class InnerFunction extends Function<Method, ModuleFunction>
 {
-    public InnerFunction(String name, Method family, ImmutableList<Atom> body)
+    public InnerFunction(String name, Method family, ImmutableList<? extends Atom> body)
     {
         super(name, family, body);
     }
 
-    public InnerFunction(String name, Method family, ImmutableList<Atom> body, Lambda condition)
+    public InnerFunction(String name, Method family, ImmutableList<? extends Atom> body, Lambda condition)
     {
         super(name, family, body, condition);
     }
@@ -77,7 +77,7 @@ public class InnerFunction extends Function<Method, ModuleFunction>
     public String toString()
     {
         String string = super.toString();
-        return null != this.condition ? string + " condition=" + this.condition.toSourceRep() : string;
+        return null != this.predicate ? string + " condition=" + this.predicate.toSourceRep() : string;
     }
 
     @Override
@@ -85,9 +85,9 @@ public class InnerFunction extends Function<Method, ModuleFunction>
     {
         StringBuilder sb = new StringBuilder("\\[");
         sb.append(this.getName()).append(" ");
-        if(null != this.condition)
+        if(null != this.predicate)
         {
-            sb.append(this.condition.toSourceRep()).append(" ");
+            sb.append(this.predicate.toSourceRep()).append(" ");
         }
 
         sb.append(this.body.makeString(" "));

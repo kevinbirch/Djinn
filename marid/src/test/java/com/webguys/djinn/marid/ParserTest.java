@@ -32,7 +32,7 @@ import com.webguys.djinn.ifrit.DjinnParser;
 import com.webguys.djinn.ifrit.DjinnParser.lambda_return;
 import com.webguys.djinn.ifrit.DjinnParser.statement_return;
 import com.webguys.djinn.ifrit.model.*;
-import com.webguys.djinn.marid.runtime.LocalDictionary;
+import com.webguys.djinn.marid.runtime.SystemDictionary;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
@@ -48,7 +48,7 @@ public class ParserTest
     @Before
     public void setUp()
     {
-        this.dictionary = new LocalDictionary(LocalDictionary.getRootDictionary());
+        this.dictionary = new SystemDictionary(SystemDictionary.getRootDictionary());
     }
 
     @Test

@@ -1,7 +1,7 @@
-/**
+/*
  * The MIT License
  *
- * Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
+ * Copyright (c) 2012 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,39 +20,45 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Created: 10/28/11 10:06 PM
  */
 
-package com.webguys.djinn.marid.primitive.higher;
+package com.webguys.djinn.marid.primitive.runtime;
 
-import com.webguys.djinn.ifrit.model.Context;
+import com.webguys.djinn.ifrit.model.IntegerAtom;
 import com.webguys.djinn.ifrit.model.Lambda;
-import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.Stack;
-import com.webguys.djinn.marid.primitive.BinaryFunction;
-import com.webguys.djinn.marid.primitive.Builtin;
-import ponzu.impl.list.mutable.FastList;
+import com.webguys.djinn.ifrit.model.StackUnderflowException;
+import com.webguys.djinn.ifrit.model.StringAtom;
+import com.webguys.djinn.marid.primitive.AbstractBuiltinTest;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import ponzu.impl.factory.Lists;
 
-@Builtin(Compose.NAME)
-public class Compose extends BinaryFunction
+public class DefunTest extends AbstractBuiltinTest
 {
-    public static final String NAME = "compose";
-
-    public Compose(Method family)
+    @Before
+    public void setUp() throws Exception
     {
-        super(NAME, family);
+        super.setUp(Defun.NAME);
     }
 
-    @Override
-    public void execute(Context context)
+    @Test
+    public void execute() throws Exception
     {
-        super.execute(context);
+        this.stack.push(new Lambda(Lists.immutable.of(new IntegerAtom(1))));
+        this.stack.push(new StringAtom("foo"));
 
-        Stack stack = context.getStack();
-        Lambda b = ensureStackTop(stack, Lambda.class, "lambda");
-        Lambda a = ensureStackItem(stack, "second", Lambda.class, "lambda");
+        this.method.execute(this.context);
 
-        stack.push(new Lambda(FastList.newList(a.getBody()).withAll(b.getBody()).toImmutable()));
+        this.assertStackSize(0);
+        Assert.assertTrue(this.context.getDictionary().isMethodDefined("foo"));
+    }
+
+    @Test(expected = StackUnderflowException.class)
+    public void stackUnderflow()
+    {
+        this.stack.push(new Lambda(Lists.immutable.of(new IntegerAtom(1))));
+
+        this.method.execute(this.context);
     }
 }

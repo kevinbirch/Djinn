@@ -45,7 +45,7 @@ public class Dip extends BinaryFunction
     {
         Stack stack = context.getStack();
 
-        Lambda lambda = this.ensureStackTop(stack, Lambda.class, "lambda");
+        Lambda lambda = ensureStackTop(stack, Lambda.class, "lambda");
         Atom second = stack.pop();
 
         lambda.execute(context);

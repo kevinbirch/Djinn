@@ -49,7 +49,7 @@ public class Print extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        StringAtom a = this.ensureStackTop(stack, StringAtom.class, "string");
+        StringAtom a = ensureStackTop(stack, StringAtom.class, "string");
 
         context.getStdout().print(a.getValue());
         context.getStdout().flush();
