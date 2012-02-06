@@ -22,6 +22,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="ifrit" />
+    <orderEntry type="module" module-name="ifrit" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.5" level="project" />
     <orderEntry type="module" module-name="processor" />
     <orderEntry type="library" name="Maven: ponzu:api:1.1.0" level="project" />
@@ -33,8 +34,7 @@
     <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />
     <orderEntry type="module" module-name="ifrit" />
     <orderEntry type="library" name="Maven: org.antlr:antlr:3.4" level="project" />
-    <orderEntry type="library" name="Maven: org.scala-lang:jline:2.9.0" level="project" />
-    <orderEntry type="library" name="Maven: org.fusesource.jansi:jansi:1.4" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jline:jline:2.6-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.0.1" level="project" />
   </component>
 </module>

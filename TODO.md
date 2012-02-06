@@ -65,8 +65,6 @@
   - fatal error in parsing should not leave partial definitions, all or nothing
   - restarts, fix and continue
   - refactor commands into separate classes
-  - upgrade jline to standalone version (not scala version)
-  - fix terminal problem on mac os
   - apache commons cli or http://code.google.com/p/java-cli-api/
   - apache commons launcher
 - types:

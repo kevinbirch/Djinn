@@ -32,8 +32,8 @@ import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.runtime.FullStack;
 import com.webguys.djinn.marid.runtime.SystemDictionary;
 import com.webguys.djinn.marid.runtime.Version;
+import jline.console.ConsoleReader;
 import ponzu.impl.utility.StringIterate;
-import scala.tools.jline.console.ConsoleReader;
 
 public class REPL
 {
@@ -72,6 +72,8 @@ public class REPL
             String result = this.eval(input);
             this.print(result);
         }
+
+        this.reader.getTerminal().restore();
     }
 
     private String read() throws IOException
