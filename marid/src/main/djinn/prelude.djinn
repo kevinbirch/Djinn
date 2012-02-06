@@ -133,7 +133,7 @@ ifel :: A [(A -> B) (A -> B) bool] -> B
 @description: applies the given lambda to each element of the list;
 foreach :: A [list (A -> B)] -> A
 
-\[foreach [dip] bind [first swap] rcompose whilene]
+// \[foreach [dip] bind [first swap] rcompose whilene]
 
 @description: extracts the first item from the list;
 first :: A [list] -> A [list a]
