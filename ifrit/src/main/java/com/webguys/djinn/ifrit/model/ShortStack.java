@@ -31,6 +31,12 @@ class ShortStack implements Stack
     private Atom top;
 
     @Override
+    public boolean isEmpty()
+    {
+        return null == top;
+    }
+
+    @Override
     public void push(Atom atom)
     {
         this.top = atom;
@@ -57,6 +63,7 @@ class ShortStack implements Stack
     @Override
     public void drop()
     {
+        this.top = null;
     }
 
     @Override

@@ -37,6 +37,12 @@ public class FullStack implements Stack
     private MutableList<Atom> data = FastList.newList();
 
     @Override
+    public boolean isEmpty()
+    {
+        return this.data.isEmpty();
+    }
+
+    @Override
     public void push(Atom atom)
     {
         this.data.add(0, atom);
@@ -139,6 +145,6 @@ public class FullStack implements Stack
     @Override
     public String toString()
     {
-        return this.data.reverseThis().transform(Atom.TO_SOURCE_REP).makeString(" ");
+        return this.data.transform(Atom.TO_SOURCE_REP).reverseThis().makeString(" ");
     }
 }

@@ -105,7 +105,7 @@ public class REPL
         if(":quit".equalsIgnoreCase(input) || ":exit".equalsIgnoreCase(input))
         {
             this.done = true;
-            return "goodbye.";
+            return "Goodbye.";
         }
         else if(":help".equalsIgnoreCase(input))
         {
@@ -117,37 +117,37 @@ public class REPL
         }
         else if(":license".equalsIgnoreCase(input))
         {
-            return " The MIT License\n" +
+            return "  The MIT License\n" +
                    "\n" +
-                   " Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.\n" +
+                   "  Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.\n" +
                    "\n" +
-                   " Permission is hereby granted, free of charge, to any person obtaining a copy of\n" +
-                   " this software and associated documentation files (the \"Software\"), to deal in\n" +
-                   " the Software without restriction, including without limitation the rights to\n" +
-                   " use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies\n" +
-                   " of the Software, and to permit persons to whom the Software is furnished to do\n" +
-                   " so, subject to the following conditions:\n" +
+                   "  Permission is hereby granted, free of charge, to any person obtaining a copy of\n" +
+                   "  this software and associated documentation files (the \"Software\"), to deal in\n" +
+                   "  the Software without restriction, including without limitation the rights to\n" +
+                   "  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies\n" +
+                   "  of the Software, and to permit persons to whom the Software is furnished to do\n" +
+                   "  so, subject to the following conditions:\n" +
                    "\n" +
-                   " The above copyright notice and this permission notice shall be included in all\n" +
-                   " copies or substantial portions of the Software.\n" +
+                   "  The above copyright notice and this permission notice shall be included in all\n" +
+                   "  copies or substantial portions of the Software.\n" +
                    "\n" +
-                   " THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
-                   " IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
-                   " FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
-                   " AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
-                   " LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
-                   " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
-                   " SOFTWARE.";
+                   "  THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
+                   "  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
+                   "  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
+                   "  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
+                   "  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
+                   "  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
+                   "  SOFTWARE.";
         }
         else if(":no-warranty".equalsIgnoreCase(input))
         {
-            return "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
-                   "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
-                   "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
-                   "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
-                   "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
-                   "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
-                   "SOFTWARE.";
+            return "  THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
+                   "  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
+                   "  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
+                   "  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
+                   "  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
+                   "  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
+                   "  SOFTWARE.";
         }
         else if(":stack".equalsIgnoreCase(input))
         {
@@ -171,7 +171,7 @@ public class REPL
             if(result instanceof ImmediateStatement)
             {
                 result.execute(this.context);
-                return "stack: " + this.context.getStack();
+                return this.context.getStack().isEmpty() ? "stack empty" : "stack: " + this.context.getStack();
             }
             else
             {

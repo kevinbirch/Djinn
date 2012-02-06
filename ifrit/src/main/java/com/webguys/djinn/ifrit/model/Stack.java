@@ -28,6 +28,8 @@ package com.webguys.djinn.ifrit.model;
 
 public interface Stack extends Cloneable
 {
+    boolean isEmpty();
+
     void push(Atom atom);
 
     <T extends Atom> T pop();
