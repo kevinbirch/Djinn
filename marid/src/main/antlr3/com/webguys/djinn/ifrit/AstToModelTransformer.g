@@ -218,7 +218,7 @@ list returns [ListAtom result]
 		MutableList<Atom> atoms = FastList.newList();
 	}
 	:	^(LIST_LITERAL (atom { atoms.add($atom.result); })*)
-		{ $result = new ListAtom(atoms.toImmutable()); }
+		{ $result = new ListAtom(atoms); }
 	;
 
 immediate_statement returns [ImmediateStatement result]

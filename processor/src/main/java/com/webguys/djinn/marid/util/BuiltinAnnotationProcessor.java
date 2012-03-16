@@ -92,11 +92,6 @@ public class BuiltinAnnotationProcessor extends AbstractProcessor
     {
         try
         {
-            if(null == this.sourceFile)
-            {
-                this.sourceFile = this.processingEnv.getFiler().createSourceFile(CLASSNAME);
-            }
-
             for(TypeElement annotation : annotations)
             {
                 this.elements.addAll(roundEnv.getElementsAnnotatedWith(annotation));
@@ -106,6 +101,11 @@ public class BuiltinAnnotationProcessor extends AbstractProcessor
             {
                 if(this.shouldGenerate(elements))
                 {
+                    if(null == this.sourceFile)
+                    {
+                        this.sourceFile = this.processingEnv.getFiler().createSourceFile(CLASSNAME);
+                    }
+
                     this.processingEnv.getMessager().printMessage(Kind.NOTE, "generating builtin repository.");
                     this.generate();
                 }

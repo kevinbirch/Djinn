@@ -90,6 +90,36 @@ dig5 :: [a b c d e] -> [b c d e a]
 
 \[dig5 [dig4] dip swap]
 
+@description: pushes a copy of the second item on the top of the stack;
+fetch :: [a b c d] -> [a b c d c]
+
+\[fetch [dup] dip swap]
+
+@description: pushes a copy of the third item on the top of the stack;
+fetch3 :: [a b c d] -> [a b c d b]
+
+\[fetch3 [fetch] dip swap]
+
+@description: pushes a copy of the fourth item on the top of the stack;
+fetch4 :: [a b c d] -> [a b c d a]
+
+\[fetch4 [fetch3] dip swap]
+
+@description: duplicates the top two items of the stack;
+dup2 :: [a b] -> [a b a b]
+
+\[dup2 fetch fetch]
+
+@description: duplicates the top three items of the stack;
+dup3 :: [a b c] -> [a b c a b c]
+
+\[dup3 fetch3 fetch3 fetch3]
+
+@description: duplicates the top four items of the stack;
+dup4 :: [a b c d] -> [a b c d a b c d]
+
+\[dup4 fetch4 fetch4 fetch4 fetch4]
+
 // Higher order functions
 
 @description: applies the lambda at the top of the stack to the stack, keeping any elements normally consumed;

@@ -63,7 +63,14 @@ public class InnerFunction extends Function<Method, ModuleFunction>
     {
         for(Atom atom : this.body)
         {
-            atom.execute(context);
+            if(atom instanceof Lambda)
+            {
+                context.getStack().push(atom);
+            }
+            else
+            {
+                atom.execute(context);
+            }
         }
     }
 
@@ -77,7 +84,7 @@ public class InnerFunction extends Function<Method, ModuleFunction>
     public String toString()
     {
         String string = super.toString();
-        return null != this.predicate ? string + " condition=" + this.predicate.toSourceRep() : string;
+        return null != this.predicate ? string + " predicate=" + this.predicate.toSourceRep() : string;
     }
 
     @Override

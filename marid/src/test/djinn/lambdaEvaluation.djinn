@@ -1,0 +1,12 @@
+
+foo :: [int int] -> [int int]
+
+@description: returns the square of the second item leaving the top intact;
+\[foo [dup mul] dip]
+
+bar :: [int int] -> [int int]
+
+@description: returns the square of the second item adding one to the top item;
+\[bar bar' 1 +
+  \[bar' [dup mul] dip]
+]

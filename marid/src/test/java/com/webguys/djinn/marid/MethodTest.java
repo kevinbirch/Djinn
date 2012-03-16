@@ -246,6 +246,42 @@ public class MethodTest extends AbstractDjinnTest
         this.assertStackTop(Integer.valueOf(8));
     }
 
+    @Test
+    public void functionWithLambdaBody() throws Exception
+    {
+        this.parseAndLoad("djinn/lambdaEvaluation.djinn", "foo");
+
+        Assert.assertNotNull(this.method);
+        Assert.assertFalse(this.method.getMembers().isEmpty());
+
+        this.stack.push(new IntegerAtom(3));
+        this.stack.push(new IntegerAtom(1));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(2);
+        this.assertStackTop(1);
+        this.assertStackIndex(1, 9);
+    }
+
+    @Test
+    public void innerFunctionWithLambdaBody() throws Exception
+    {
+        this.parseAndLoad("djinn/lambdaEvaluation.djinn", "bar");
+
+        Assert.assertNotNull(this.method);
+        Assert.assertFalse(this.method.getMembers().isEmpty());
+
+        this.stack.push(new IntegerAtom(3));
+        this.stack.push(new IntegerAtom(1));
+
+        this.method.execute(this.context);
+
+        this.assertStackSize(2);
+        this.assertStackTop(2);
+        this.assertStackIndex(1, 9);
+    }
+
     private void parseAndLoad(String path, String name) throws Exception
     {
         this.runtime.loadSourceFile(path, this.dictionary);

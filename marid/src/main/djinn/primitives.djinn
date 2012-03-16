@@ -72,23 +72,47 @@ false :: [] -> [bool]
 
 \[false __primitive__]
 
-@description: boolean and for the first two stack elements;
+@description: boolean conjunction of the first two stack elements;
 @sealed: true;
 and :: [bool bool] -> [bool]
 
 \[and __primitive__]
 
-@description: boolean or for the first two stack elements;
+@description: boolean disjunction of the first two stack elements;
 @sealed: true;
 or :: [bool bool] -> [bool]
 
 \[or __primitive__]
 
-@description: negates the boolean at the top of the stack;
+@description: boolean complement of the top of the stack;
 @sealed: true;
 not :: [bool] -> [bool]
 
 \[not __primitive__]
+
+@description: logical not and ("Sheffer stroke", alternative denial, negation of conjunction), i.e. x ↑ y = ¬(x ∧ y);
+@sealed: true;
+nand :: [bool bool] -> [bool]
+
+\[nand and not]
+
+@description: logical not or ("Peirce's arrow", joint denial, negation of disjunction), i.e. x ↓ y = ¬(x ∨ y);
+@sealed: true;
+nor :: [bool bool] -> [bool]
+
+\[nor or not]
+
+@description: exclusive disjunction of the first two stack elements, i.e. x ⊕ y = (x ∨ y) ∧ ¬(x ∧ y);
+@sealed: true;
+xor :: [bool bool] -> [bool]
+
+\[xor dup2 and not [or] dip and]
+
+@description: material implication of the first two stack elements, i.e. x → y = (¬x ∨ y);
+@sealed: true;
+imp :: [bool bool] -> [bool]
+
+\[imp [not] dip or]
 
 // Comparison functions
 

@@ -49,6 +49,7 @@ public class REPL
     {
         this.version = new Version();
         this.reader = new ConsoleReader();
+        this.reader.setExpandEvents(false); // why does this implementation eat all occurrences of backslash?
         SystemDictionary root = SystemDictionary.getRootDictionary();
 
         this.runtime = new Runtime();
@@ -193,8 +194,8 @@ public class REPL
     private void print(String result) throws Exception
     {
         this.reader.println(result);
-        this.reader.flush();
         this.reader.println();
+        this.reader.flush();
     }
 
     public static void main(String[] args)

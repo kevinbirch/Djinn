@@ -18,6 +18,7 @@
 - type and predicate based method dispatch
 - pre/post method functions, next-method
 - user types: record, algebraic, union, protocol
+  - http://blog.lab49.com/archives/3011
 - user types w/ versioning, persistence, immutability, ref [coherence] (http://coherence-lang.org/EmergingLangs.pdf)
 - wiki
 - web repl w/ ANTLR JavaScript target & jquery.console, jquery
@@ -44,6 +45,7 @@
 ## Enhancements
 
 - model:
+  - do functions need to explicitly hold on to inner function refs? they will be in the dictionary...
   - add inputs and outputs to action class
   - symbols as messages?
   - tags should be implemented as properties in the metamodel
@@ -52,6 +54,7 @@
   - is there a use for ocl pre and post conditions on synthetic slots? normal slots?
   - refactor type atoms into single simple type atom and create type classes.  combine decimal and int into number ala javascript
 - primitives:
+  - defun should not re-create existing inner functions if the parent context is a function
   - full numeric intrinsics primitive impls
   - remove impls for pow, etc, wait for jdk iterop and build on calls to those
   - review for moving unnecessary impls to prelude
@@ -108,3 +111,5 @@
 - Niue - http://vmathew.in/niue/index.html
 - FIF - http://www.mailsend-online.com/blog/fif-isnt-forth.html
 - Clojure - http://clojure.org/
+- PLOT - http://users.rcn.com/david-moon/PLOT/
+- Julia - http://julialang.org/manual/

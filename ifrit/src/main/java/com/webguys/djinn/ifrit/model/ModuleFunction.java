@@ -112,7 +112,14 @@ public class ModuleFunction extends Function<Method, Module> implements Entry, C
 
         for(Atom atom : this.body)
         {
-            atom.execute(functionContext);
+            if(atom instanceof Lambda)
+            {
+                functionContext.getStack().push(atom);
+            }
+            else
+            {
+                atom.execute(functionContext);
+            }
         }
     }
 
@@ -126,7 +133,7 @@ public class ModuleFunction extends Function<Method, Module> implements Entry, C
     public String toString()
     {
         String string = super.toString();
-        return null != this.predicate ? string + " condition=" + this.predicate.toSourceRep() : string;
+        return null != this.predicate ? string + " predicate=" + this.predicate.toSourceRep() : string;
     }
 
     @Override
