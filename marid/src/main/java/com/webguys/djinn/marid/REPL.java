@@ -30,42 +30,36 @@ import java.io.IOException;
 
 import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.runtime.FullStack;
-import com.webguys.djinn.marid.runtime.SystemDictionary;
-import com.webguys.djinn.marid.runtime.Version;
+import com.webguys.djinn.marid.runtime.Runtime;
 import jline.console.ConsoleReader;
 import ponzu.impl.utility.StringIterate;
 
 public class REPL
 {
-    private ConsoleReader reader;
-    private Dictionary dictionary;
+    private ConsoleReader console;
     private Context context;
-    private Version version;
     private Runtime runtime;
 
     private boolean done;
 
     public REPL() throws Exception
     {
-        this.version = new Version();
-        this.reader = new ConsoleReader();
-        this.reader.setExpandEvents(false); // why does this implementation eat all occurrences of backslash?
-        SystemDictionary root = SystemDictionary.getRootDictionary();
+        this.console = new ConsoleReader();
+        this.console.setExpandEvents(false); // xxx - why does this implementation eat all occurrences of backslash?
 
         this.runtime = new Runtime();
-        this.runtime.loadSourceFile("djinn/prelude.djinn", root);
 
-        this.dictionary = root.newChild();
-        this.context = new Context(new FullStack(), this.dictionary, this.reader.getInput(), this.reader.getOutput());
+        Dictionary dictionary = this.runtime.getRootDictionary().newChild();
+        this.context = new Context(new FullStack(), dictionary, this.console.getInput(), this.console.getOutput());
     }
 
     private void run() throws Exception
     {
-        this.reader.setPrompt("User> ");
+        this.console.setPrompt("User> ");
 
-        this.reader.println("Welcome to Djinn.");
-        this.reader.println("Type \":quit\" or \":exit\" to end your session.  Type \":help\" for instructions.");
-        this.reader.println();
+        this.console.println("Welcome to Djinn.");
+        this.console.println("Type \":quit\" or \":exit\" to end your session.  Type \":help\" for instructions.");
+        this.console.println();
 
         while(!this.done)
         {
@@ -74,19 +68,19 @@ public class REPL
             this.print(result);
         }
 
-        this.reader.getTerminal().restore();
+        this.console.getTerminal().restore();
     }
 
     private String read() throws IOException
     {
-        return this.reader.readLine();
+        return this.console.readLine();
     }
 
     private String eval(String input) throws Exception
     {
         if(null == input)
         {
-            this.reader.println("^D");
+            this.console.println("^D");
             return this.evalCommand(":exit");
         }
         else if(StringIterate.isEmptyOrWhitespace(input))
@@ -116,7 +110,7 @@ public class REPL
         }
         else if(":version".equalsIgnoreCase(input))
         {
-            return String.format("%s%n%s", this.version.getVersionDetails(), this.version.getBuildEnvironment());
+            return String.format("%s%n%s", this.runtime.getVersion().getVersionDetails(), this.runtime.getVersion().getBuildEnvironment());
         }
         else if(":license".equalsIgnoreCase(input))
         {
@@ -170,7 +164,7 @@ public class REPL
     {
         try
         {
-            Executable result = this.runtime.parseStatement(input, this.dictionary);
+            Executable result = this.runtime.parseStatement(input, this.context.getDictionary());
             if(result instanceof ImmediateStatement)
             {
                 result.execute(this.context);
@@ -193,9 +187,12 @@ public class REPL
 
     private void print(String result) throws Exception
     {
-        this.reader.println(result);
-        this.reader.println();
-        this.reader.flush();
+        this.console.println(result);
+        if(!done)
+        {
+            this.console.println();
+        }
+        this.console.flush();
     }
 
     public static void main(String[] args)

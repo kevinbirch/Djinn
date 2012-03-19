@@ -44,7 +44,6 @@ import org.stringtemplate.v4.STGroupDir;
 import org.stringtemplate.v4.misc.ErrorBuffer;
 import ponzu.api.block.function.Function;
 import ponzu.api.set.MutableSet;
-import ponzu.api.set.SetIterable;
 import ponzu.impl.set.mutable.UnifiedSet;
 
 @SupportedAnnotationTypes({"com.webguys.djinn.marid.primitive.Builtin"})
@@ -60,9 +59,9 @@ public class BuiltinAnnotationProcessor extends AbstractProcessor
     private static final Function<Element, String> ELEMENT_TO_TYPESTRING = new Function<Element, String>()
     {
         @Override
-        public String valueOf(Element element)
+        public String valueOf(Element each)
         {
-            return element.asType().toString();
+            return each.asType().toString();
         }
     };
 
@@ -99,7 +98,7 @@ public class BuiltinAnnotationProcessor extends AbstractProcessor
 
             if(roundEnv.processingOver())
             {
-                if(this.shouldGenerate(elements))
+                if(this.shouldGenerate())
                 {
                     if(null == this.sourceFile)
                     {
@@ -124,10 +123,10 @@ public class BuiltinAnnotationProcessor extends AbstractProcessor
         return true;
     }
 
-    private boolean shouldGenerate(SetIterable<Element> elements) throws IOException
+    private boolean shouldGenerate() throws IOException
     {
         boolean result = false;
-        UnifiedSet<String> typeStrings = elements.transform(ELEMENT_TO_TYPESTRING, UnifiedSet.<String>newSet(elements.size()));
+        UnifiedSet<String> typeStrings = this.elements.transform(ELEMENT_TO_TYPESTRING, UnifiedSet.<String>newSet(this.elements.size()));
 
         if(this.db.exists())
         {

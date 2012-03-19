@@ -54,6 +54,7 @@
   - is there a use for ocl pre and post conditions on synthetic slots? normal slots?
   - refactor type atoms into single simple type atom and create type classes.  combine decimal and int into number ala javascript
 - primitives:
+  - add global names for system information (e.g. versions, states, etc.) and meta-name listing all available names
   - defun should not re-create existing inner functions if the parent context is a function
   - full numeric intrinsics primitive impls
   - remove impls for pow, etc, wait for jdk iterop and build on calls to those
@@ -97,10 +98,11 @@
 
 ## Examples
 
-- fizzbuzz
 - http://blog.carbonfive.com/2011/11/17/explorations-in-go-solving-the-instagram-engineering-challenge/
 - http://en.wikipedia.org/wiki/Forth_(programming_language)#A_complete_RC4_cipher_program
 - http://www.reddit.com/r/Python/comments/mdoro/whats_your_shortest_fizzbuzz/
+- http://rosettacode.org/wiki/Rosetta_Code
+- http://www.franz.com/support/tech_corner/usgs-011207.lhtml
 
 ## Other languages
 

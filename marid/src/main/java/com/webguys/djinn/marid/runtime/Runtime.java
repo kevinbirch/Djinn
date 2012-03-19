@@ -24,7 +24,7 @@
  * Created: 10/30/11 7:00 PM
  */
 
-package com.webguys.djinn.marid;
+package com.webguys.djinn.marid.runtime;
 
 import com.webguys.djinn.ifrit.AstToModelTransformer;
 import com.webguys.djinn.ifrit.DjinnLexer;
@@ -34,8 +34,6 @@ import com.webguys.djinn.ifrit.DjinnParser.translation_unit_return;
 import com.webguys.djinn.ifrit.model.Dictionary;
 import com.webguys.djinn.ifrit.model.Executable;
 import com.webguys.djinn.ifrit.model.Module;
-import com.webguys.djinn.marid.runtime.InitializationException;
-import com.webguys.djinn.marid.runtime.SystemDictionary;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
@@ -45,16 +43,34 @@ import org.antlr.runtime.tree.CommonTreeNodeStream;
 
 public class Runtime
 {
+    private Version version;
+    private SystemDictionary systemDictionary;
+
     public Runtime()
     {
         try
         {
-            loadSourceFile("djinn/primitives.djinn", SystemDictionary.getRootDictionary());
+            this.version = new Version();
+            this.systemDictionary = SystemDictionary.getRootDictionary();
+
+            this.loadSourceFile("djinn/primitives.djinn", this.systemDictionary);
+            this.loadSourceFile("djinn/prelude.djinn", this.systemDictionary);
+            this.loadSourceFile("djinn/system-environment.djinn", this.systemDictionary);
         }
         catch(Exception e)
         {
             throw new InitializationException(e);
         }
+    }
+
+    public Version getVersion()
+    {
+        return version;
+    }
+
+    public Dictionary getRootDictionary()
+    {
+        return systemDictionary;
     }
 
     public Module loadSourceFile(String path, Dictionary dictionary) throws Exception

@@ -38,9 +38,14 @@ public class Version
         this.properties.load(this.getClass().getClassLoader().getResourceAsStream("version.properties"));
     }
 
+    public Version(Properties properties)
+    {
+        this.properties = properties;
+    }
+
     public String getVersionDetails()
     {
-        return String.format("Djinn %s (%s@%s, %s)", this.getVersion(), this.getBuildNumber(), this.getBuildHostname(), this.getBuildDate());
+        return String.format("Djinn %s (%s@%s, %s)", this.getShortVersion(), this.getBuildNumber(), this.getBuildHostname(), this.getBuildDate());
     }
 
     public String getBuildEnvironment()
@@ -48,14 +53,14 @@ public class Version
         return String.format("[%s %s] on %s %s", this.getJavaVmName(), this.getJavaRuntimeVersion(), this.getBuildHostOs(), this.getBuildHostOsVersion());
     }
 
-    public String getVersion()
+    public String getShortVersion()
     {
-        return this.properties.getProperty("version");
+        return this.properties.getProperty("short.version");
     }
 
     public String getBuildDate()
     {
-        return this.properties.getProperty("date");
+        return this.properties.getProperty("build.date");
     }
 
     public String getBuildNumber()
@@ -65,26 +70,26 @@ public class Version
 
     public String getBuildHostname()
     {
-        return this.properties.getProperty("host.name");
+        return this.properties.getProperty("build.host.name");
     }
 
     public String getBuildHostOs()
     {
-        return this.properties.getProperty("host.os");
+        return this.properties.getProperty("build.host.os");
     }
 
     public String getBuildHostOsVersion()
     {
-        return this.properties.getProperty("host.os.vers");
+        return this.properties.getProperty("build.host.os.version");
     }
 
     public String getJavaVmName()
     {
-        return this.properties.getProperty("java.vm.name");
+        return this.properties.getProperty("build.java.vm.name");
     }
 
     public String getJavaRuntimeVersion()
     {
-        return this.properties.getProperty("java.runtime.version");
+        return this.properties.getProperty("build.java.runtime.version");
     }
 }

@@ -30,6 +30,7 @@ import com.webguys.djinn.ifrit.model.Context;
 import com.webguys.djinn.ifrit.model.Dictionary;
 import com.webguys.djinn.ifrit.model.Stack;
 import com.webguys.djinn.marid.runtime.FullStack;
+import com.webguys.djinn.marid.runtime.Runtime;
 import com.webguys.djinn.marid.runtime.SystemDictionary;
 import org.junit.Assert;
 
@@ -46,7 +47,7 @@ public abstract class AbstractDjinnTest
         this.dictionary = SystemDictionary.getRootDictionary().newChild();
         this.context = new Context(this.stack, this.dictionary);
 
-        this.runtime = new com.webguys.djinn.marid.Runtime();
+        this.runtime = new Runtime();
         this.runtime.loadSourceFile("djinn/prelude.djinn", SystemDictionary.getRootDictionary());
     }
 

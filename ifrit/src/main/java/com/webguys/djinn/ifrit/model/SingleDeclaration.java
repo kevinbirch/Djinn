@@ -45,9 +45,8 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     @Override
     public void initialize(Context context)
     {
-        Stack declarationStack = context.getStack().clone();
-        this.definition.execute(new Context(declarationStack, context.getDictionary()));
-        this.cache = declarationStack.pop();
+        this.definition.execute(context);
+        this.cache = context.getStack().peek();
     }
 
     @Override
@@ -71,7 +70,14 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     @Override
     public void execute(Context context)
     {
-        context.getStack().push(this.cache);
+        if(null == this.cache)
+        {
+            this.initialize(context);
+        }
+        else
+        {
+            context.getStack().push(this.cache);
+        }
     }
 
     @Override
