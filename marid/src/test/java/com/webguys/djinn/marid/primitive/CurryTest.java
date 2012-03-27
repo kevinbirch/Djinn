@@ -21,32 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created: 10/30/11 9:15 PM
+ * Created: 11/6/11 1:36 AM
  */
 
-package com.webguys.djinn.ifrit.model;
+package com.webguys.djinn.marid.primitive;
 
-public interface NumericAtom<T> extends Atom<T>
+import com.webguys.djinn.ifrit.model.IntegerAtom;
+import com.webguys.djinn.ifrit.model.Lambda;
+import com.webguys.djinn.ifrit.model.Symbol;
+import com.webguys.djinn.marid.primitive.higher.Curry;
+import org.junit.Before;
+import org.junit.Test;
+import ponzu.impl.factory.Lists;
+
+public class CurryTest extends AbstractBuiltinTest
 {
-    Atom add(NumericAtom value);
+    @Before
+    public void setUp() throws Exception
+    {
+        super.setUp(Curry.NAME);
+    }
 
-    Atom sub(NumericAtom value);
+    @Test
+    public void execute() throws Exception
+    {
+        this.stack.push(new IntegerAtom(1));
+        this.stack.push(new Lambda(Lists.immutable.of(new Symbol("sub"))));
 
-    Atom div(NumericAtom value);
+        this.method.execute(this.context);
 
-    Atom mul(NumericAtom value);
-
-    Atom lt(NumericAtom value);
-
-    Atom lte(NumericAtom value);
-
-    Atom gt(NumericAtom value);
-
-    Atom gte(NumericAtom value);
-
-    Atom mod(NumericAtom value);
-
-    int intValue();
-
-    double doubleValue();
+        this.assertStackSize(1);
+        this.assertStackTop(Lists.immutable.of(new IntegerAtom(1), new Symbol("sub")));
+    }
 }

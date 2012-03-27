@@ -28,13 +28,12 @@ package com.webguys.djinn.marid.runtime;
 
 import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.Stack;
-import com.webguys.djinn.ifrit.model.StackUnderflowException;
 import ponzu.api.list.MutableList;
 import ponzu.impl.list.mutable.FastList;
 
 public class FullStack implements Stack
 {
-    private MutableList<Atom> data = FastList.newList();
+    private MutableList<Atom<?>> data = FastList.newList();
 
     @Override
     public boolean isEmpty()
@@ -43,29 +42,29 @@ public class FullStack implements Stack
     }
 
     @Override
-    public void push(Atom atom)
+    public void push(Atom<?> atom)
     {
         this.data.add(0, atom);
     }
 
     @Override
-    public <T extends Atom> T pop()
+    public <T extends Atom<?>> T pop()
     {
         if(this.data.isEmpty())
         {
-            throw new StackUnderflowException(1, 0);
+            return null;
         }
         return (T)this.data.remove(0);
     }
 
     @Override
-    public Atom peek()
+    public Atom<?> peek()
     {
         return this.peek(0);
     }
 
     @Override
-    public Atom peek(int depth)
+    public Atom<?> peek(int depth)
     {
         return this.data.size() > depth ? this.data.get(depth) : null;
     }
@@ -81,7 +80,7 @@ public class FullStack implements Stack
     {
         if(this.data.isEmpty())
         {
-            throw new StackUnderflowException(1, 0);
+            return;
         }
         this.data.add(0, this.data.get(0));
     }
@@ -91,9 +90,9 @@ public class FullStack implements Stack
     {
         if(2 > this.data.size())
         {
-            throw new StackUnderflowException(2, this.data.size());
+            return;
         }
-        Atom top = this.pop();
+        Atom<?> top = this.pop();
         this.data.add(1, top);
     }
 
@@ -104,12 +103,12 @@ public class FullStack implements Stack
         {
             if(movement > 0)
             {
-                Atom last = this.data.remove(this.data.size() - 1);
+                Atom<?> last = this.data.remove(this.data.size() - 1);
                 this.data.add(0, last);
             }
             else
             {
-                Atom first = this.data.remove(0);
+                Atom<?> first = this.data.remove(0);
                 this.data.add(first);
             }
         }

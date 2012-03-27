@@ -37,7 +37,7 @@ public class Eq extends BinaryFunction
 
     public Eq(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, Any.getMetaclass(), Any.getMetaclass());
     }
 
     @Override

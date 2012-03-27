@@ -22,32 +22,47 @@
  * SOFTWARE.
  */
 
-package com.webguys.djinn.marid.primitive.runtime;
+package com.webguys.djinn.marid.primitive;
 
 import com.webguys.djinn.ifrit.model.*;
-import com.webguys.djinn.marid.primitive.BinaryFunction;
-import com.webguys.djinn.marid.primitive.Builtin;
+import ponzu.api.list.ImmutableList;
+import ponzu.impl.factory.Lists;
 
-@Builtin(Defun.NAME)
-public class Defun extends BinaryFunction
+public abstract class BuiltinFunction extends ModuleFunction
 {
-    public static final String NAME = "defun";
+    private static final ImmutableList<? extends Atom> BODY = Lists.immutable.of(new StringAtom("__primitive__"));
 
-    public Defun(Method family)
+    private Metaclass<?>[] stackItems;
+
+    public BuiltinFunction(String name, Method family, int depthRequirement, Metaclass<?>... stackItems)
     {
-        super(NAME, family, StringAtom.getMetaclass(), Lambda.getMetaclass());
+        super(name, family, BODY);
+        this.setDepthRequirement(depthRequirement);
+        this.stackItems = stackItems;
     }
 
     @Override
     public void execute(Context context)
     {
-        super.execute(context);
-
         Stack stack = context.getStack();
-        StringAtom name = stack.pop();
-        Lambda body = stack.pop();
+        if(this.getDepthRequirement() > stack.depth())
+        {
+            throw new StackUnderflowException(this.getFamily(), this.getDepthRequirement(), stack.depth());
+        }
 
-        Method method = context.getDictionary().getOrCreateMethod(name.getValue());
-        method.addMember(new ModuleFunction(name.getValue(), method, body.getBody()));
+        for(int i = 0; i < stackItems.length; i++)
+        {
+            Metaclass<?> stackItem = stackItems[i];
+            ensureStackItem(stack, i, stackItem);
+        }
+    }
+
+    private void ensureStackItem(Stack stack, int position, Metaclass<?> metaclass)
+    {
+        Atom<?> atom = stack.peek(position);
+        if(!(metaclass.isImplementation(atom)))
+        {
+            throw new DoesNotUnderstandException(this.getFamily(), position, metaclass, atom);
+        }
     }
 }

@@ -1,7 +1,7 @@
-/**
+/*
  * The MIT License
  *
- * Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
+ * Copyright (c) 2012 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,19 +20,46 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Created: 10/30/11 8:58 PM
  */
 
-package com.webguys.djinn.marid.primitive;
+package com.webguys.djinn.marid.primitive.runtime;
 
-import com.webguys.djinn.ifrit.model.Metaclass;
 import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.StringAtom;
+import com.webguys.djinn.marid.primitive.AbstractBuiltinTest;
+import org.junit.Before;
+import org.junit.Test;
 
-public abstract class BinaryFunction extends BuiltinFunction
+/**
+ * Created: 3/20/12 12:21 AM
+ */
+public class DefinedTest extends AbstractBuiltinTest
 {
-    public BinaryFunction(String name, Method family, Metaclass<?> itemOne, Metaclass<?> itemTwo)
+    @Before
+    public void setUp() throws Exception
     {
-        super(name, family, 2, itemOne, itemTwo);
+        super.setUp(Defined.NAME);
+    }
+
+    @Test
+    public void execute() throws Exception
+    {
+        this.dictionary.defineMethod(new Method("foo"));
+
+        this.stack.push(new StringAtom("foo"));
+
+        this.method.execute(this.context);
+
+        this.assertStackTop(true);
+    }
+
+    @Test
+    public void notDefined() throws Exception
+    {
+        this.stack.push(new StringAtom("bar"));
+
+        this.method.execute(this.context);
+
+        this.assertStackTop(false);
     }
 }

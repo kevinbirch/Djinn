@@ -37,7 +37,7 @@ public class Dip extends BinaryFunction
 
     public Dip(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, Lambda.getMetaclass(), Any.getMetaclass());
     }
 
     @Override
@@ -45,8 +45,8 @@ public class Dip extends BinaryFunction
     {
         Stack stack = context.getStack();
 
-        Lambda lambda = ensureStackTop(stack, Lambda.class, "lambda");
-        Atom second = stack.pop();
+        Lambda lambda = stack.pop();
+        Atom<?> second = stack.pop();
 
         lambda.execute(context);
         stack.push(second);

@@ -57,10 +57,56 @@ public class DefunpTest extends AbstractBuiltinTest
     }
 
     @Test(expected = StackUnderflowException.class)
-    public void stackUnderflow()
+    public void emptyStack()
+    {
+        this.method.execute(this.context);
+    }
+
+    @Test(expected = StackUnderflowException.class)
+    public void onlyOneItem()
+    {
+        this.stack.push(new Lambda(Lists.immutable.of(new IntegerAtom(1))));
+
+        this.method.execute(this.context);
+    }
+
+    @Test(expected = StackUnderflowException.class)
+    public void onlyTwoItems()
+    {
+        this.stack.push(new Lambda(Lists.immutable.of(new IntegerAtom(1))));
+        Lambda predicate = new Lambda(Lists.immutable.of(BooleanAtom.getTrue()));
+        this.stack.push(predicate);
+
+        this.method.execute(this.context);
+    }
+
+    @Test(expected = DoesNotUnderstandException.class)
+    public void wrongThird() throws Exception
+    {
+        this.stack.push(new IntegerAtom(1));
+        this.stack.push(new StringAtom("foo"));
+        this.stack.push(new StringAtom("foo"));
+
+        this.method.execute(this.context);
+    }
+
+    @Test(expected = DoesNotUnderstandException.class)
+    public void wrongSecond() throws Exception
     {
         this.stack.push(new Lambda(Lists.immutable.of(new IntegerAtom(1))));
         this.stack.push(new StringAtom("foo"));
+        this.stack.push(new StringAtom("foo"));
+
+        this.method.execute(this.context);
+    }
+
+    @Test(expected = DoesNotUnderstandException.class)
+    public void wrongTop() throws Exception
+    {
+        this.stack.push(new Lambda(Lists.immutable.of(new IntegerAtom(1))));
+        Lambda predicate = new Lambda(Lists.immutable.of(BooleanAtom.getTrue()));
+        this.stack.push(predicate);
+        this.stack.push(new IntegerAtom(42));
 
         this.method.execute(this.context);
     }

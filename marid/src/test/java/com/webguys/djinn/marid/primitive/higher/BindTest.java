@@ -22,45 +22,50 @@
  * SOFTWARE.
  */
 
-package com.webguys.djinn.marid.primitive.runtime;
+package com.webguys.djinn.marid.primitive.higher;
 
 import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.primitive.AbstractBuiltinTest;
+import com.webguys.djinn.marid.primitive.runtime.Bind;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ponzu.impl.factory.Lists;
 
-public class DefunTest extends AbstractBuiltinTest
+/**
+ * Created: 3/26/12 8:40 PM
+ */
+public class BindTest extends AbstractBuiltinTest
 {
     @Before
     public void setUp() throws Exception
     {
-        super.setUp(Defun.NAME);
+        super.setUp(Bind.NAME);
     }
 
     @Test
     public void execute() throws Exception
     {
-        this.stack.push(new Lambda(Lists.immutable.of(new IntegerAtom(1))));
+        IntegerAtom value = new IntegerAtom(1);
+        this.stack.push(new Lambda(Lists.immutable.of(value)));
         this.stack.push(new StringAtom("foo"));
 
         this.method.execute(this.context);
 
-        this.assertStackSize(0);
-        Assert.assertTrue(this.context.getDictionary().isMethodDefined("foo"));
+        Assert.assertTrue(this.dictionary.isNameDefined("foo"));
+        Assert.assertTrue(this.dictionary.getDeclaration("foo").getDefinition().getBody().getFirst().equals(value));
     }
 
     @Test(expected = StackUnderflowException.class)
-    public void emptyStack()
+    public void emptyStack() throws Exception
     {
         this.method.execute(this.context);
     }
 
     @Test(expected = StackUnderflowException.class)
-    public void onlyOneItem()
+    public void onlyOneItem() throws Exception
     {
-        this.stack.push(new Lambda(Lists.immutable.of(new IntegerAtom(1))));
+        this.stack.push(new StringAtom("foo"));
 
         this.method.execute(this.context);
     }
@@ -68,7 +73,8 @@ public class DefunTest extends AbstractBuiltinTest
     @Test(expected = DoesNotUnderstandException.class)
     public void wrongSecond() throws Exception
     {
-        this.stack.push(new IntegerAtom(1));
+        IntegerAtom value = new IntegerAtom(1);
+        this.stack.push(value);
         this.stack.push(new StringAtom("foo"));
 
         this.method.execute(this.context);
@@ -77,8 +83,9 @@ public class DefunTest extends AbstractBuiltinTest
     @Test(expected = DoesNotUnderstandException.class)
     public void wrongTop() throws Exception
     {
-        this.stack.push(new Lambda(Lists.immutable.of(new IntegerAtom(1))));
-        this.stack.push(new IntegerAtom(42));
+        IntegerAtom value = new IntegerAtom(1);
+        this.stack.push(new Lambda(Lists.immutable.of(value)));
+        this.stack.push(value);
 
         this.method.execute(this.context);
     }

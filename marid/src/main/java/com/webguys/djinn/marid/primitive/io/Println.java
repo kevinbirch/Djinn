@@ -40,7 +40,7 @@ public class Println extends UnaryFunction
 
     public Println(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, StringAtom.getMetaclass());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Println extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        StringAtom a = ensureStackTop(stack, StringAtom.class, "string");
+        StringAtom a = stack.pop();
 
         context.getStdout().println(a.getValue());
     }

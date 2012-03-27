@@ -38,7 +38,7 @@ public class Quote extends UnaryFunction
 
     public Quote(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, Any.getMetaclass());
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Quote extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        Atom a = ensureStackTopIsSimpleType(stack);
+        Atom<?> a = stack.pop();
 
         stack.push(new Lambda(Lists.immutable.of(a)));
     }

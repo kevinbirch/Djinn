@@ -40,7 +40,7 @@ public class Not extends UnaryFunction
 
     public Not(Method family)
     {
-        super("not", family);
+        super("not", family, BooleanAtom.getMetaclass());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Not extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        BooleanAtom atom = ensureStackTop(stack, BooleanAtom.class, "boolean");
+        BooleanAtom atom = stack.pop();
 
         if(atom.getValue())
         {

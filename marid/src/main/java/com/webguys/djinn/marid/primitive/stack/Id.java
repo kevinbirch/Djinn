@@ -26,6 +26,7 @@
 
 package com.webguys.djinn.marid.primitive.stack;
 
+import com.webguys.djinn.ifrit.model.Any;
 import com.webguys.djinn.ifrit.model.Context;
 import com.webguys.djinn.ifrit.model.Method;
 import com.webguys.djinn.marid.primitive.Builtin;
@@ -38,7 +39,7 @@ public class Id extends UnaryFunction
 
     public Id(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, Any.getMetaclass());
     }
 
     @Override

@@ -28,7 +28,7 @@ package com.webguys.djinn.marid.primitive.math;
 
 import com.webguys.djinn.ifrit.model.Context;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.NumericAtom;
+import com.webguys.djinn.ifrit.model.NumberAtom;
 import com.webguys.djinn.ifrit.model.Stack;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
 
@@ -36,7 +36,7 @@ public abstract class ArithmeticFunction extends BinaryFunction
 {
     public ArithmeticFunction(String name, Method family)
     {
-        super(name, family);
+        super(name, family, NumberAtom.getMetaclass(), NumberAtom.getMetaclass());
     }
 
     @Override
@@ -45,12 +45,12 @@ public abstract class ArithmeticFunction extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        NumericAtom b = ensureStackTop(stack, NumericAtom.class, "number");
-        NumericAtom a = ensureStackItem(stack, "second", NumericAtom.class, "number");
+        NumberAtom<?> b = stack.pop();
+        NumberAtom<?> a = stack.pop();
 
         this.execute(context, a, b);
     }
 
-    protected abstract void execute(Context context, NumericAtom a, NumericAtom b);
+    protected abstract void execute(Context context, NumberAtom<?> a, NumberAtom<?> b);
 
 }

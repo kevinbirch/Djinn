@@ -47,7 +47,7 @@ import ponzu.api.set.MutableSet;
 import ponzu.impl.set.mutable.UnifiedSet;
 
 @SupportedAnnotationTypes({"com.webguys.djinn.marid.primitive.Builtin"})
-@SupportedSourceVersion(SourceVersion.RELEASE_6)
+@SupportedSourceVersion(SourceVersion.RELEASE_7)
 @SupportedOptions({"baseDirectory"})
 public class BuiltinAnnotationProcessor extends AbstractProcessor
 {

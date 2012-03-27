@@ -37,7 +37,7 @@ public class Length extends UnaryFunction
 
     public Length(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, ListAtom.getMetaclass());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Length extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        ListAtom a = ensureStackTop(stack, ListAtom.class, "list");
+        ListAtom a = stack.pop();
 
         stack.push(new IntegerAtom(a.getValue().size()));
     }

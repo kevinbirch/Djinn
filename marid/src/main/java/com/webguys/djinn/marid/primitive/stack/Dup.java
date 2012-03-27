@@ -26,20 +26,21 @@
 
 package com.webguys.djinn.marid.primitive.stack;
 
+import com.webguys.djinn.ifrit.model.Any;
 import com.webguys.djinn.ifrit.model.Context;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.ifrit.model.Stack;
 import com.webguys.djinn.marid.primitive.Builtin;
+import com.webguys.djinn.marid.primitive.UnaryFunction;
 
 @Builtin(Dup.NAME)
-public class Dup extends ModuleFunction
+public class Dup extends UnaryFunction
 {
     public static final String NAME = "dup";
 
     public Dup(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, Any.getMetaclass());
     }
 
     @Override

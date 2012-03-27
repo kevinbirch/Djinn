@@ -1,7 +1,7 @@
-/**
+/*
  * The MIT License
  *
- * Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
+ * Copyright (c) 2012 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,19 +20,34 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Created: 10/30/11 8:58 PM
  */
 
-package com.webguys.djinn.marid.primitive;
+package com.webguys.djinn.marid.primitive.runtime;
 
-import com.webguys.djinn.ifrit.model.Metaclass;
-import com.webguys.djinn.ifrit.model.Method;
+import com.webguys.djinn.ifrit.model.*;
+import com.webguys.djinn.marid.primitive.BinaryFunction;
+import com.webguys.djinn.marid.primitive.Builtin;
 
-public abstract class BinaryFunction extends BuiltinFunction
+@Builtin(Bind.NAME)
+public class Bind extends BinaryFunction
 {
-    public BinaryFunction(String name, Method family, Metaclass<?> itemOne, Metaclass<?> itemTwo)
+    public static final String NAME = "bind";
+
+    public Bind(Method family)
     {
-        super(name, family, 2, itemOne, itemTwo);
+        super(NAME, family, StringAtom.getMetaclass(), Lambda.getMetaclass());
+    }
+
+    @Override
+    public void execute(Context context)
+    {
+        super.execute(context);
+
+        Stack stack = context.getStack();
+        StringAtom name = stack.pop();
+        Lambda body = stack.pop();
+
+        Declaration declaration = new SingleDeclaration(name.getValue(), body);
+        context.getDictionary().defineName(declaration);
     }
 }

@@ -26,26 +26,12 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.Context;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 
-public abstract class NullaryFunction extends ModuleFunction
+public abstract class NullaryFunction extends BuiltinFunction
 {
     public NullaryFunction(String name, Method family)
     {
-        super(name, family);
-    }
-
-    @Override
-    public int getDepthRequirement()
-    {
-        return 0;
-    }
-
-
-    @Override
-    public void execute(Context context)
-    {
+        super(name, family, -1);
     }
 }

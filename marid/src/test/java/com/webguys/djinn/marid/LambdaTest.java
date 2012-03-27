@@ -38,7 +38,7 @@ import ponzu.impl.factory.Lists;
 public class LambdaTest extends AbstractDjinnTest
 {
     private Lambda lambda;
-    private ImmutableList<? extends Atom> body;
+    private ImmutableList<? extends Atom<?>> body;
 
     @Before
     public void setUp() throws Exception

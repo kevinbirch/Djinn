@@ -37,7 +37,7 @@ public class Ne extends BinaryFunction
 
     public Ne(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, Any.getMetaclass(), Any.getMetaclass());
     }
 
     @Override
@@ -46,8 +46,8 @@ public class Ne extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        Atom b = stack.pop();
-        Atom a = stack.pop();
+        Atom<?> b = stack.pop();
+        Atom<?> a = stack.pop();
 
         if(a.equals(b))
         {

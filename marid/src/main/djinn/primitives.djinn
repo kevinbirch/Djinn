@@ -14,7 +14,27 @@ defunp :: [(A -> B) (A -> bool) string] -> []
 
 \[defunp __primitive__]
 
+@description: returns true if the given string is a defined method;
+@sealed: true;
+defined? :: [string] -> [bool]
+
+\[defined? __primitive__]
+
+@description: binds the result of a lambda atom to a name;
+@sealed: true;
+bind :: [(A -> B) string] -> []
+
+\[bind __primitive__]
+
+@description: returns true if the given string is a bound name;
+@sealed: true;
+bound? :: [string] -> [bool]
+
+\[bound? __primitive__]
+
 // Stack manipulation functions
+
+// string?, number?, lambda?,
 
 @description: a no-op identity statement that represents the top of the stack;
 @sealed: true;
@@ -208,9 +228,9 @@ compose :: [(A -> B) (B -> C)] -> [(A -> C)]
 
 @description: binds the second element to the lambda at the top of the stack, pushing a new lambda;
 @sealed: true;
-bind :: [a (A [a] -> B)] -> [(A -> B)]
+curry :: [a (A [a] -> B)] -> [(A -> B)]
 
-\[bind __primitive__]
+\[curry __primitive__]
 
 @description: pushes a new lambda that will return the value at the top of the stack;
 @sealed: true;

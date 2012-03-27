@@ -26,21 +26,16 @@ package com.webguys.djinn.marid.primitive.runtime;
 
 import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.primitive.Builtin;
+import com.webguys.djinn.marid.primitive.TrinaryFunction;
 
 @Builtin(Defunp.NAME)
-public class Defunp extends ModuleFunction
+public class Defunp extends TrinaryFunction
 {
     public static final String NAME = "defunp";
 
     public Defunp(Method family)
     {
-        super(NAME, family);
-    }
-
-    @Override
-    public int getDepthRequirement()
-    {
-        return 3;
+        super(NAME, family, StringAtom.getMetaclass(), Lambda.getMetaclass(), Lambda.getMetaclass());
     }
 
     @Override
@@ -50,14 +45,9 @@ public class Defunp extends ModuleFunction
 
         Stack stack = context.getStack();
 
-        if(2 > stack.depth())
-        {
-            throw new StackUnderflowException(2, stack.depth());
-        }
-
-        StringAtom name = ensureStackTop(stack, StringAtom.class, "string");
-        Lambda predicate = ensureStackItem(stack, "second", Lambda.class, "lambda");
-        Lambda body = ensureStackItem(stack, "third", Lambda.class, "lambda");
+        StringAtom name = stack.pop();
+        Lambda predicate = stack.pop();
+        Lambda body = stack.pop();
 
         Method method = context.getDictionary().getOrCreateMethod(name.getValue());
         if(method.isConditionDefined(predicate))

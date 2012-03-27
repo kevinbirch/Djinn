@@ -24,30 +24,45 @@
 
 package com.webguys.djinn.marid.primitive.runtime;
 
-import com.webguys.djinn.ifrit.model.*;
-import com.webguys.djinn.marid.primitive.BinaryFunction;
-import com.webguys.djinn.marid.primitive.Builtin;
+import com.webguys.djinn.ifrit.model.IntegerAtom;
+import com.webguys.djinn.ifrit.model.Lambda;
+import com.webguys.djinn.ifrit.model.SingleDeclaration;
+import com.webguys.djinn.ifrit.model.StringAtom;
+import com.webguys.djinn.marid.primitive.AbstractBuiltinTest;
+import org.junit.Before;
+import org.junit.Test;
+import ponzu.impl.factory.Lists;
 
-@Builtin(Defun.NAME)
-public class Defun extends BinaryFunction
+/**
+ * Created: 3/20/12 12:21 AM
+ */
+public class BoundTest extends AbstractBuiltinTest
 {
-    public static final String NAME = "defun";
-
-    public Defun(Method family)
+    @Before
+    public void setUp() throws Exception
     {
-        super(NAME, family, StringAtom.getMetaclass(), Lambda.getMetaclass());
+        super.setUp(Bound.NAME);
     }
 
-    @Override
-    public void execute(Context context)
+    @Test
+    public void execute() throws Exception
     {
-        super.execute(context);
+        this.dictionary.defineName(new SingleDeclaration("foo", new Lambda(Lists.immutable.of(new IntegerAtom(1)))));
 
-        Stack stack = context.getStack();
-        StringAtom name = stack.pop();
-        Lambda body = stack.pop();
+        this.stack.push(new StringAtom("foo"));
 
-        Method method = context.getDictionary().getOrCreateMethod(name.getValue());
-        method.addMember(new ModuleFunction(name.getValue(), method, body.getBody()));
+        this.method.execute(this.context);
+
+        this.assertStackTop(true);
+    }
+
+    @Test
+    public void notBound() throws Exception
+    {
+        this.stack.push(new StringAtom("bar"));
+
+        this.method.execute(this.context);
+
+        this.assertStackTop(false);
     }
 }

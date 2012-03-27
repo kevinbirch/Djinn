@@ -28,7 +28,7 @@ package com.webguys.djinn.marid.primitive.math;
 
 import com.webguys.djinn.ifrit.model.Context;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.NumericAtom;
+import com.webguys.djinn.ifrit.model.NumberAtom;
 import com.webguys.djinn.marid.primitive.Builtin;
 
 @Builtin(Mod.NAME)
@@ -42,7 +42,7 @@ public class Mod extends ArithmeticFunction
     }
 
     @Override
-    protected void execute(Context context, NumericAtom a, NumericAtom b)
+    protected void execute(Context context, NumberAtom<?> a, NumberAtom<?> b)
     {
         context.getStack().push(a.mod(b));
     }

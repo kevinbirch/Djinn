@@ -28,12 +28,12 @@ package com.webguys.djinn.marid.primitive.stack;
 
 import com.webguys.djinn.ifrit.model.Context;
 import com.webguys.djinn.ifrit.model.Method;
-import com.webguys.djinn.ifrit.model.ModuleFunction;
 import com.webguys.djinn.ifrit.model.Stack;
 import com.webguys.djinn.marid.primitive.Builtin;
+import com.webguys.djinn.marid.primitive.NullaryFunction;
 
 @Builtin(Roll.NAME)
-public class Roll extends ModuleFunction
+public class Roll extends NullaryFunction
 {
     public static final String NAME = "roll";
 

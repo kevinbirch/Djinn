@@ -54,16 +54,19 @@
   - is there a use for ocl pre and post conditions on synthetic slots? normal slots?
   - refactor type atoms into single simple type atom and create type classes.  combine decimal and int into number ala javascript
 - primitives:
+  - keep should restore all items removed from the stack (implemented as a rewinding stack with a movable sp that pop mutates, but does not actually remove items)
+  - seq protocol: cons, nth, length, remove, subseq
   - add global names for system information (e.g. versions, states, etc.) and meta-name listing all available names
+  - dup should not clone
+  - add concept for protocols so that primitives can be reduced to a protocol slot invoker
   - defun should not re-create existing inner functions if the parent context is a function
   - full numeric intrinsics primitive impls
   - remove impls for pow, etc, wait for jdk iterop and build on calls to those
   - review for moving unnecessary impls to prelude
-  - dup should not clone
-  - seq protocol: cons, nth, length, remove, subseq
   - implement Lock-free extensible hash tables back by split-ordered lists, compare with UnifiedMap?
 - prelude:
   - reimplement declaration, method, function syntax as macros
+  - vector math: inv, tran, det, fnrm (length), rnrm (max), dot, cross, uvec ([fnrm] keep 1.0 swap div mul)
 - repl:
   - file loading
   - fatal error in parsing should not leave partial definitions, all or nothing
@@ -104,7 +107,7 @@
 - http://rosettacode.org/wiki/Rosetta_Code
 - http://www.franz.com/support/tech_corner/usgs-011207.lhtml
 
-## Other languages
+## Other stack languages
 
 - Cat - http://www.cat-language.com/
 - Factor - http://factorcode.org/
@@ -115,3 +118,32 @@
 - Clojure - http://clojure.org/
 - PLOT - http://users.rcn.com/david-moon/PLOT/
 - Julia - http://julialang.org/manual/
+- Lang5 - http://lang5.sourceforge.net/tiki-index.php
+
+## Other languages
+
+- http://golang.org/
+- http://www.mirah.org/
+- http://research.microsoft.com/en-us/projects/kodu/
+- http://www.impredicative.com/ur/
+- http://cappuccino.org/
+- http://www.bitc-lang.org/
+- http://codespeak.net/pypy/dist/pypy/doc/
+- http://www.fancy-lang.org/
+- http://code.google.com/p/noop/ *
+- http://www.erights.org/
+- http://code.google.com/p/google-caja/
+- http://slatelanguage.org/ *
+- http://soft.vub.ac.be/amop/
+- http://thyrd.org/
+- http://en.wikipedia.org/wiki/COLA_(software_architecture)
+- http://en.wikipedia.org/wiki/Cola_(programming_language) *
+- http://gosu-lang.org/ *
+- http://onilabs.com/stratifiedjs
+- http://futureboy.us/frinkdocs/
+- http://somefancy.com/trylon/ *
+- http://ioke.org/ *
+- http://ooc-lang.org/ *
+- http://lambda-the-ultimate.org/node/4088 *
+- http://www.eclipse.org/Xtext/
+- http://www.jetbrains.com/mps/index.html

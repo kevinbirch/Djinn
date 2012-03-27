@@ -40,7 +40,7 @@ public class Or extends BinaryFunction
 
     public Or(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, BooleanAtom.getMetaclass(), BooleanAtom.getMetaclass());
     }
 
     @Override
@@ -49,8 +49,8 @@ public class Or extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        BooleanAtom b = ensureStackTop(stack, BooleanAtom.class, "boolean");
-        BooleanAtom a = ensureStackItem(stack, "second", BooleanAtom.class, "boolean");
+        BooleanAtom b = stack.pop();
+        BooleanAtom a = stack.pop();
 
         if(a.getValue() || b.getValue())
         {

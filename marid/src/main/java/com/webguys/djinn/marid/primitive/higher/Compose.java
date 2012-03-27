@@ -41,7 +41,7 @@ public class Compose extends BinaryFunction
 
     public Compose(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, Lambda.getMetaclass(), Lambda.getMetaclass());
     }
 
     @Override
@@ -50,8 +50,8 @@ public class Compose extends BinaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        Lambda b = ensureStackTop(stack, Lambda.class, "lambda");
-        Lambda a = ensureStackItem(stack, "second", Lambda.class, "lambda");
+        Lambda b = stack.pop();
+        Lambda a = stack.pop();
 
         stack.push(new Lambda(FastList.newList(a.getBody()).withAll(b.getBody()).toImmutable()));
     }

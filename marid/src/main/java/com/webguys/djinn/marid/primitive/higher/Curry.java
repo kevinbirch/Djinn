@@ -31,14 +31,14 @@ import com.webguys.djinn.marid.primitive.BinaryFunction;
 import com.webguys.djinn.marid.primitive.Builtin;
 import ponzu.impl.list.mutable.FastList;
 
-@Builtin(Bind.NAME)
-public class Bind extends BinaryFunction
+@Builtin(Curry.NAME)
+public class Curry extends BinaryFunction
 {
-    public static final String NAME = "bind";
+    public static final String NAME = "curry";
 
-    public Bind(Method family)
+    public Curry(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, Lambda.getMetaclass(), Any.getMetaclass());
     }
 
     @Override
@@ -48,9 +48,9 @@ public class Bind extends BinaryFunction
 
         Stack stack = context.getStack();
 
-        Lambda b = ensureStackTop(stack, Lambda.class, "lambda");
-        Atom a = ensureStackItemIsSimpleType(stack, "second");
+        Lambda b = stack.pop();
+        Atom<?> a = stack.pop();
 
-        stack.push(new Lambda(FastList.newListWith(a).withAll(b.getBody()).toImmutable()));
+        stack.push(new Lambda(FastList.<Atom<?>>newListWith(a).withAll(b.getBody()).toImmutable()));
     }
 }

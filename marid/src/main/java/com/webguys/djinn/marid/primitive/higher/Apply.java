@@ -40,7 +40,7 @@ public class Apply extends UnaryFunction
 
     public Apply(Method family)
     {
-        super(NAME, family);
+        super(NAME, family, Lambda.getMetaclass());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Apply extends UnaryFunction
         super.execute(context);
 
         Stack stack = context.getStack();
-        Lambda lambda = ensureStackTop(stack, Lambda.class, "lambda");
+        Lambda lambda = stack.pop();
         lambda.execute(context);
     }
 }

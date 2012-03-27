@@ -1,7 +1,7 @@
-/**
+/*
  * The MIT License
  *
- * Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
+ * Copyright (c) 2012 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,37 +20,32 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Created: 11/6/11 1:36 AM
  */
 
-package com.webguys.djinn.marid.primitive;
+package com.webguys.djinn.marid.primitive.runtime;
 
-import com.webguys.djinn.ifrit.model.IntegerAtom;
-import com.webguys.djinn.ifrit.model.Lambda;
-import com.webguys.djinn.ifrit.model.Symbol;
-import com.webguys.djinn.marid.primitive.higher.Bind;
-import org.junit.Before;
-import org.junit.Test;
-import ponzu.impl.factory.Lists;
+import com.webguys.djinn.ifrit.model.*;
+import com.webguys.djinn.marid.primitive.Builtin;
+import com.webguys.djinn.marid.primitive.UnaryFunction;
 
-public class BindTest extends AbstractBuiltinTest
+@Builtin(Defined.NAME)
+public class Defined extends UnaryFunction
 {
-    @Before
-    public void setUp() throws Exception
+    public static final String NAME = "defined?";
+
+    public Defined(Method family)
     {
-        super.setUp(Bind.NAME);
+        super(NAME, family, StringAtom.getMetaclass());
     }
 
-    @Test
-    public void execute() throws Exception
+    @Override
+    public void execute(Context context)
     {
-        this.stack.push(new IntegerAtom(1));
-        this.stack.push(new Lambda(Lists.immutable.of(new Symbol("sub"))));
+        super.execute(context);
 
-        this.method.execute(this.context);
+        Stack stack = context.getStack();
+        StringAtom name = stack.pop();
 
-        this.assertStackSize(1);
-        this.assertStackTop(Lists.immutable.of(new IntegerAtom(1), new Symbol("sub")));
+        stack.push(context.getDictionary().isMethodDefined(name.getValue()) ? BooleanAtom.getTrue() : BooleanAtom.getFalse());
     }
 }

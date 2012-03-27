@@ -26,28 +26,13 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.*;
+import com.webguys.djinn.ifrit.model.Metaclass;
+import com.webguys.djinn.ifrit.model.Method;
 
-public abstract class UnaryFunction extends ModuleFunction
+public abstract class UnaryFunction extends BuiltinFunction
 {
-    public UnaryFunction(String name, Method family)
+    public UnaryFunction(String name, Method family, Metaclass<?> itemOne)
     {
-        super(name, family);
-    }
-
-    @Override
-    public int getDepthRequirement()
-    {
-        return 1;
-    }
-
-    @Override
-    public void execute(Context context)
-    {
-        Stack stack = context.getStack();
-        if(0 == stack.depth())
-        {
-            throw new StackUnderflowException(1, stack.depth());
-        }
+        super(name, family, 1, itemOne);
     }
 }

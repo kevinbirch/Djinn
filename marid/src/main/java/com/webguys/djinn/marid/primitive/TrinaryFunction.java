@@ -1,7 +1,7 @@
-/**
+/*
  * The MIT License
  *
- * Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
+ * Copyright (c) 2012 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,8 +20,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Created: 10/30/11 8:58 PM
  */
 
 package com.webguys.djinn.marid.primitive;
@@ -29,10 +27,10 @@ package com.webguys.djinn.marid.primitive;
 import com.webguys.djinn.ifrit.model.Metaclass;
 import com.webguys.djinn.ifrit.model.Method;
 
-public abstract class BinaryFunction extends BuiltinFunction
+public abstract class TrinaryFunction extends BuiltinFunction
 {
-    public BinaryFunction(String name, Method family, Metaclass<?> itemOne, Metaclass<?> itemTwo)
+    public TrinaryFunction(String name, Method family, Metaclass<?> itemOne, Metaclass<?> itemTwo, Metaclass<?> itemThree)
     {
-        super(name, family, 2, itemOne, itemTwo);
+        super(name, family, 3, itemOne, itemTwo, itemThree);
     }
 }

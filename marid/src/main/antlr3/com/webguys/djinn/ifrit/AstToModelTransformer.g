@@ -76,7 +76,7 @@ function_type_qualifier
 function returns [Function result]
 	@init
 	{
-		MutableList<Atom> body = FastList.newList();
+		MutableList<Atom<?>> body = FastList.newList();
 		MutableList<InnerFunction> functions = FastList.newList();
 		MutableList<Declaration> declarations = FastList.newList();
 		Dictionary functionDictionary = this.dictionary.newChild();
@@ -136,7 +136,7 @@ function returns [Function result]
 inner_function[Dictionary dictionary] returns [InnerFunction result]
 	@init
 	{
-		MutableList<Atom> body = FastList.newList();
+		MutableList<Atom<?>> body = FastList.newList();
 	}
 	:	^(INNER_FUNCTION NAME (^(PATTERN p=lambda))? ^(BODY (l=lambda { body.add($l.result); } | atom { body.add($atom.result); })+))
 	{
@@ -163,7 +163,7 @@ inner_function[Dictionary dictionary] returns [InnerFunction result]
 
 lambda returns [Lambda result]
 	@init {
-		MutableList<Atom> atoms = FastList.newList();
+		MutableList<Atom<?>> atoms = FastList.newList();
 	}
 	:	^(LAMBDA (atom { atoms.add($atom.result); })+)
 		{ $result = new Lambda(atoms.toImmutable()); }
@@ -199,13 +199,13 @@ compound_assignment_statement returns [CompoundDeclaration result]
 expression returns [Lambda result]
 	:	literal
 		{
-			MutableList<Atom> atoms = FastList.newList();
+			MutableList<Atom<?>> atoms = FastList.newList();
 			atoms.add($literal.result);
 			$result = new Lambda(atoms.toImmutable());
 		}
 	|	list
 		{
-			MutableList<Atom> atoms = FastList.newList();
+			MutableList<Atom<?>> atoms = FastList.newList();
 			atoms.add($list.result);
 			$result = new Lambda(atoms.toImmutable());
 		}
@@ -215,7 +215,7 @@ expression returns [Lambda result]
 
 list returns [ListAtom result]
 	@init {
-		MutableList<Atom> atoms = FastList.newList();
+		MutableList<Atom<?>> atoms = FastList.newList();
 	}
 	:	^(LIST_LITERAL (atom { atoms.add($atom.result); })*)
 		{ $result = new ListAtom(atoms); }
@@ -223,7 +223,7 @@ list returns [ListAtom result]
 
 immediate_statement returns [ImmediateStatement result]
 	@init {
-		MutableList<Atom> atoms = FastList.newList();
+		MutableList<Atom<?>> atoms = FastList.newList();
 	}
 	:	^(IMMEDIATE (atom { atoms.add($atom.result); } | lambda { atoms.add($lambda.result); } )+)
 		{ $result = new ImmediateStatement(atoms.toImmutable()); }
