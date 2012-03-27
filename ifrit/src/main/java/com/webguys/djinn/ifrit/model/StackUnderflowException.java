@@ -28,8 +28,8 @@ package com.webguys.djinn.ifrit.model;
 
 public class StackUnderflowException extends RuntimeException
 {
-    public StackUnderflowException(int expected, int actual)
+    public StackUnderflowException(Method method, int expected, int actual)
     {
-        super(String.format("stack underflow! expected a depth of %s, but only %s available.", expected, actual));
+        super(String.format("Stack underflow in %s! Expected a depth of %s, but only %s available.", method.getName(), expected, actual));
     }
 }

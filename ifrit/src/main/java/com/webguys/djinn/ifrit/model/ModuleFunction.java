@@ -35,6 +35,7 @@ public class ModuleFunction extends Function<Method, Module> implements Entry, C
 {
     private ImmutableList<InnerFunction> inner = Lists.immutable.of();
     private ImmutableList<Declaration> declarations = Lists.immutable.of();
+
     protected Dictionary localDictionary;
 
     public ModuleFunction(String name, Method family, ImmutableList<? extends Atom> body)
@@ -45,11 +46,6 @@ public class ModuleFunction extends Function<Method, Module> implements Entry, C
     public ModuleFunction(String name, Method family, ImmutableList<? extends Atom> body, Lambda predicate)
     {
         super(name, family, body, predicate);
-    }
-
-    protected ModuleFunction(String name, Method family)
-    {
-        super(name, family, Lists.immutable.<Atom>of());
     }
 
     @Override

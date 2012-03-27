@@ -32,7 +32,7 @@ public class ImmediateStatement extends Lambda
 {
     private static final String TYPE_NAME = "ImmediateStatement";
 
-    public ImmediateStatement(ImmutableList<Atom> body)
+    public ImmediateStatement(ImmutableList<Atom<?>> body)
     {
         super(gensym(TYPE_NAME), body);
     }

@@ -32,6 +32,39 @@ public class BooleanAtom extends AbstractAtom<Boolean>
     private static final BooleanAtom FALSE = new BooleanAtom("false", Boolean.FALSE);
 
     private static final String TYPE_NAME = "Boolean";
+    private static final Meta METACLASS = new Meta();
+
+    public static Meta getMetaclass()
+    {
+        return METACLASS;
+    }
+
+    public static final class Meta implements Metaclass<Boolean>
+    {
+        @Override
+        public String getTypeName()
+        {
+            return TYPE_NAME;
+        }
+
+        @Override
+        public boolean isImplementation(Atom<?> atom)
+        {
+            return this.getImplementationClass().isInstance(atom);
+        }
+
+        @Override
+        public Class<? extends Atom<Boolean>> getImplementationClass()
+        {
+            return BooleanAtom.class;
+        }
+
+        @Override
+        public Atom<Boolean> makeInstance(Boolean value)
+        {
+            return value ? TRUE : FALSE;
+        }
+    }
 
     public static BooleanAtom getTrue()
     {

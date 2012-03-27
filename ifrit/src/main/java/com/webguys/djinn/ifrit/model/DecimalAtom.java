@@ -26,9 +26,42 @@
 
 package com.webguys.djinn.ifrit.model;
 
-public class DecimalAtom extends AbstractAtom<Double> implements NumericAtom<Double>
+public class DecimalAtom extends NumberAtom<Double>
 {
     private static final String TYPE_NAME = "Decimal";
+    private static final Meta METACLASS = new Meta();
+
+    public static NumberAtom.Meta<Double> getMetaclass()
+    {
+        return METACLASS;
+    }
+
+    public static final class Meta extends NumberAtom.Meta<Double>
+    {
+        @Override
+        public String getTypeName()
+        {
+            return TYPE_NAME;
+        }
+
+        @Override
+        public boolean isImplementation(Atom<?> atom)
+        {
+            return this.getImplementationClass().isInstance(atom);
+        }
+
+        @Override
+        public Class<? extends Atom<Double>> getImplementationClass()
+        {
+            return DecimalAtom.class;
+        }
+
+        @Override
+        public DecimalAtom makeInstance(Double value)
+        {
+            return new DecimalAtom(value);
+        }
+    }
 
     public DecimalAtom(Double value)
     {
@@ -42,66 +75,66 @@ public class DecimalAtom extends AbstractAtom<Double> implements NumericAtom<Dou
     }
 
     @Override
-    public Atom add(NumericAtom value)
+    public DecimalAtom add(NumberAtom<? extends Number> value)
     {
         double result = this.value.doubleValue() + value.doubleValue();
         return new DecimalAtom(result);
     }
 
     @Override
-    public Atom sub(NumericAtom value)
+    public DecimalAtom sub(NumberAtom<? extends Number> value)
     {
         double result = this.value.doubleValue() - value.doubleValue();
         return new DecimalAtom(result);
     }
 
     @Override
-    public Atom div(NumericAtom value)
+    public DecimalAtom div(NumberAtom<? extends Number> value)
     {
         double result = this.value.doubleValue() / value.doubleValue();
         return new DecimalAtom(result);
     }
 
     @Override
-    public Atom mul(NumericAtom value)
+    public DecimalAtom mul(NumberAtom<? extends Number> value)
     {
         double result = this.value.doubleValue() * value.doubleValue();
         return new DecimalAtom(result);
     }
 
     @Override
-    public Atom lt(NumericAtom value)
+    public DecimalAtom mod(NumberAtom<? extends Number> value)
+    {
+        double result = this.value.doubleValue() % value.doubleValue();
+        return new DecimalAtom(result);
+    }
+
+    @Override
+    public BooleanAtom lt(NumberAtom<? extends Number> value)
     {
         double that = value.doubleValue();
         return this.value.doubleValue() < that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
     }
 
     @Override
-    public Atom lte(NumericAtom value)
+    public BooleanAtom lte(NumberAtom<? extends Number> value)
     {
         double that = value.doubleValue();
         return this.value.doubleValue() <= that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
     }
 
     @Override
-    public Atom gt(NumericAtom value)
+    public BooleanAtom gt(NumberAtom<? extends Number> value)
     {
         double that = value.doubleValue();
         return this.value.doubleValue() > that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
     }
 
     @Override
-    public Atom gte(NumericAtom value)
+    public BooleanAtom gte(NumberAtom<? extends Number> value)
     {
         double that = value.doubleValue();
         return this.value.doubleValue() >= that ? BooleanAtom.getTrue() : BooleanAtom.getFalse();
-    }
-
-    @Override
-    public Atom mod(NumericAtom value)
-    {
-        double result = this.value.doubleValue() % value.doubleValue();
-        return new DecimalAtom(result);
     }
 
     @Override

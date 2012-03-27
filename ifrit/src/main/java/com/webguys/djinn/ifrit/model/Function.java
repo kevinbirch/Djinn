@@ -26,13 +26,16 @@
 
 package com.webguys.djinn.ifrit.model;
 
-import com.webguys.djinn.ifrit.metamodel.*;
+import com.webguys.djinn.ifrit.metamodel.Action;
+import com.webguys.djinn.ifrit.metamodel.Cluster;
+import com.webguys.djinn.ifrit.metamodel.Container;
+import com.webguys.djinn.ifrit.metamodel.Member;
 import ponzu.api.list.ImmutableList;
 
 public abstract class Function<FamilyType extends Cluster<Function>, ContainerType extends Container<? extends Member>>
     extends Action<FamilyType, ContainerType> implements ConditionalExecutable
 {
-    private int depthRequirement = 0;
+    private int depthRequirement = -1;
 
     protected Lambda predicate;
     protected ImmutableList<? extends Atom> body;
@@ -86,35 +89,5 @@ public abstract class Function<FamilyType extends Cluster<Function>, ContainerTy
     public void setDepthRequirement(int depthRequirement)
     {
         this.depthRequirement = depthRequirement;
-    }
-
-    protected static <T extends Atom> T ensureStackTop(Stack stack, Class<T> clazz, String typeName)
-    {
-        return ensureStackItem(stack, "top", clazz, typeName);
-    }
-
-    protected static <T extends Atom> T ensureStackItem(Stack stack, String position, Class<T> clazz, String typeName)
-    {
-        if(!(clazz.isInstance(stack.peek())))
-        {
-            throw new DoesNotUnderstandException("The " + position + " of the stack is not a " + typeName + " value.");
-        }
-
-        return stack.pop();
-    }
-
-    protected static Atom ensureStackTopIsSimpleType(Stack stack)
-    {
-        return ensureStackItemIsSimpleType(stack, "top");
-    }
-
-    protected static Atom ensureStackItemIsSimpleType(Stack stack, String position)
-    {
-        if(!(stack.peek() instanceof SimpleType))
-        {
-            throw new DoesNotUnderstandException("The " + position + " of the stack is not a simple value.");
-        }
-
-        return stack.pop();
     }
 }

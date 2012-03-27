@@ -29,6 +29,39 @@ package com.webguys.djinn.ifrit.model;
 public class StringAtom extends AbstractAtom<String>
 {
     private static final String TYPE_NAME = "String";
+    private static final Meta METACLASS = new Meta();
+
+    public static Metaclass<String> getMetaclass()
+    {
+        return METACLASS;
+    }
+
+    public static final class Meta implements Metaclass<String>
+    {
+        @Override
+        public String getTypeName()
+        {
+            return TYPE_NAME;
+        }
+
+        @Override
+        public boolean isImplementation(Atom<?> atom)
+        {
+            return this.getImplementationClass().isInstance(atom);
+        }
+
+        @Override
+        public Class<? extends Atom<String>> getImplementationClass()
+        {
+            return StringAtom.class;
+        }
+
+        @Override
+        public Atom<String> makeInstance(String value)
+        {
+            return new StringAtom(value);
+        }
+    }
 
     public StringAtom(String value)
     {

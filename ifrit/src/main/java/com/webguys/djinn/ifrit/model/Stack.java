@@ -30,13 +30,13 @@ public interface Stack extends Cloneable
 {
     boolean isEmpty();
 
-    void push(Atom atom);
+    void push(Atom<?> atom);
 
-    <T extends Atom> T pop();
+    <T extends Atom<?>> T pop();
 
-    Atom peek();
+    Atom<?> peek();
 
-    Atom peek(int depth);
+    Atom<?> peek(int depth);
 
     void drop();
 

@@ -1,7 +1,7 @@
-/**
+/*
  * The MIT License
  *
- * Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
+ * Copyright (c) 2012 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,82 +20,21 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Created: 11/9/11 8:47 PM
+ */
+
+/**
+ * Created: 3/26/12 3:52 PM
  */
 
 package com.webguys.djinn.ifrit.model;
 
-class ShortStack implements Stack
+public interface Metaclass<T>
 {
-    private Atom<?> top;
+    String getTypeName();
 
-    @Override
-    public boolean isEmpty()
-    {
-        return null == top;
-    }
+    Atom<T> makeInstance(T value);
 
-    @Override
-    public void push(Atom<?> atom)
-    {
-        this.top = atom;
-    }
+    Class<? extends Atom<T>> getImplementationClass();
 
-    @Override
-    public <T extends Atom<?>> T pop()
-    {
-        return (T)this.top;
-    }
-
-    @Override
-    public Atom<?> peek()
-    {
-        return this.top;
-    }
-
-    @Override
-    public Atom<?> peek(int depth)
-    {
-        return 0 == depth ? this.top : null;
-    }
-
-    @Override
-    public void drop()
-    {
-        this.top = null;
-    }
-
-    @Override
-    public void dup()
-    {
-    }
-
-    @Override
-    public void swap()
-    {
-    }
-
-    @Override
-    public void roll(int movement)
-    {
-    }
-
-    @Override
-    public int depth()
-    {
-        return 1;
-    }
-
-    @Override
-    public void clear()
-    {
-        this.top = null;
-    }
-
-    @Override
-    public Stack clone()
-    {
-        throw new RuntimeException("not supported");
-    }
+    boolean isImplementation(Atom<?> atom);
 }

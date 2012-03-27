@@ -34,7 +34,7 @@ public class SingleDeclaration<T extends Container<? extends SingleDeclaration>>
     implements Member<T>, Declaration
 {
     private Lambda definition;
-    private Atom cache;
+    private Atom<?> cache;
 
     public SingleDeclaration(String name, Lambda definition)
     {

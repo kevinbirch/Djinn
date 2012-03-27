@@ -28,8 +28,14 @@ package com.webguys.djinn.ifrit.model;
 
 public class DoesNotUnderstandException extends RuntimeException
 {
-    public DoesNotUnderstandException(String message)
+    public DoesNotUnderstandException(Method method, int position, Metaclass<?> expected, Atom<?> found)
     {
-        super(message);
+        super(String.format("The method %s does not understand the current stack configuration.  For the %s, expected: %s but found: %s",
+                            method.getName(), getPositionName(position), expected.getTypeName(), found.getTypeName()));
+    }
+
+    private static String getPositionName(int position)
+    {
+        return 0 == position ? "top item" : "item in position " + (position + 1);
     }
 }

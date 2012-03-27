@@ -29,19 +29,52 @@ package com.webguys.djinn.ifrit.model;
 import com.webguys.djinn.ifrit.metamodel.MetaObject;
 import ponzu.api.list.ImmutableList;
 
-public class Lambda extends MetaObject implements Atom<ImmutableList<? extends Atom>>
+public class Lambda extends MetaObject implements Atom<ImmutableList<? extends Atom<?>>>
 {
     private static final String TYPE_NAME = "Lambda";
+    private static final Meta METACLASS = new Meta();
 
-    private ImmutableList<? extends Atom> body;
+    public static Metaclass<ImmutableList<? extends Atom<?>>> getMetaclass()
+    {
+        return METACLASS;
+    }
 
-    public Lambda(ImmutableList<? extends Atom> body)
+    public static final class Meta implements Metaclass<ImmutableList<? extends Atom<?>>>
+    {
+        @Override
+        public String getTypeName()
+        {
+            return TYPE_NAME;
+        }
+
+        @Override
+        public boolean isImplementation(Atom<?> atom)
+        {
+            return this.getImplementationClass().isInstance(atom);
+        }
+
+        @Override
+        public Class<? extends Atom<ImmutableList<? extends Atom<?>>>> getImplementationClass()
+        {
+            return Lambda.class;
+        }
+
+        @Override
+        public Atom<ImmutableList<? extends Atom<?>>> makeInstance(ImmutableList<? extends Atom<?>> value)
+        {
+            return new Lambda(value);
+        }
+    }
+
+    private ImmutableList<? extends Atom<?>> body;
+
+    public Lambda(ImmutableList<? extends Atom<?>> body)
     {
         super(gensym(TYPE_NAME));
         this.body = body;
     }
 
-    protected Lambda(String name, ImmutableList<Atom> body)
+    protected Lambda(String name, ImmutableList<Atom<?>> body)
     {
         super(name);
         this.body = body;
@@ -56,13 +89,13 @@ public class Lambda extends MetaObject implements Atom<ImmutableList<? extends A
         }
     }
 
-    public ImmutableList<? extends Atom> getBody()
+    public ImmutableList<? extends Atom<?>> getBody()
     {
         return this.body;
     }
 
     @Override
-    public ImmutableList<? extends Atom> getValue()
+    public ImmutableList<? extends Atom<?>> getValue()
     {
         return this.body;
     }

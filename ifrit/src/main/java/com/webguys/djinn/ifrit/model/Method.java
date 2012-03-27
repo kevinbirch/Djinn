@@ -74,7 +74,7 @@ public class Method extends Cluster<Function> implements Executable
         Stack stack = context.getStack();
         if(stack.depth() < executable.getDepthRequirement())
         {
-            throw new StackUnderflowException(executable.getDepthRequirement(), stack.depth());
+            throw new StackUnderflowException(this, executable.getDepthRequirement(), stack.depth());
         }
         executable.execute(context);
     }

@@ -1,7 +1,7 @@
-/**
+/*
  * The MIT License
  *
- * Copyright (c) 2011 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
+ * Copyright (c) 2012 Kevin Birch <kevin.birch@gmail.com>. Some rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,82 +20,77 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Created: 11/9/11 8:47 PM
  */
 
 package com.webguys.djinn.ifrit.model;
 
-class ShortStack implements Stack
+/**
+ * Created: 3/26/12 7:37 PM
+ */
+public class Any implements Atom<Object>
 {
-    private Atom<?> top;
+    private static final String TYPE_NAME = "Any";
+    private static final Meta METACLASS = new Meta();
 
-    @Override
-    public boolean isEmpty()
+    private Object value;
+
+    public static Metaclass<Object> getMetaclass()
     {
-        return null == top;
+        return METACLASS;
+    }
+
+    public static final class Meta implements Metaclass<Object>
+    {
+        @Override
+        public String getTypeName()
+        {
+            return TYPE_NAME;
+        }
+
+        @Override
+        public boolean isImplementation(Atom<?> atom)
+        {
+            return true;
+        }
+
+        @Override
+        public Class<? extends Atom<Object>> getImplementationClass()
+        {
+            return Any.class;
+        }
+
+        @Override
+        public Atom<Object> makeInstance(Object value)
+        {
+            return new Any(value);
+        }
+    }
+
+    public Any(Object value)
+    {
+        this.value = value;
     }
 
     @Override
-    public void push(Atom<?> atom)
+    public Object getValue()
     {
-        this.top = atom;
+        return this.value;
     }
 
     @Override
-    public <T extends Atom<?>> T pop()
+    public String getTypeName()
     {
-        return (T)this.top;
+        return TYPE_NAME;
     }
 
     @Override
-    public Atom<?> peek()
-    {
-        return this.top;
-    }
-
-    @Override
-    public Atom<?> peek(int depth)
-    {
-        return 0 == depth ? this.top : null;
-    }
-
-    @Override
-    public void drop()
-    {
-        this.top = null;
-    }
-
-    @Override
-    public void dup()
+    public void execute(Context context)
     {
     }
 
     @Override
-    public void swap()
+    public String toSourceRep()
     {
-    }
-
-    @Override
-    public void roll(int movement)
-    {
-    }
-
-    @Override
-    public int depth()
-    {
-        return 1;
-    }
-
-    @Override
-    public void clear()
-    {
-        this.top = null;
-    }
-
-    @Override
-    public Stack clone()
-    {
-        throw new RuntimeException("not supported");
+        return "any";
     }
 }

@@ -31,6 +31,39 @@ import ponzu.api.RichIterable;
 public class ListAtom extends AbstractAtom<RichIterable<? extends Atom>>
 {
     public static final String TYPE_NAME = "List";
+    private static final Meta METACLASS = new Meta();
+
+    public static Metaclass<RichIterable<? extends Atom>> getMetaclass()
+    {
+        return METACLASS;
+    }
+
+    public static final class Meta implements Metaclass<RichIterable<? extends Atom>>
+    {
+        @Override
+        public String getTypeName()
+        {
+            return TYPE_NAME;
+        }
+
+        @Override
+        public boolean isImplementation(Atom<?> atom)
+        {
+            return this.getImplementationClass().isInstance(atom);
+        }
+
+        @Override
+        public Class<? extends Atom<RichIterable<? extends Atom>>> getImplementationClass()
+        {
+            return ListAtom.class;
+        }
+
+        @Override
+        public Atom<RichIterable<? extends Atom>> makeInstance(RichIterable<? extends Atom> value)
+        {
+            return new ListAtom(value);
+        }
+    }
 
     public ListAtom(RichIterable<? extends Atom> value)
     {
