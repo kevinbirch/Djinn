@@ -40,7 +40,7 @@ public class Not extends UnaryFunction
 
     public Not(Method family)
     {
-        super("not", family, BooleanAtom.getMetaclass());
+        super("not", family, BooleanAtom.getMetatype());
     }
 
     @Override

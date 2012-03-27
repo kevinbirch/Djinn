@@ -28,7 +28,7 @@
 
 package com.webguys.djinn.ifrit.model;
 
-public interface Metaclass<T>
+public interface Metatype<T>
 {
     String getTypeName();
 

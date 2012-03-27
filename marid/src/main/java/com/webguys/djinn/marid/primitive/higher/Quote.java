@@ -38,7 +38,7 @@ public class Quote extends UnaryFunction
 
     public Quote(Method family)
     {
-        super(NAME, family, Any.getMetaclass());
+        super(NAME, family, Any.getMetatype());
     }
 
     @Override

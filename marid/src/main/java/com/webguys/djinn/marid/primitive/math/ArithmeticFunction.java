@@ -36,7 +36,7 @@ public abstract class ArithmeticFunction extends BinaryFunction
 {
     public ArithmeticFunction(String name, Method family)
     {
-        super(name, family, NumberAtom.getMetaclass(), NumberAtom.getMetaclass());
+        super(name, family, NumberAtom.getMetatype(), NumberAtom.getMetatype());
     }
 
     @Override

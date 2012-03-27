@@ -27,14 +27,14 @@ package com.webguys.djinn.ifrit.model;
 public abstract class NumberAtom<T extends Number> extends AbstractAtom<T>
 {
     private static final String TYPE_NAME = "Number";
-    private static final Meta METACLASS = new Meta();
+    private static final Metatype METATYPE = new Metatype();
 
-    public static Metaclass<? extends Number> getMetaclass()
+    public static com.webguys.djinn.ifrit.model.Metatype getMetatype()
     {
-        return METACLASS;
+        return METATYPE;
     }
 
-    protected static class Meta<T extends Number> implements Metaclass<T>
+    protected static class Metatype<T extends Number> implements com.webguys.djinn.ifrit.model.Metatype<T>
     {
         @Override
         public String getTypeName()

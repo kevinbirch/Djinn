@@ -30,16 +30,14 @@ package com.webguys.djinn.ifrit.model;
 public class Any implements Atom<Object>
 {
     private static final String TYPE_NAME = "Any";
-    private static final Meta METACLASS = new Meta();
+    private static final Metatype METATYPE = new Metatype();
 
-    private Object value;
-
-    public static Metaclass<Object> getMetaclass()
+    public static com.webguys.djinn.ifrit.model.Metatype<Object> getMetatype()
     {
-        return METACLASS;
+        return METATYPE;
     }
 
-    public static final class Meta implements Metaclass<Object>
+    public static final class Metatype implements com.webguys.djinn.ifrit.model.Metatype<Object>
     {
         @Override
         public String getTypeName()
@@ -65,6 +63,8 @@ public class Any implements Atom<Object>
             return new Any(value);
         }
     }
+
+    private Object value;
 
     public Any(Object value)
     {

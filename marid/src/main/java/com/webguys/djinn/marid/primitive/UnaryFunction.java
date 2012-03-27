@@ -26,12 +26,12 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.Metaclass;
+import com.webguys.djinn.ifrit.model.Metatype;
 import com.webguys.djinn.ifrit.model.Method;
 
 public abstract class UnaryFunction extends BuiltinFunction
 {
-    public UnaryFunction(String name, Method family, Metaclass<?> itemOne)
+    public UnaryFunction(String name, Method family, Metatype<?> itemOne)
     {
         super(name, family, 1, itemOne);
     }

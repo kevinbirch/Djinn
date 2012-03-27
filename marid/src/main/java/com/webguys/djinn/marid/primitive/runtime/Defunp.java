@@ -35,7 +35,7 @@ public class Defunp extends TrinaryFunction
 
     public Defunp(Method family)
     {
-        super(NAME, family, StringAtom.getMetaclass(), Lambda.getMetaclass(), Lambda.getMetaclass());
+        super(NAME, family, StringAtom.getMetatype(), Lambda.getMetatype(), Lambda.getMetatype());
     }
 
     @Override

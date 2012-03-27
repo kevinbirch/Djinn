@@ -35,7 +35,7 @@ public class Bind extends BinaryFunction
 
     public Bind(Method family)
     {
-        super(NAME, family, StringAtom.getMetaclass(), Lambda.getMetaclass());
+        super(NAME, family, StringAtom.getMetatype(), Lambda.getMetatype());
     }
 
     @Override

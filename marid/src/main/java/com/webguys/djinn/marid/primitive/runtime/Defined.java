@@ -35,7 +35,7 @@ public class Defined extends UnaryFunction
 
     public Defined(Method family)
     {
-        super(NAME, family, StringAtom.getMetaclass());
+        super(NAME, family, StringAtom.getMetatype());
     }
 
     @Override

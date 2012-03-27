@@ -37,7 +37,7 @@ public class Ne extends BinaryFunction
 
     public Ne(Method family)
     {
-        super(NAME, family, Any.getMetaclass(), Any.getMetaclass());
+        super(NAME, family, Any.getMetatype(), Any.getMetatype());
     }
 
     @Override

@@ -26,12 +26,12 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.Metaclass;
+import com.webguys.djinn.ifrit.model.Metatype;
 import com.webguys.djinn.ifrit.model.Method;
 
 public abstract class BinaryFunction extends BuiltinFunction
 {
-    public BinaryFunction(String name, Method family, Metaclass<?> itemOne, Metaclass<?> itemTwo)
+    public BinaryFunction(String name, Method family, Metatype<?> itemOne, Metatype<?> itemTwo)
     {
         super(name, family, 2, itemOne, itemTwo);
     }

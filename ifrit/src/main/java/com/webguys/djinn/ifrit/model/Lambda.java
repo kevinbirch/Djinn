@@ -32,14 +32,15 @@ import ponzu.api.list.ImmutableList;
 public class Lambda extends MetaObject implements Atom<ImmutableList<? extends Atom<?>>>
 {
     private static final String TYPE_NAME = "Lambda";
-    private static final Meta METACLASS = new Meta();
+    private static final Metatype METATYPE = new Metatype();
 
-    public static Metaclass<ImmutableList<? extends Atom<?>>> getMetaclass()
+    public static com.webguys.djinn.ifrit.model.Metatype<ImmutableList<? extends Atom<?>>> getMetatype()
     {
-        return METACLASS;
+        return METATYPE;
     }
 
-    public static final class Meta implements Metaclass<ImmutableList<? extends Atom<?>>>
+    public static final class Metatype
+        implements com.webguys.djinn.ifrit.model.Metatype<ImmutableList<? extends Atom<?>>>
     {
         @Override
         public String getTypeName()

@@ -40,7 +40,7 @@ public class Drop extends UnaryFunction
 
     public Drop(Method family)
     {
-        super(NAME, family, Any.getMetaclass());
+        super(NAME, family, Any.getMetatype());
     }
 
     @Override

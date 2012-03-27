@@ -24,12 +24,12 @@
 
 package com.webguys.djinn.marid.primitive;
 
-import com.webguys.djinn.ifrit.model.Metaclass;
+import com.webguys.djinn.ifrit.model.Metatype;
 import com.webguys.djinn.ifrit.model.Method;
 
 public abstract class TrinaryFunction extends BuiltinFunction
 {
-    public TrinaryFunction(String name, Method family, Metaclass<?> itemOne, Metaclass<?> itemTwo, Metaclass<?> itemThree)
+    public TrinaryFunction(String name, Method family, Metatype<?> itemOne, Metatype<?> itemTwo, Metatype<?> itemThree)
     {
         super(name, family, 3, itemOne, itemTwo, itemThree);
     }

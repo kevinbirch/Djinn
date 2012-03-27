@@ -32,14 +32,14 @@ public class BooleanAtom extends AbstractAtom<Boolean>
     private static final BooleanAtom FALSE = new BooleanAtom("false", Boolean.FALSE);
 
     private static final String TYPE_NAME = "Boolean";
-    private static final Meta METACLASS = new Meta();
+    private static final Metatype METATYPE = new Metatype();
 
-    public static Meta getMetaclass()
+    public static com.webguys.djinn.ifrit.model.Metatype<Boolean> getMetatype()
     {
-        return METACLASS;
+        return METATYPE;
     }
 
-    public static final class Meta implements Metaclass<Boolean>
+    public static final class Metatype implements com.webguys.djinn.ifrit.model.Metatype<Boolean>
     {
         @Override
         public String getTypeName()

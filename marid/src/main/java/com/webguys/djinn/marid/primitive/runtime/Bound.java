@@ -35,7 +35,7 @@ public class Bound extends UnaryFunction
 
     public Bound(Method family)
     {
-        super(NAME, family, StringAtom.getMetaclass());
+        super(NAME, family, StringAtom.getMetatype());
     }
 
     @Override

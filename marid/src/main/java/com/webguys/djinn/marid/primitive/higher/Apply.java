@@ -40,7 +40,7 @@ public class Apply extends UnaryFunction
 
     public Apply(Method family)
     {
-        super(NAME, family, Lambda.getMetaclass());
+        super(NAME, family, Lambda.getMetatype());
     }
 
     @Override

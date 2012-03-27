@@ -29,14 +29,14 @@ package com.webguys.djinn.ifrit.model;
 public class DecimalAtom extends NumberAtom<Double>
 {
     private static final String TYPE_NAME = "Decimal";
-    private static final Meta METACLASS = new Meta();
+    private static final Metatype METATYPE = new Metatype();
 
-    public static NumberAtom.Meta<Double> getMetaclass()
+    public static com.webguys.djinn.ifrit.model.Metatype<Double> getMetatype()
     {
-        return METACLASS;
+        return METATYPE;
     }
 
-    public static final class Meta extends NumberAtom.Meta<Double>
+    public static final class Metatype extends NumberAtom.Metatype<Double>
     {
         @Override
         public String getTypeName()

@@ -32,9 +32,9 @@ public abstract class BuiltinFunction extends ModuleFunction
 {
     private static final ImmutableList<? extends Atom> BODY = Lists.immutable.of(new StringAtom("__primitive__"));
 
-    private Metaclass<?>[] stackItems;
+    private Metatype<?>[] stackItems;
 
-    public BuiltinFunction(String name, Method family, int depthRequirement, Metaclass<?>... stackItems)
+    public BuiltinFunction(String name, Method family, int depthRequirement, Metatype<?>... stackItems)
     {
         super(name, family, BODY);
         this.setDepthRequirement(depthRequirement);
@@ -52,17 +52,17 @@ public abstract class BuiltinFunction extends ModuleFunction
 
         for(int i = 0; i < stackItems.length; i++)
         {
-            Metaclass<?> stackItem = stackItems[i];
+            Metatype<?> stackItem = stackItems[i];
             ensureStackItem(stack, i, stackItem);
         }
     }
 
-    private void ensureStackItem(Stack stack, int position, Metaclass<?> metaclass)
+    private void ensureStackItem(Stack stack, int position, Metatype<?> metatype)
     {
         Atom<?> atom = stack.peek(position);
-        if(!(metaclass.isImplementation(atom)))
+        if(!(metatype.isImplementation(atom)))
         {
-            throw new DoesNotUnderstandException(this.getFamily(), position, metaclass, atom);
+            throw new DoesNotUnderstandException(this.getFamily(), position, metatype, atom);
         }
     }
 }

@@ -40,7 +40,7 @@ public class Or extends BinaryFunction
 
     public Or(Method family)
     {
-        super(NAME, family, BooleanAtom.getMetaclass(), BooleanAtom.getMetaclass());
+        super(NAME, family, BooleanAtom.getMetatype(), BooleanAtom.getMetatype());
     }
 
     @Override

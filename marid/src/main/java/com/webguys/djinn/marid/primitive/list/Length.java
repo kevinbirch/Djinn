@@ -37,7 +37,7 @@ public class Length extends UnaryFunction
 
     public Length(Method family)
     {
-        super(NAME, family, ListAtom.getMetaclass());
+        super(NAME, family, ListAtom.getMetatype());
     }
 
     @Override

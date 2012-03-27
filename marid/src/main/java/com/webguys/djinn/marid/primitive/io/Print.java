@@ -40,7 +40,7 @@ public class Print extends UnaryFunction
 
     public Print(Method family)
     {
-        super(NAME, family, StringAtom.getMetaclass());
+        super(NAME, family, StringAtom.getMetatype());
     }
 
     @Override

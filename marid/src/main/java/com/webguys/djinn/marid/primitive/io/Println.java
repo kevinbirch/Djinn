@@ -40,7 +40,7 @@ public class Println extends UnaryFunction
 
     public Println(Method family)
     {
-        super(NAME, family, StringAtom.getMetaclass());
+        super(NAME, family, StringAtom.getMetatype());
     }
 
     @Override

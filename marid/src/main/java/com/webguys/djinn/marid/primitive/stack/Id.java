@@ -39,7 +39,7 @@ public class Id extends UnaryFunction
 
     public Id(Method family)
     {
-        super(NAME, family, Any.getMetaclass());
+        super(NAME, family, Any.getMetatype());
     }
 
     @Override

@@ -37,7 +37,7 @@ public class Dip extends BinaryFunction
 
     public Dip(Method family)
     {
-        super(NAME, family, Lambda.getMetaclass(), Any.getMetaclass());
+        super(NAME, family, Lambda.getMetatype(), Any.getMetatype());
     }
 
     @Override

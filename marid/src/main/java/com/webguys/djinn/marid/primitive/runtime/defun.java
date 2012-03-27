@@ -35,7 +35,7 @@ public class Defun extends BinaryFunction
 
     public Defun(Method family)
     {
-        super(NAME, family, StringAtom.getMetaclass(), Lambda.getMetaclass());
+        super(NAME, family, StringAtom.getMetatype(), Lambda.getMetatype());
     }
 
     @Override

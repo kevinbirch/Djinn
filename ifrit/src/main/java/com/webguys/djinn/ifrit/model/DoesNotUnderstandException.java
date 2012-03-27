@@ -28,7 +28,7 @@ package com.webguys.djinn.ifrit.model;
 
 public class DoesNotUnderstandException extends RuntimeException
 {
-    public DoesNotUnderstandException(Method method, int position, Metaclass<?> expected, Atom<?> found)
+    public DoesNotUnderstandException(Method method, int position, Metatype<?> expected, Atom<?> found)
     {
         super(String.format("The method %s does not understand the current stack configuration.  For the %s, expected: %s but found: %s",
                             method.getName(), getPositionName(position), expected.getTypeName(), found.getTypeName()));

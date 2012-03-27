@@ -28,17 +28,18 @@ package com.webguys.djinn.ifrit.model;
 
 import ponzu.api.RichIterable;
 
-public class ListAtom extends AbstractAtom<RichIterable<? extends Atom>>
+public class ListAtom extends AbstractAtom<RichIterable<? extends Atom<?>>>
 {
     public static final String TYPE_NAME = "List";
-    private static final Meta METACLASS = new Meta();
+    private static final Metatype METATYPE = new Metatype();
 
-    public static Metaclass<RichIterable<? extends Atom>> getMetaclass()
+    public static com.webguys.djinn.ifrit.model.Metatype<RichIterable<? extends Atom<?>>> getMetatype()
     {
-        return METACLASS;
+        return METATYPE;
     }
 
-    public static final class Meta implements Metaclass<RichIterable<? extends Atom>>
+    public static final class Metatype
+        implements com.webguys.djinn.ifrit.model.Metatype<RichIterable<? extends Atom<?>>>
     {
         @Override
         public String getTypeName()
@@ -53,19 +54,19 @@ public class ListAtom extends AbstractAtom<RichIterable<? extends Atom>>
         }
 
         @Override
-        public Class<? extends Atom<RichIterable<? extends Atom>>> getImplementationClass()
+        public Class<? extends Atom<RichIterable<? extends Atom<?>>>> getImplementationClass()
         {
             return ListAtom.class;
         }
 
         @Override
-        public Atom<RichIterable<? extends Atom>> makeInstance(RichIterable<? extends Atom> value)
+        public Atom<RichIterable<? extends Atom<?>>> makeInstance(RichIterable<? extends Atom<?>> value)
         {
             return new ListAtom(value);
         }
     }
 
-    public ListAtom(RichIterable<? extends Atom> value)
+    public ListAtom(RichIterable<? extends Atom<?>> value)
     {
         super(gensym(TYPE_NAME), value);
     }

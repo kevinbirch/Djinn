@@ -40,7 +40,7 @@ public class And extends BinaryFunction
 
     public And(Method family)
     {
-        super(NAME, family, BooleanAtom.getMetaclass(), BooleanAtom.getMetaclass());
+        super(NAME, family, BooleanAtom.getMetatype(), BooleanAtom.getMetatype());
     }
 
     @Override

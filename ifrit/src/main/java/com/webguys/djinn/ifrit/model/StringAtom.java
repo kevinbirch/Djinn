@@ -29,14 +29,14 @@ package com.webguys.djinn.ifrit.model;
 public class StringAtom extends AbstractAtom<String>
 {
     private static final String TYPE_NAME = "String";
-    private static final Meta METACLASS = new Meta();
+    private static final Metatype METATYPE = new Metatype();
 
-    public static Metaclass<String> getMetaclass()
+    public static com.webguys.djinn.ifrit.model.Metatype<String> getMetatype()
     {
-        return METACLASS;
+        return METATYPE;
     }
 
-    public static final class Meta implements Metaclass<String>
+    public static final class Metatype implements com.webguys.djinn.ifrit.model.Metatype<String>
     {
         @Override
         public String getTypeName()

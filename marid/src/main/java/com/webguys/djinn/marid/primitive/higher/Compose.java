@@ -41,7 +41,7 @@ public class Compose extends BinaryFunction
 
     public Compose(Method family)
     {
-        super(NAME, family, Lambda.getMetaclass(), Lambda.getMetaclass());
+        super(NAME, family, Lambda.getMetatype(), Lambda.getMetatype());
     }
 
     @Override
