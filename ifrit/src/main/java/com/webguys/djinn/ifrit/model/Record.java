@@ -26,11 +26,16 @@
 
 package com.webguys.djinn.ifrit.model;
 
+import com.webguys.djinn.ifrit.metamodel.Association;
 import com.webguys.djinn.ifrit.metamodel.ComplexType;
+import ponzu.api.RichIterable;
+import ponzu.api.list.MutableList;
+import ponzu.impl.factory.Lists;
 
 public class Record extends ComplexType<SingleDeclaration> implements Entry
 {
     private Module parent;
+    private MutableList<Association> associations = Lists.mutable.of();
 
     public Record(String name)
     {
@@ -53,5 +58,20 @@ public class Record extends ComplexType<SingleDeclaration> implements Entry
     public Module getContainer()
     {
         return this.parent;
+    }
+    
+    public RichIterable<Association> getAssociations()
+    {
+        return this.associations;
+    }
+    
+    public void addAssociation(Association association)
+    {
+        this.associations.add(association);
+    }
+    
+    public void removeAssociation(Association association)
+    {
+        this.associations.remove(association);
     }
 }

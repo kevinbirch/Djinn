@@ -22,6 +22,12 @@ tokens {
 	STRING_LITERAL;
 	LIST_LITERAL;
 	SYMBOL;
+	RECORD;
+	TYPE_DEFINITION;
+	CTOR;
+	ATTRIBUTE;
+	ASSOCIATION;
+	QUALIFIER;
 }
 
 @header
@@ -35,7 +41,7 @@ package com.webguys.djinn.ifrit;
 }
 
 translation_unit
-	:	key_value_pair* (method | function | assignment_statement)+
+	:	key_value_pair* (method | function | assignment)+
 	;
 
 key_value_pair
@@ -45,8 +51,9 @@ key_value_pair
 statement
 	:	method
 	|	function
-	|	assignment_statement
-	|	immediate_statement
+	|	record
+	|	assignment
+	|	immediate
 	;
 
 tag
@@ -75,7 +82,7 @@ function_type_qualifier
 	;
 
 function
-	:	tag* DEF LBRACK NAME function_body functions+=inner_function* vardefs+=assignment_statement* RBRACK
+	:	tag* DEF LBRACK NAME function_body functions+=inner_function* vardefs+=assignment* RBRACK
 		-> ^(FUNCTION NAME tag* function_body $functions* $vardefs*)
 	;
 
@@ -95,24 +102,56 @@ lambda
 	:	LBRACK atom+ RBRACK -> ^(LAMBDA atom+)
 	;
 
-assignment_statement
-	:	single_assignment_statement
-	|	compound_assignment_statement
+assignment
+	:	single_assignment
+	|	compound_assignment
 	;
 
-single_assignment_statement
+single_assignment
 	:	DEF NAME expression -> ^(ASSIGNMENT NAME expression)
 	;
 
-compound_assignment_statement
+compound_assignment
 	:	DEF names+=NAME (COMMA DEF names+=NAME)+ lambda -> ^(COMPOUND_ASSIGNMENT $names+ lambda)
 	;
 
-expression
-	:	literal
-	|	list
-//	|	literal record
-	|	lambda
+record
+	:	DEF NAME ( type_definition )? DEF LBRACK constructor* slot+ RBRACK -> ^( RECORD NAME type_definition? constructor* slot+ )
+	;
+
+type_definition
+	:	DBL_COLON NAME -> ^( TYPE_DEFINITION NAME )
+	;
+
+constructor
+	:	DEF NAME THICK_ARROW initializers+=initializer (COMMA initializers+=initializer)* -> ^(CTOR NAME $initializers+ )
+	;
+
+initializer
+	:	NAME (LBRACK literal RBRACK)? -> ^( NAME literal? )
+	;
+
+slot
+	:	attribute
+	|	association
+	;
+
+attribute
+	:	DEF NAME (DBL_COLON type=NAME)? -> ^( ATTRIBUTE NAME $type? )
+	;
+
+association
+	:	DEF NAME ( LBRACK qualifiers+=qualifier ( COMMA qualifiers+=qualifier )* RBRACK )? THIN_ARROW ( cardinality )? target=NAME
+	-> ^( ASSOCIATION NAME $qualifiers* cardinality? $target)
+	;
+
+qualifier
+	:	NAME ( type_definition )? -> ^( QUALIFIER NAME type_definition )
+	;
+
+cardinality
+	:	'1'
+	|	'*'
 	;
 
 list
@@ -120,8 +159,9 @@ list
 //	|	list comprehension
 	;
 
-immediate_statement
-	:	( body+=atom | body+=lambda )+ -> ^(IMMEDIATE $body+ )
+expression
+	:	literal
+	|	lambda
 	;
 
 atom
@@ -138,6 +178,11 @@ literal
 	:	INTEGER -> ^(INTEGER_LITERAL INTEGER)
 	|	DECIMAL -> ^(DECIMAL_LITERAL DECIMAL)
 	|	STRING -> ^(STRING_LITERAL STRING)
+	|	list
+	;
+
+immediate
+	:	( body+=atom | body+=lambda )+ -> ^(IMMEDIATE $body+ )
 	;
 
 COLON    	: ':' ;
@@ -198,7 +243,7 @@ DIGITS : ( '0' .. '9' )+ ;
 
 NAME
 	:	( '$' ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9') | '_'* ( '<=' | '>=' | '==' | '!=' | '<' | '>' | '.' | '+' | '-' | '*' | '/' | '%' | '^' | 'a' .. 'z' | 'A' .. 'Z' ) )
-		( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '-' | '.' )* ( '!' | '?' | '\'' )?
+		( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '-' | '.' )* ( '!' | '?' | '\'' | '>' )?
 	;
 
 STRING

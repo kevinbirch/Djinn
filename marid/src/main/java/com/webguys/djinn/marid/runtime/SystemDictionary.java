@@ -26,13 +26,10 @@
 
 package com.webguys.djinn.marid.runtime;
 
-import java.util.Map;
-
-import com.webguys.djinn.ifrit.model.Declaration;
-import com.webguys.djinn.ifrit.model.Dictionary;
-import com.webguys.djinn.ifrit.model.Executable;
-import com.webguys.djinn.ifrit.model.Method;
-import ponzu.impl.map.mutable.UnifiedMap;
+import com.webguys.djinn.ifrit.metamodel.Association;
+import com.webguys.djinn.ifrit.model.*;
+import ponzu.api.map.MutableMap;
+import ponzu.impl.factory.Maps;
 
 public class SystemDictionary implements Dictionary
 {
@@ -40,8 +37,10 @@ public class SystemDictionary implements Dictionary
 
     private static boolean redefinitionAllowed = true;
 
-    private Map<String, Method> methods = UnifiedMap.newMap();
-    private Map<String, Declaration> declarations = UnifiedMap.newMap();
+    private MutableMap<String, Method> methods = Maps.mutable.of();
+    private MutableMap<String, Declaration> declarations = Maps.mutable.of();
+    private MutableMap<String, Record> records = Maps.mutable.of();
+    private MutableMap<String, Association> associations = Maps.mutable.of();
 
     private Dictionary parent;
 

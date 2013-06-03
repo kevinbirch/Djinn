@@ -26,10 +26,11 @@
 
 package com.webguys.djinn.ifrit.metamodel;
 
-public class Association extends MetaObject implements Relationship
+public class Association<T extends Container<? extends Association>> extends MetaObject implements Relationship, Element<T>
 {
     private Endpoint source;
     private Endpoint target;
+    private T parent;
 
     public Association(String name, Endpoint source, Endpoint target)
     {
@@ -52,6 +53,12 @@ public class Association extends MetaObject implements Relationship
     public String getTypeName()
     {
         return null;
+    }
+
+    @Override
+    public T getContainer()
+    {
+        return parent;
     }
 
     public static enum Cardinality

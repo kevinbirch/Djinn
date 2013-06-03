@@ -148,11 +148,15 @@ public class REPL
         }
         else if(":stack".equalsIgnoreCase(input))
         {
-            return "stack: " + this.context.getStack();
+            return this.printStack();
         }
         else if(":depth".equalsIgnoreCase(input))
         {
             return String.valueOf(this.context.getStack().depth());
+        }
+        else if(":xyzzy".equalsIgnoreCase(input))
+        {
+            return "Nothing happens.";
         }
         else
         {
@@ -168,7 +172,7 @@ public class REPL
             if(result instanceof ImmediateStatement)
             {
                 result.execute(this.context);
-                return this.context.getStack().isEmpty() ? "stack empty" : "stack: " + this.context.getStack();
+                return this.printStack();
             }
             else
             {
@@ -183,6 +187,11 @@ public class REPL
         {
             return "error: " + e.getMessage();
         }
+    }
+
+    private String printStack()
+    {
+        return this.context.getStack().isEmpty() ? "stack empty" : "stack: " + this.context.getStack();
     }
 
     private void print(String result) throws Exception

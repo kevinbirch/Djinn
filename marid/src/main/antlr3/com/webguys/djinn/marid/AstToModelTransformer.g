@@ -28,7 +28,7 @@ import com.webguys.djinn.marid.runtime.*;
 }
 
 translation_unit returns [Module result]
-	:	key_value_pair* (method | function | assignment_statement[this.dictionary])+
+	:	key_value_pair* (method | function | assignment[this.dictionary])+
 		{ $result = Module.getRootModule(); }
 	;
 
@@ -37,10 +37,10 @@ key_value_pair
 	;
 
 statement returns [Executable result]
-	:	method									{ $result = $method.result; }
-	|	function 								{ $result = $function.result; }
-	|	assignment_statement[this.dictionary] 	{ $result = $assignment_statement.result; }
-	|	immediate_statement 					{ $result = $immediate_statement.result; }
+	:	method							{ $result = $method.result; }
+	|	function 						{ $result = $function.result; }
+	|	assignment[this.dictionary] 	{ $result = $assignment.result; }
+	|	immediate 						{ $result = $immediate.result; }
 	;
 
 tag
@@ -81,7 +81,7 @@ function returns [Function result]
 		MutableList<Declaration> declarations = FastList.newList();
 		Dictionary functionDictionary = this.dictionary.newChild();
 	}
-	:	^(FUNCTION NAME tag* (^(PATTERN p=lambda))? ^(BODY (l=lambda { body.add($l.result); } | atom { body.add($atom.result); })+) (f=inner_function[functionDictionary] { functions.add($f.result); })* (s=assignment_statement[functionDictionary] { declarations.add($s.result); })*)
+	:	^(FUNCTION NAME tag* (^(PATTERN p=lambda))? ^(BODY (l=lambda { body.add($l.result); } | atom { body.add($atom.result); })+) (f=inner_function[functionDictionary] { functions.add($f.result); })* (s=assignment[functionDictionary] { declarations.add($s.result); })*)
 	{
 		Method method = this.dictionary.getOrCreateMethod($NAME.text);
 		if(method.isSealed())
@@ -169,26 +169,26 @@ lambda returns [Lambda result]
 		{ $result = new Lambda(atoms.toImmutable()); }
 	;
 
-assignment_statement[Dictionary dictionary] returns [Declaration result]
-	:	single_assignment_statement
+assignment[Dictionary dictionary] returns [Declaration result]
+	:	single_assignment
 		{
-			SingleDeclaration single = $single_assignment_statement.result;
+			SingleDeclaration single = $single_assignment.result;
 			dictionary.defineName(single);
 			$result = single;
 		}
-	|	compound_assignment_statement
+	|	compound_assignment
 		{
-			CompoundDeclaration compound = $compound_assignment_statement.result;
+			CompoundDeclaration compound = $compound_assignment.result;
 			$result = compound;
 		}
 	;
 
-single_assignment_statement returns [SingleDeclaration result]
+single_assignment returns [SingleDeclaration result]
 	:	^(ASSIGNMENT NAME expression)
 		{ $result = new SingleDeclaration($NAME.text, $expression.result); }
 	;
 
-compound_assignment_statement returns [CompoundDeclaration result]
+compound_assignment returns [CompoundDeclaration result]
 	@init {
 		MutableList<String> names = FastList.newList();
 	}
@@ -196,21 +196,52 @@ compound_assignment_statement returns [CompoundDeclaration result]
 		{ $result = new CompoundDeclaration(names.toImmutable(), $lambda.result); }
 	;
 
-expression returns [Lambda result]
-	:	literal
+record returns [Record result]
+	@init {
+	}
+	:	^( RECORD NAME { $result = new Record($NAME.text); } type_definition? constructor* slot+ )
 		{
-			MutableList<Atom<?>> atoms = FastList.newList();
-			atoms.add($literal.result);
-			$result = new Lambda(atoms.toImmutable());
+			this.dictionary.defineRecord($record);
+			if(null != $type_definition.result)
+			{
+				$record.addGeneralization(this.dictionary.getRecord($type_definition.result));
+			}
+			
 		}
-	|	list
-		{
-			MutableList<Atom<?>> atoms = FastList.newList();
-			atoms.add($list.result);
-			$result = new Lambda(atoms.toImmutable());
-		}
-	|	lambda
-		{ $result = $lambda.result; }
+	;
+
+type_definition
+	:	^( TYPE_DEFINITION NAME )
+	;
+
+constructor
+	:	^(CTOR NAME initializer+ )
+	;
+
+initializer
+	:	^( NAME literal? )
+	;
+
+slot
+	:	attribute
+	|	association
+	;
+
+attribute
+	:	^( ATTRIBUTE NAME $type? )
+	;
+
+association
+	:	^( ASSOCIATION NAME $qualifiers* cardinality? $target)
+	;
+
+qualifier
+	:	^( QUALIFIER NAME type_definition )
+	;
+
+cardinality
+	:	'1'
+	|	'*'
 	;
 
 list returns [ListAtom result]
@@ -221,12 +252,15 @@ list returns [ListAtom result]
 		{ $result = new ListAtom(atoms); }
 	;
 
-immediate_statement returns [ImmediateStatement result]
-	@init {
-		MutableList<Atom<?>> atoms = FastList.newList();
-	}
-	:	^(IMMEDIATE (atom { atoms.add($atom.result); } | lambda { atoms.add($lambda.result); } )+)
-		{ $result = new ImmediateStatement(atoms.toImmutable()); }
+expression returns [Lambda result]
+	:	literal
+		{
+			MutableList<Atom<?>> atoms = FastList.newList();
+			atoms.add($literal.result);
+			$result = new Lambda(atoms.toImmutable());
+		}
+	|	lambda
+		{ $result = $lambda.result; }
 	;
 
 atom returns [Atom result]
@@ -250,4 +284,15 @@ literal returns [Atom result]
 		{ $result = new DecimalAtom(Double.valueOf($DECIMAL.text)); }
 	|	^(STRING_LITERAL STRING)
 		{ $result = new StringAtom(StringUtils.strip($STRING.text, "\"")); }
+	|	list
+		{ $result = $list.result; }
 	;
+
+immediate returns [ImmediateStatement result]
+	@init {
+		MutableList<Atom<?>> atoms = FastList.newList();
+	}
+	:	^(IMMEDIATE (atom { atoms.add($atom.result); } | lambda { atoms.add($lambda.result); } )+)
+		{ $result = new ImmediateStatement(atoms.toImmutable()); }
+	;
+

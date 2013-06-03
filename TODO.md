@@ -44,6 +44,8 @@
 
 ## Enhancements
 
+- language:
+  - Lisp-style conditions: http://www.gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html
 - model:
   - do functions need to explicitly hold on to inner function refs? they will be in the dictionary...
   - add inputs and outputs to action class
@@ -53,6 +55,7 @@
   - modules should have protocols and versioned dependency system
   - is there a use for ocl pre and post conditions on synthetic slots? normal slots?
   - refactor type atoms into single simple type atom and create type classes.  combine decimal and int into number ala javascript
+  - eliminate use of hashtables to track runtime data: http://blog.headius.com/2012/09/avoiding-hash-lookups-in-ruby.html
 - primitives:
   - keep should restore all items removed from the stack (implemented as a rewinding stack with a movable sp that pop mutates, but does not actually remove items)
   - seq protocol: cons, nth, length, remove, subseq
@@ -70,6 +73,7 @@
 - repl:
   - file loading
   - fatal error in parsing should not leave partial definitions, all or nothing
+  - the console output should be prepended with ">> " before the results of println are written
   - restarts, fix and continue
   - refactor commands into separate classes
   - apache commons cli or http://code.google.com/p/java-cli-api/
@@ -106,8 +110,22 @@
 - http://www.reddit.com/r/Python/comments/mdoro/whats_your_shortest_fizzbuzz/
 - http://rosettacode.org/wiki/Rosetta_Code
 - http://www.franz.com/support/tech_corner/usgs-011207.lhtml
+- http://www.hp42s.com/programs/res/res.html
 
-## Other stack languages
+## Interesting links
+
+- SECD Machine
+  - http://en.wikipedia.org/wiki/SECD_machine
+  - http://skelet.ludost.net/sec/
+  - http://www.amazon.com/The-SECD-Microprocessor-Verification-International/dp/0792392450
+  - http://www.amazon.com/Architecture-Computers-Mcgraw-Hill-Supercomputing-Processing/dp/0070355967
+  - http://stackoverflow.com/questions/7547951/in-the-secd-machine-how-does-rap-work
+  - http://www.cs.utexas.edu/~boyer/ftp/nqthm/trsecd/trsecd.html
+- Yegge's NBL
+  - http://steve-yegge.blogspot.com.au/2007/02/next-big-language.html
+  - http://dave.cheney.net/2012/09/03/another-go-at-the-next-big-language
+  
+## Other languages
 
 - Cat - http://www.cat-language.com/
 - Factor - http://factorcode.org/
@@ -119,9 +137,6 @@
 - PLOT - http://users.rcn.com/david-moon/PLOT/
 - Julia - http://julialang.org/manual/
 - Lang5 - http://lang5.sourceforge.net/tiki-index.php
-
-## Other languages
-
 - http://golang.org/
 - http://www.mirah.org/
 - http://research.microsoft.com/en-us/projects/kodu/

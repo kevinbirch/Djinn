@@ -30,23 +30,29 @@ package com.webguys.djinn.ifrit.model;
 
 public interface Dictionary
 {
-    Method getOrCreateMethod(String name);
-
-    void defineMethod(Method method);
-
-    boolean isMethodDefined(String name);
-
-    Method getMethod(String name);
-
-    void defineName(Declaration declaration);
-
-    boolean isNameDefined(String name);
-
-    Declaration getDeclaration(String name);
+    Dictionary newChild();
 
     boolean isSymbolDefined(String symbol);
 
     Executable getSymbol(String symbol);
 
-    Dictionary newChild();
+    boolean isMethodDefined(String name);
+
+    Method getMethod(String name);
+
+    Method getOrCreateMethod(String name);
+
+    void defineMethod(Method method);
+
+    boolean isNameDefined(String name);
+
+    Declaration getDeclaration(String name);
+    
+    void defineName(Declaration declaration);
+    
+    boolean isRecordDefined(String name);
+    
+    Record getRecord(String name);
+    
+    void defineRecord(Record record);
 }
