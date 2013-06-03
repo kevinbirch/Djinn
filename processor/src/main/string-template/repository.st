@@ -25,8 +25,8 @@ repository(types, names) ::= <<
 
 package com.webguys.djinn.marid.primitive;
 
-import ponzu.api.map.ImmutableMap;
-import ponzu.impl.map.mutable.UnifiedMap;
+import com.webguys.ponzu.api.map.ImmutableMap;
+import com.webguys.ponzu.impl.map.mutable.UnifiedMap;
 
 import com.webguys.djinn.ifrit.model.Method;
 import com.webguys.djinn.ifrit.model.ModuleFunction;
