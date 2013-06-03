@@ -29,7 +29,7 @@ package com.webguys.djinn.marid.primitive.higher;
 import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
 import com.webguys.djinn.marid.primitive.Builtin;
-import ponzu.impl.list.mutable.FastList;
+import com.webguys.ponzu.impl.list.mutable.FastList;
 
 @Builtin(Bind.NAME)
 public class Bind extends BinaryFunction

@@ -31,8 +31,8 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import com.webguys.djinn.marid.runtime.Version;
-import ponzu.api.block.function.Function;
-import ponzu.impl.map.mutable.UnifiedMap;
+import com.webguys.ponzu.api.block.function.Function;
+import com.webguys.ponzu.impl.map.mutable.UnifiedMap;
 
 /**
  * Created: 3/18/12 6:14 PM

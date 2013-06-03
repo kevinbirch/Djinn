@@ -26,13 +26,13 @@
 
 package com.webguys.djinn.marid;
 
-import java.io.IOException;
-
 import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.runtime.FullStack;
 import com.webguys.djinn.marid.runtime.Runtime;
+import com.webguys.ponzu.impl.utility.StringIterate;
 import jline.console.ConsoleReader;
-import ponzu.impl.utility.StringIterate;
+
+import java.io.IOException;
 
 public class REPL
 {

@@ -26,7 +26,7 @@
 
 package com.webguys.djinn.ifrit.metamodel;
 
-import ponzu.api.RichIterable;
+import com.webguys.ponzu.api.RichIterable;
 
 public interface Container<T extends Element>
 {

@@ -26,7 +26,7 @@
 
 package com.webguys.djinn.ifrit.model;
 
-import ponzu.api.RichIterable;
+import com.webguys.ponzu.api.RichIterable;
 
 public class ListAtom extends AbstractAtom<RichIterable<? extends Atom>>
 {

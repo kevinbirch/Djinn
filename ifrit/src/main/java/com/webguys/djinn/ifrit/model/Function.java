@@ -27,7 +27,7 @@
 package com.webguys.djinn.ifrit.model;
 
 import com.webguys.djinn.ifrit.metamodel.*;
-import ponzu.api.list.ImmutableList;
+import com.webguys.ponzu.api.list.ImmutableList;
 
 public abstract class Function<FamilyType extends Cluster<Function>, ContainerType extends Container<? extends Member>>
     extends Action<FamilyType, ContainerType> implements ConditionalExecutable

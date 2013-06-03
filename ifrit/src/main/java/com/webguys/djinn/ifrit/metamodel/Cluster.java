@@ -26,9 +26,9 @@
 
 package com.webguys.djinn.ifrit.metamodel;
 
-import ponzu.api.RichIterable;
-import ponzu.api.set.MutableSet;
-import ponzu.impl.set.mutable.UnifiedSet;
+import com.webguys.ponzu.api.RichIterable;
+import com.webguys.ponzu.api.set.MutableSet;
+import com.webguys.ponzu.impl.set.mutable.UnifiedSet;
 
 public class Cluster<T extends Action> extends MetaObject implements Type
 {

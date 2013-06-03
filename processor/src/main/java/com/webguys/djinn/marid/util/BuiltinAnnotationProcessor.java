@@ -42,9 +42,9 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 import org.stringtemplate.v4.misc.ErrorBuffer;
-import ponzu.api.block.function.Function;
-import ponzu.api.set.MutableSet;
-import ponzu.impl.set.mutable.UnifiedSet;
+import com.webguys.ponzu.api.block.function.Function;
+import com.webguys.ponzu.api.set.MutableSet;
+import com.webguys.ponzu.impl.set.mutable.UnifiedSet;
 
 @SupportedAnnotationTypes({"com.webguys.djinn.marid.primitive.Builtin"})
 @SupportedSourceVersion(SourceVersion.RELEASE_6)

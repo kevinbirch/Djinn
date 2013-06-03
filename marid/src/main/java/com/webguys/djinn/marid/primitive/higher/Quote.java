@@ -29,7 +29,7 @@ package com.webguys.djinn.marid.primitive.higher;
 import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.primitive.Builtin;
 import com.webguys.djinn.marid.primitive.UnaryFunction;
-import ponzu.impl.factory.Lists;
+import com.webguys.ponzu.impl.factory.Lists;
 
 @Builtin(Quote.NAME)
 public class Quote extends UnaryFunction

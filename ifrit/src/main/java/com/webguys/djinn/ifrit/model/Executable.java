@@ -28,7 +28,7 @@ package com.webguys.djinn.ifrit.model;
 
 public interface Executable
 {
-    ponzu.api.block.function.Function<Executable, String> TO_SOURCE_REP = new ponzu.api.block.function.Function<Executable, String>()
+    com.webguys.ponzu.api.block.function.Function<Executable, String> TO_SOURCE_REP = new com.webguys.ponzu.api.block.function.Function<Executable, String>()
     {
         @Override
         public String valueOf(Executable function)

@@ -26,7 +26,7 @@
 
 package com.webguys.djinn.ifrit.model;
 
-import ponzu.api.list.ImmutableList;
+import com.webguys.ponzu.api.list.ImmutableList;
 
 public class ImmediateStatement extends Lambda
 {

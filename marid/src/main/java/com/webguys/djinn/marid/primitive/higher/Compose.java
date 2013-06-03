@@ -32,7 +32,7 @@ import com.webguys.djinn.ifrit.model.Method;
 import com.webguys.djinn.ifrit.model.Stack;
 import com.webguys.djinn.marid.primitive.BinaryFunction;
 import com.webguys.djinn.marid.primitive.Builtin;
-import ponzu.impl.list.mutable.FastList;
+import com.webguys.ponzu.impl.list.mutable.FastList;
 
 @Builtin(Compose.NAME)
 public class Compose extends BinaryFunction

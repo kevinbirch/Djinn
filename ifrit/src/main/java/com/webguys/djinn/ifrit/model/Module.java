@@ -27,7 +27,7 @@
 package com.webguys.djinn.ifrit.model;
 
 import com.webguys.djinn.ifrit.metamodel.ComplexType;
-import ponzu.api.RichIterable;
+import com.webguys.ponzu.api.RichIterable;
 
 public class Module extends ComplexType<Entry>
 {

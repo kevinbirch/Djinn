@@ -32,7 +32,7 @@ import com.webguys.djinn.ifrit.model.Symbol;
 import com.webguys.djinn.marid.primitive.higher.Bind;
 import org.junit.Before;
 import org.junit.Test;
-import ponzu.impl.factory.Lists;
+import com.webguys.ponzu.impl.factory.Lists;
 
 public class BindTest extends AbstractBuiltinTest
 {

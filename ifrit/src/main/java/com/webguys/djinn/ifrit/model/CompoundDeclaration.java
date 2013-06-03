@@ -29,11 +29,11 @@ package com.webguys.djinn.ifrit.model;
 import com.webguys.djinn.ifrit.metamodel.Attribute;
 import com.webguys.djinn.ifrit.metamodel.Container;
 import com.webguys.djinn.ifrit.metamodel.Member;
-import ponzu.api.RichIterable;
-import ponzu.api.block.procedure.Procedure;
-import ponzu.api.list.ImmutableList;
-import ponzu.api.map.MutableMap;
-import ponzu.impl.map.mutable.UnifiedMap;
+import com.webguys.ponzu.api.RichIterable;
+import com.webguys.ponzu.api.block.procedure.Procedure;
+import com.webguys.ponzu.api.list.ImmutableList;
+import com.webguys.ponzu.api.map.MutableMap;
+import com.webguys.ponzu.impl.map.mutable.UnifiedMap;
 
 public class CompoundDeclaration<T extends Container<? extends CompoundDeclaration>> extends Attribute<T>
     implements Member<T>, Declaration

@@ -8,8 +8,8 @@ options {
 package com.webguys.djinn.ifrit;
 
 import org.apache.commons.lang3.StringUtils;
-import ponzu.api.list.MutableList;
-import ponzu.impl.list.mutable.FastList;
+import com.webguys.ponzu.api.list.MutableList;
+import com.webguys.ponzu.impl.list.mutable.FastList;
 
 import com.webguys.djinn.ifrit.model.*;
 import com.webguys.djinn.marid.primitive.BuiltinRepository;

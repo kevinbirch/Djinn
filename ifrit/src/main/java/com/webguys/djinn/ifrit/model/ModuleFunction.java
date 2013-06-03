@@ -27,9 +27,9 @@
 package com.webguys.djinn.ifrit.model;
 
 import com.webguys.djinn.ifrit.metamodel.Container;
-import ponzu.api.RichIterable;
-import ponzu.api.list.ImmutableList;
-import ponzu.impl.factory.Lists;
+import com.webguys.ponzu.api.RichIterable;
+import com.webguys.ponzu.api.list.ImmutableList;
+import com.webguys.ponzu.impl.factory.Lists;
 
 public class ModuleFunction extends Function<Method, Module> implements Entry, Container<InnerFunction>
 {

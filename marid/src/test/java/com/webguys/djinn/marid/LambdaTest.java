@@ -32,8 +32,8 @@ import com.webguys.djinn.ifrit.model.StringAtom;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ponzu.api.list.ImmutableList;
-import ponzu.impl.factory.Lists;
+import com.webguys.ponzu.api.list.ImmutableList;
+import com.webguys.ponzu.impl.factory.Lists;
 
 public class LambdaTest extends AbstractDjinnTest
 {

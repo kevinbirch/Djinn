@@ -27,7 +27,7 @@
 package com.webguys.djinn.ifrit.model;
 
 import com.webguys.djinn.ifrit.metamodel.MetaObject;
-import ponzu.api.list.ImmutableList;
+import com.webguys.ponzu.api.list.ImmutableList;
 
 public class Lambda extends MetaObject implements Atom<ImmutableList<? extends Atom>>
 {

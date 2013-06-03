@@ -27,8 +27,8 @@
 package com.webguys.djinn.ifrit.model;
 
 import com.webguys.djinn.ifrit.metamodel.Cluster;
-import ponzu.api.map.MutableMap;
-import ponzu.impl.map.mutable.UnifiedMap;
+import com.webguys.ponzu.api.map.MutableMap;
+import com.webguys.ponzu.impl.map.mutable.UnifiedMap;
 
 public class Method extends Cluster<Function> implements Executable
 {

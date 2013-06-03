@@ -29,7 +29,7 @@ import com.webguys.djinn.marid.primitive.AbstractBuiltinTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ponzu.impl.factory.Lists;
+import com.webguys.ponzu.impl.factory.Lists;
 
 public class DefunpTest extends AbstractBuiltinTest
 {

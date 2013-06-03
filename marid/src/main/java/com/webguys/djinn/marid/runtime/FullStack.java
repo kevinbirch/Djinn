@@ -29,8 +29,8 @@ package com.webguys.djinn.marid.runtime;
 import com.webguys.djinn.ifrit.model.Atom;
 import com.webguys.djinn.ifrit.model.Stack;
 import com.webguys.djinn.ifrit.model.StackUnderflowException;
-import ponzu.api.list.MutableList;
-import ponzu.impl.list.mutable.FastList;
+import com.webguys.ponzu.api.list.MutableList;
+import com.webguys.ponzu.impl.list.mutable.FastList;
 
 public class FullStack implements Stack
 {

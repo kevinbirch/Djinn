@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -8,12 +8,12 @@
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/antlr3" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/stringtemplate" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/djinn" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/test-annotations" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/djinn" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/djinn" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/test-annotations" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
@@ -23,11 +23,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ifrit" />
+    <orderEntry type="module" module-name="ifrit" />
+    <orderEntry type="module" module-name="ifrit" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.5" level="project" />
     <orderEntry type="module" module-name="processor" />
-    <orderEntry type="library" name="Maven: ponzu:api:1.1.0" level="project" />
-    <orderEntry type="library" name="Maven: ponzu:impl:1.1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-io:1.3.2" level="project" />
+    <orderEntry type="library" name="Maven: com.webguys.ponzu:api:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.webguys.ponzu:impl:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:1.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:ST4:4.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.4" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:stringtemplate:3.2.1" level="project" />

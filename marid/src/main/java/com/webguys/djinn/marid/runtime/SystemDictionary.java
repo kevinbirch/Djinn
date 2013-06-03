@@ -32,7 +32,7 @@ import com.webguys.djinn.ifrit.model.Declaration;
 import com.webguys.djinn.ifrit.model.Dictionary;
 import com.webguys.djinn.ifrit.model.Executable;
 import com.webguys.djinn.ifrit.model.Method;
-import ponzu.impl.map.mutable.UnifiedMap;
+import com.webguys.ponzu.impl.map.mutable.UnifiedMap;
 
 public class SystemDictionary implements Dictionary
 {
